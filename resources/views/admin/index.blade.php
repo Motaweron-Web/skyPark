@@ -101,9 +101,9 @@
       </div>
 @endsection
 @section('js')
-    <script type="text/javascript" src="{{asset('admin')}}/js/plugins/chartjs.min.js"></script>
-    <script type="text/javascript" src="{{asset('admin')}}/js/plugins/threejs.js"></script>
-    <script type="text/javascript" src="{{asset('admin')}}/js/plugins/orbit-controls.js"></script>
+    <script type="text/javascript" src="{{asset('assets/admin')}}/js/plugins/chartjs.min.js"></script>
+    <script type="text/javascript" src="{{asset('assets/admin')}}/js/plugins/threejs.js"></script>
+    <script type="text/javascript" src="{{asset('assets/admin')}}/js/plugins/orbit-controls.js"></script>
     <script>
         ///////////////////////////////////////////////////////
         // charts
