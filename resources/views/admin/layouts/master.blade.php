@@ -2,18 +2,18 @@
 <html>
 <head>
     <title>@yield('page_title')</title>
-    @include('admin.layouts.head')
+    @include('admin.layouts.assets.head')
 </head>
 <body class="g-sidenav-show  bg-gray-100">
-@include('admin.layouts.sidebar')
+@include('admin.layouts.inc.sidebar')
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-        @include('admin.layouts.navbar')
+        @include('admin.layouts.inc.navbar')
         <content class="container-fluid pt-4">
         @yield('content')
-            @include('admin.layouts.footer')
+            @include('admin.layouts.inc.footer')
         </content>
     </main>
-@include('admin.layouts.scripts')
+@include('admin.layouts.assets.scripts')
 </body>
 </html>
 
