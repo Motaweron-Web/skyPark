@@ -1,0 +1,46 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::get('/', function () {
+    return view('admin.index');
+})->name('/');
+
+Route::get('add-client', function () {
+    return view('admin.add-client');
+})->name('add-client');
+
+Route::get('ticket', function () {
+    return view('admin.ticket');
+})->name('ticket');
+
+Route::get('family-access', function () {
+    return view('admin.family-access');
+})->name('family-access');
+
+Route::get('reservations', function () {
+    return view('admin.reservations');
+})->name('reservations');
+
+Route::get('capacity', function () {
+    return view('admin.capacity');
+})->name('capacity');
+
+Route::get('group-access', function () {
+    return view('admin.group-access');
+})->name('group-access');
+
+Route::get('exit', function () {
+    return view('admin.exit');
+})->name('exit');
