@@ -7,5 +7,8 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    //
-}
+    public function index(){
+        return view('sales.index');
+    }//end fun
+
+}//end class

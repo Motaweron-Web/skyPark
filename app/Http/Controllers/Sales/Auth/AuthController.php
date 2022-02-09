@@ -9,10 +9,21 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->only('logout');
+    }
+
     public function view(){
+        if (auth()->check()){
+            return redirect('/');
+        }
         return view('sales.auth.login');
     }//end fun
-
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function login(Request $request){
         $data = $request->validate([
             'user_name'=>'required|exists:users',
@@ -24,6 +35,11 @@ class AuthController extends Controller
             return response()->json(200);
         }
         return response()->json(405);
+    }//end fun
+    public function logout(){
+        auth()->logout();
+        toastr()->info('logged out successfully');
+        return redirect('login');
+    }//end fun
 
-    }
 }//end class

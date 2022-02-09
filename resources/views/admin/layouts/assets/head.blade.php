@@ -8,3 +8,11 @@
 <link href="{{asset('assets/admin')}}/css/style.css" rel="stylesheet" />
 <!-- data table -->
 <link href="{{asset('assets/admin')}}/css/datatables.min.css" rel="stylesheet" />
+
+<style>
+
+.navbar-vertical .navbar-nav>.nav-item .nav-link.active {
+    background-color: #eee;
+
+}
+</style>

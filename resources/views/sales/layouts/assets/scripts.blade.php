@@ -14,4 +14,10 @@
 @yield('js')
 <script>
     $('.spinner').fadeOut('slow')
+    window.addEventListener("offline",function () {
+        toastr.warning('No Internet')
+    });
+    window.addEventListener("online",function (){
+        toastr.success('Internet Connected')
+    });
 </script>

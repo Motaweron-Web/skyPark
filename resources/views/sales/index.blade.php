@@ -1,6 +1,9 @@
-@extends('admin.layouts.master')
+@extends('sales.layouts.master')
 @section('page_title')
     Sky Park | Home
+@endsection
+@section('links')
+{{--    <li class="breadcrumb-item text-sm text-dark active" aria-current="page">family Access</li>--}}
 @endsection
 @section('content')
       <h2 class="MainTiltle mb-5 ms-4">General Statistics</h2>
@@ -312,5 +315,7 @@
             }
             init();
         })();
+
+        $('#mainHome').addClass('active');
     </script>
 @endsection

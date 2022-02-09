@@ -10,3 +10,6 @@
 <script type="text/javascript" href="{{asset('assets/admin')}}/js/custom.js"></script>
 <script type="text/javascript" src="{{asset('assets/admin')}}/js/plugins/choices.min.js"></script>
 @yield('js')
+<script>
+    $('.spinner').fadeOut('slow')
+</script>

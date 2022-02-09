@@ -12,4 +12,9 @@
 .toast-container{
     margin-bottom: 50px;
 }
+.navbar-vertical .navbar-nav>.nav-item .nav-link.active {
+    background-color: #eee;
+
+}
 </style>
+@toastr_css

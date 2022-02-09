@@ -22,12 +22,22 @@
     </div>
     <div class="collapse navbar-collapse  me-md-0 me-sm-4" id="navbar">
         <ul class="ms-md-auto navbar-nav  justify-content-end">
-            <li class="nav-item d-flex align-items-center">
-                <a href="login.html" class="nav-link text-body font-weight-bold px-0">
-                    <span class="d-inline">Log In</span>
-                    <i class="fa fa-user ms-2"></i>
-                </a>
-            </li>
+            @if(auth()->check())
+                <li class="nav-item d-flex align-items-center">
+                    <a href="{{route('logout')}}" class="nav-link text-body font-weight-bold px-0">
+                        <span class="d-inline">Log out</span>
+                        <i class="fa fa-user ms-2"></i>
+                    </a>
+                </li>
+            @else
+                <li class="nav-item d-flex align-items-center">
+                    <a href="{{route('login')}}" class="nav-link text-body font-weight-bold px-0">
+                        <span class="d-inline">Log In</span>
+                        <i class="fa fa-user ms-2"></i>
+                    </a>
+                </li>
+            @endif
+
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
                 <a href="#!" class="nav-link text-body p-0" id="iconNavbarSidenav">
                     <div class="sidenav-toggler-inner">

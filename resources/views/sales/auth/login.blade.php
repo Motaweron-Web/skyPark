@@ -6,7 +6,6 @@
 
     @include('sales.layouts.assets.head')
     @include('layouts.loader.mainLoader.loaderCss')
-    @toastr_css
 
 </head>
 

@@ -4,11 +4,11 @@
      data-scroll="true"> <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-2">
             <li class="breadcrumb-item text-sm">
-                <a class="opacity-3 text-dark" href="index.html">
+                <a class="opacity-3 text-dark" href="/">
                     <i class="fas fa-house-day"></i>
                 </a>
             </li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">family Access</li>
+            @yield('links')
         </ol>
     </nav>
     <div class="sidenav-toggler sidenav-toggler-inner d-xl-block d-none ">
@@ -23,7 +23,7 @@
     <div class="collapse navbar-collapse  me-md-0 me-sm-4" id="navbar">
         <ul class="ms-md-auto navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center">
-                <a href="login.html" class="nav-link text-body font-weight-bold px-0">
+                <a href="{{route('login')}}" class="nav-link text-body font-weight-bold px-0">
                     <span class="d-inline">Log In</span>
                     <i class="fa fa-user ms-2"></i>
                 </a>
