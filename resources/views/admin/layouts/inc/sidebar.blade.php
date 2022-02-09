@@ -14,7 +14,7 @@
         <ul class="navbar-nav">
             <!-- nav-item  -->
             <li class="nav-item ">
-                <a href="{{route('/')}}" class="nav-link" id="mainHome">
+                <a href="{{route('/')}}" class="nav-link" >
                     <div
                         class="icon  icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
                         <i class="fas fa-home"></i>

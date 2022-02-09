@@ -46,6 +46,8 @@ Route::get('exit', function () {
 })->name('exit');
 
 
+
+
 require __DIR__.'/sales/auth.php';
 
 
@@ -56,5 +58,6 @@ Route::group(['middleware'=>'auth','namespace'=>'Sales'],function(){
 //================================ Home ====================================
     Route::get('/','HomeController@index')->name('/');
 
+    require __DIR__.'/sales/CRUD.php';
 
 });

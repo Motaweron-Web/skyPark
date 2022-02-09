@@ -82,3 +82,11 @@
         </div>
       </form>
 @endsection
+
+@section('js')
+    <script>
+        $('#main-family').addClass('active')
+        $('.createClient').addClass('active')
+        $('#familySale').addClass('show')
+    </script>
+@endsection

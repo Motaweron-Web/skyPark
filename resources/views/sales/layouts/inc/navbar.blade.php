@@ -8,7 +8,7 @@
                     <i class="fas fa-house-day"></i>
                 </a>
             </li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">family Access</li>
+            @yield('links')
         </ol>
     </nav>
     <div class="sidenav-toggler sidenav-toggler-inner d-xl-block d-none ">
