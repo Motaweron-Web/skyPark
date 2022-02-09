@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Sales;
 
 use App\Http\Controllers\Controller;
+use App\Models\Governorate;
+use App\Models\Reference;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -24,7 +26,10 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return view('sales.add-client');
+        $governorates = Governorate::with('cities')->latest()->get();
+        $references = Reference::latest()->get();
+
+        return view('sales.add-client',compact('governorates','references'));
     }
 
     /**
