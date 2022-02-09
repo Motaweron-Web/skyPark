@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/home', function () {
     return view('admin.index');
-})->name('/');
+})->name('/home');
 
 Route::get('add-client', function () {
     return view('admin.add-client');
@@ -44,3 +44,17 @@ Route::get('group-access', function () {
 Route::get('exit', function () {
     return view('admin.exit');
 })->name('exit');
+
+
+require __DIR__.'/sales/auth.php';
+
+
+Route::group(['middleware'=>'auth','namespace'=>'Sales'],function(){
+
+
+
+//================================ Home ====================================
+    Route::get('/','HomeController@index')->name('/');
+
+
+});

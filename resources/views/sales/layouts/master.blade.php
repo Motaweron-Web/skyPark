@@ -3,11 +3,8 @@
 <head>
     <title>@yield('page_title')</title>
     @include('admin.layouts.assets.head')
-    @include('layouts.loader.mainLoader.loaderCss')
 </head>
 <body class="g-sidenav-show  bg-gray-100">
-@include('layouts.loader.mainLoader.loader')
-
 @include('admin.layouts.inc.sidebar')
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         @include('admin.layouts.inc.navbar')
