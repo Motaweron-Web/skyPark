@@ -44,23 +44,23 @@
 
                           if($flag) {
                               if ($year . '-' . $month . '-' . $i == date('Y') . '-' . date('m') . '-' . (int)date('d'))
-                                  include(resource_path('views\sales\capacity\toDay.blade.php'));
+                                  include(resource_path('views/sales/capacity/toDay.blade.php'));
                               else
-                                  include(resource_path('views\sales\capacity\capacity.blade.php'));
+                                  include(resource_path('views/sales/capacity/capacity.blade.php'));
 
                               $i++;
                           }elseif($j == $start_day){
                               if($year.'-'.$month.'-'.$i == date('Y').'-'.date('m').'-'.(int)date('d'))
-                                  include(resource_path('views\sales\capacity\toDay.blade.php'));
+                                  include(resource_path('views/sales/capacity/toDay.blade.php'));
                               else
-                                  include(resource_path('views\sales\capacity\capacity.blade.php'));
+                                  include(resource_path('views/sales/capacity/capacity.blade.php'));
 
                               $flag = 1;
                               $i++;
                               continue;
                           }
                           else {
-                              include(resource_path('views\sales\capacity\prevMonth.blade.php'));
+                              include(resource_path('views/sales/capacity/prevMonth.blade.php'));
                           }
 
                       }
