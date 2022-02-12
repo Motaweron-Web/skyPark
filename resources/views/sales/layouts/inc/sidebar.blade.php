@@ -57,7 +57,7 @@
             </li>
             <!-- nav-item  -->
             <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#groupSale" class="nav-link " aria-controls="groupSale" role="button"
+                <a data-bs-toggle="collapse" href="#groupSale" class="nav-link " id="main-group" aria-controls="groupSale" role="button"
                    aria-expanded="false">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
@@ -68,15 +68,15 @@
                 <div class="collapse" id="groupSale">
                     <ul class="nav ms-4 ps-3">
 
-                        <li class="nav-item ">
-                            <a class="nav-link " href="{{route('reservations')}}">
+                        <li class="nav-item createReservation">
+                            <a class="nav-link createReservation" href="{{route('reservations.index')}}">
                                 <span class="sidenav-mini-icon"> R </span>
                                 <span class="sidenav-normal"> Reservations </span>
                             </a>
                         </li>
 
-                        <li class="nav-item ">
-                            <a class="nav-link " href="{{route('capacity')}}">
+                        <li class="nav-item capacity">
+                            <a class="nav-link capacity" href="{{route('capacity.index')}}?month={{date('Y-m')}}">
                                 <span class="sidenav-mini-icon"> C </span>
                                 <span class="sidenav-normal"> Capacity </span>
                             </a>

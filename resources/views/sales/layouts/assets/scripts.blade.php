@@ -20,4 +20,8 @@
     window.addEventListener("online",function (){
         toastr.success('Internet Connected')
     });
+    //for input number validation
+    $(document).on('keyup','.numbersOnly',function () {
+        this.value = this.value.replace(/[^0-9\.]/g,'');
+    });
 </script>

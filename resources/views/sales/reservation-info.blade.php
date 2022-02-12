@@ -1,6 +1,6 @@
-@extends('admin.layouts.master')
+@extends('sales.layouts.master')
 @section('page_title')
-Sky Park | Events
+Sky Park | Event Reservation
 @endsection
 @section('content')
       <h2 class="MainTiltle mb-5 ms-4"> Event Reservation </h2>
@@ -709,6 +709,9 @@ Sky Park | Events
 @endsection
 @section('js')
   <script>
+      $('#main-group').addClass('active')
+      $('.createReservation').addClass('active')
+      $('#groupSale').addClass('show')
     ////////////////////////////////////////////
     // choice Js
     ////////////////////////////////////////////

@@ -1,4 +1,4 @@
-@extends('admin.layouts.master')
+@extends('sales.layouts.master')
 @section('page_title')
     Sky Park | Reservations
 @endsection
@@ -17,7 +17,7 @@
                 </div>
               </div>
               <div class="col-sm-3 p-1">
-                <a href="{{route('capacity')}}" class="btn bg-gradient-primary w-100 p-3 text-white"> <i
+                <a href="{{route('capacity.index')}}?month={{date('Y-m')}}" class="btn bg-gradient-primary w-100 p-3 text-white"> <i
                     class="fal fa-plus-octagon fs-5 me-2 "></i> Add Reservation </a>
               </div>
             </div>
@@ -91,6 +91,9 @@
 @endsection
 @section('js')
   <script>
+      $('#main-group').addClass('active')
+      $('.createReservation').addClass('active')
+      $('#groupSale').addClass('show')
     ////////////////////////////////////////////
     // choice Js
     ////////////////////////////////////////////

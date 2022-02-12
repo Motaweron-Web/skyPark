@@ -22,16 +22,13 @@ Route::get('add-client', function () {
 })->name('add-client');
 
 Route::get('ticket', function () {
-    return view('admin.ticket');
+    return view('sales.ticket');
 })->name('ticket');
 
 Route::get('family-access', function () {
     return view('admin.family-access');
 })->name('family-access');
 
-Route::get('reservations', function () {
-    return view('admin.reservations');
-})->name('reservations');
 
 Route::get('capacity', function () {
     return view('admin.capacity');
@@ -61,3 +58,5 @@ Route::group(['middleware'=>'auth','namespace'=>'Sales'],function(){
     require __DIR__.'/sales/CRUD.php';
 
 });
+
+Route::get('creatCapacity','Sales\HomeController@creatCapacity');

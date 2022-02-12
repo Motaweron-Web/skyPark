@@ -1,4 +1,4 @@
-@extends('admin.layouts.master')
+@extends('sales.layouts.master')
 @section('page_title')
 Sky Park | Ticket
 @endsection
@@ -312,64 +312,7 @@ Sky Park | Ticket
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>Kid</td>
-                            <td>80 EGP</td>
-                            <td><input type="text" class="form-control" placeholder="Name"></td>
-                            <td><input type="date" class="form-control"></td>
-                            <td>
-                              <div class="choose">
-                                <div class="genderOption">
-                                  <input type="radio" class="btn-check" name="gender" id="option1">
-                                  <label class=" mb-0 btn btn-outline" for="option1">
-                                    <span> <i class="fas fa-male"></i> </span>
-                                  </label>
-                                </div>
-                                <div class="genderOption">
-                                  <input type="radio" class="btn-check" name="gender" id="option2">
-                                  <label class=" mb-0 btn btn-outline" for="option2">
-                                    <span> <i class="fas fa-female"></i> </span>
-                                    <!-- <span> female </span> -->
-                                  </label>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              <span class="controlIcons">
-                                <span class="icon" data-bs-toggle="tooltip" title="Delete"> <i
-                                    class="far fa-trash-alt"></i> </span>
-                              </span>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Kid</td>
-                            <td>80 EGP</td>
-                            <td><input type="text" class="form-control" placeholder="Name"></td>
-                            <td><input type="date" class="form-control"></td>
-                            <td>
-                              <div class="choose">
-                                <div class="genderOption">
-                                  <input type="radio" class="btn-check" name="gender2" id="option11">
-                                  <label class=" mb-0 btn btn-outline" for="option11">
-                                    <span> <i class="fas fa-male"></i> </span>
-                                  </label>
-                                </div>
-                                <div class="genderOption">
-                                  <input type="radio" class="btn-check" name="gender2" id="option21">
-                                  <label class=" mb-0 btn btn-outline" for="option21">
-                                    <span> <i class="fas fa-female"></i> </span>
-                                    <!-- <span> female </span> -->
-                                  </label>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              <span class="controlIcons">
-                                <span class="icon" data-bs-toggle="tooltip" title="Delete"> <i
-                                    class="far fa-trash-alt"></i> </span>
-                              </span>
-                            </td>
-                          </tr>
+
                         </tbody>
                       </table>
                     </div>
@@ -750,7 +693,7 @@ Sky Park | Ticket
       </div>
 @endsection
 @section('js')
-    <script type="text/javascript" src="{{asset('admin')}}/js/plugins/multistep-form.js"></script>
+    <script type="text/javascript" src="{{asset('assets/admin')}}/js/plugins/multistep-form.js"></script>
     <script>
         ////////////////////////////////////////////
         // choice Js

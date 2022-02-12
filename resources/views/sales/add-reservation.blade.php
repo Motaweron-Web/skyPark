@@ -1,51 +1,51 @@
-@extends('admin.layouts.master')
+@extends('sales.layouts.master')
 @section('page_title')
     Sky Park | Add Reservation
 @endsection
 @section('content')
       <h2 class="MainTiltle mb-5 ms-4"> Add Reservation </h2>
 
-      <form  action="reservation-info.html" class="card p-2 py-4 mt-3 ">
-        <div class="row">
+      <form  action="{{route('reservations.store')}}" method="POST" enctype="multipart/form-data" id="Form" class="card p-2 py-4 mt-3 ">
+          @csrf
+          <input type="hidden" name="day" value="{{$date}}">
+          <div class="row">
           <div class="col-sm-6 p-2">
             <label class="form-label"> <i class="fas fa-fire me-1"></i> Reservation Type </label>
-            <select class="form-control" id="choices-Reservation">
-              <option value="Event">Event</option>
-              <option value="Birthday">Birthday</option>
-              <option value="School">School</option>
-              <option value="Corporate">Corporate</option>
+            <select class="form-control" name="event_id" id="choices-Reservation">
+                <option value="" disabled selected>Choose the Reservation Type </option>
+                {!! optionForEach($events,'id','title') !!}
             </select>
           </div>
           <div class="col-sm-6 p-2">
             <label class="form-label"> <i class="fas fa-user me-1"></i> Client Name</label>
             <div class="input-group">
-              <input class="form-control" type="text" placeholder="Type here...">
+              <input class="form-control" type="text" name="client_name" placeholder="Type here...">
             </div>
           </div>
           <div class="col-sm-6 p-2">
             <label class="form-label"> <i class="fas fa-envelope me-1"></i> Email</label>
             <div class="input-group">
-              <input class="form-control" type="email" placeholder="Type here...">
+              <input class="form-control" type="email" name="email" placeholder="Type here...">
             </div>
           </div>
           <div class="col-sm-6 p-2">
             <label class="form-label"><i class="fas fa-phone-square me-1"></i> Phone</label>
             <div class="input-group">
-              <input class="form-control" type="number" placeholder="Type here...">
+              <input class="form-control numbersOnly" type="text" name="phone" placeholder="Type here...">
             </div>
           </div>
           <div class="col-sm-4 p-2">
             <label class="form-label "><i class="fas fa-venus-mars me-1"></i> gender</label>
             <div class="choose">
               <div class="genderOption">
-                <input type="radio" class="btn-check" name="gender" id="option1">
+                <input type="radio" class="btn-check" name="gender" value="male" id="option1">
                 <label class=" mb-0 btn btn-outline" for="option1">
                   <span class="me-2"> <i class="fas fa-male"></i> </span>
                   <span> male </span>
                 </label>
               </div>
               <div class="genderOption">
-                <input type="radio" class="btn-check" name="gender" id="option2">
+                <input type="radio" class="btn-check" name="gender" value="female" id="option2">
                 <label class=" mb-0 btn btn-outline" for="option2">
                   <span class="me-2"> <i class="fas fa-female"></i> </span>
                   <span> female </span>
@@ -55,55 +55,52 @@
           </div>
           <div class="col-sm-4 p-2">
             <label class="form-label"> <i class="fas fa-flag me-1"></i> Governorate </label>
-            <select class="form-control" id="choices-governorate">
-              <option value="Alexandria">Alexandria</option>
-              <option value="Aswan">Aswan</option>
-              <option value="Cairo">Cairo</option>
+            <select class="form-control" name="gov_id" id="choices-governorate">
+                <option value="" disabled selected>Choose the Governorate </option>
+                {!! optionForEach($governorates,'id','title') !!}
             </select>
           </div>
           <div class="col-sm-4 p-2">
             <label class="form-label"> <i class="fas fa-city me-1"></i> City </label>
-            <select class="form-control" id="choices-city">
-              <option value="El Nozha	">El Nozha </option>
-              <option value="Abdeen">Abdeen</option>
-              <option value="Ain Shams">Ain Shams</option>
+            <select class="form-control" name="city_id" id="choices-city">
+                <option value="" disabled selected>Choose the Governorate </option>
             </select>
           </div>
 
-          <div class="col-12 p-2">
+          <div class="col-12 p-2" id="BirthdayInfo" style="display:none;">
             <label class="form-label"> <i class="fas fa-birthday-cake me-1"></i> Birthday Info </label>
             <div class="BirthdayInfo" >
               <div class="row ">
                 <div class="col-sm-4 p-2">
                   <label class="form-label"> <i class="fas fa-user me-1"></i> Name</label>
                   <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Type here...">
+                    <input class="form-control" name="name" type="text" placeholder="Type here...">
                   </div>
                 </div>
                 <div class="col-sm-4 p-2">
                   <label class="form-label"> <i class="fas fa-envelope me-1"></i> Email</label>
                   <div class="input-group">
-                    <input class="form-control" type="email" placeholder="Type here...">
+                    <input class="form-control" type="email" name="email_" placeholder="Type here...">
                   </div>
                 </div>
                 <div class="col-sm-4 p-2">
                   <label class="form-label"><i class="fas fa-phone-square me-1"></i> Phone</label>
                   <div class="input-group">
-                    <input class="form-control" type="number" placeholder="Type here...">
+                    <input class="form-control numbersOnly" type="text" name="phone_" placeholder="Type here...">
                   </div>
                 </div>
                 <div class="col-sm-6 p-2">
                   <label class="form-label "><i class="fas fa-venus-mars me-1"></i> gender</label>
                   <div class="choose">
                     <div class="genderOption">
-                      <input type="radio" class="btn-check" name="AdminGender" id="Gender1">
+                      <input type="radio" class="btn-check" name="gender_" value="male" id="Gender1">
                       <label class=" mb-0 btn btn-outline" for="Gender1">
                         <span class="me-2"> <i class="fas fa-male"></i> </span>
                         <span> male </span>
                       </label>
                     </div>
                     <div class="genderOption">
-                      <input type="radio" class="btn-check" name="AdminGender" id="Gender2">
+                      <input type="radio" class="btn-check" name="gender_" value="female" id="Gender2">
                       <label class=" mb-0 btn btn-outline" for="Gender2">
                         <span class="me-2"> <i class="fas fa-female"></i> </span>
                         <span> female </span>
@@ -126,7 +123,11 @@
 @endsection
 @section('js')
   <script>
-    ////////////////////////////////////////////
+      $('#main-group').addClass('active')
+      $('.createReservation').addClass('active')
+      $('#groupSale').addClass('show')
+
+      ////////////////////////////////////////////
     // choice Js
     ////////////////////////////////////////////
     if (document.getElementsByClassName('choices-Reservation')) {
@@ -139,29 +140,99 @@
       var element = document.getElementById('choices-governorate');
       const options = new Choices(element);
     }
-    if (document.getElementById('choices-city')) {
-      var element = document.getElementById('choices-city');
-      const options = new Choices(element);
-    }
+    // if (document.getElementById('choices-city')) {
+    //   var element = document.getElementById('choices-city');
+    //   const options = new Choices(element);
+    // }
     if (document.getElementById('choices-reference')) {
       var element = document.getElementById('choices-reference');
       const options = new Choices(element, {
         searchEnabled: false
       });
     }
-  </script>
-  <script>
-    $(document).ready(function () {
-      var table = $('.customDataTable').DataTable({
-        responsive: true,
-        // "ordering": true,
-        // columnDefs: [{
-        //   'targets': [4, 5],
-        //   'orderable': false
-        // }, ]
+    var governorates = JSON.parse('<?php echo json_encode($governorates) ?>')
+
+    $(document).on('change','#choices-governorate',function () {
+        var id = $(this).val();
+        var governorate = governorates.filter(oneObject => oneObject.id == id)
+        if (governorate.length > 0){
+            var cities = governorate[0].cities
+
+            $('#choices-city').html('<option value="">Choose the city</option>')
+
+            $.each(cities, function(index){
+                console.log(cities[index].title)
+                $('#choices-city').append('<option value="'+cities[index].id+'">'+cities[index].title+'</option>')
+            })
+        }
+    })
+
+      $(document).on('change','#choices-Reservation',function () {
+          var id = $(this).val();
+          if (id == 1){
+              $('#BirthdayInfo').show();
+          }else {
+              $('#BirthdayInfo').hide();
+
+          }
+      })
+
+      $("form#Form").submit(function(e) {
+          e.preventDefault();
+          var formData = new FormData(this);
+          var url = $('#Form').attr('action');
+          $.ajax({
+              url:url,
+              type: 'POST',
+              data: formData,
+              beforeSend: function(){
+                  $('.spinner').show()
+              },
+              complete: function(){
+                  setTimeout(function (){
+                      $('.spinner').hide()
+                  },200)
+              },
+              success: function (data) {
+
+
+                  setTimeout(function (){
+                      toastr.success('saved successfully');
+                  },250)
+
+                      window.setTimeout(function() {
+                          window.location.href= data.url;
+                      }, 700);
+
+
+              },
+              error: function (data) {
+                  if (data.status === 500) {
+                      toastr.error('there is an error');
+                  }
+                  else if (data.status === 422) {
+                      var errors = $.parseJSON(data.responseText);
+                      $.each(errors, function (key, value) {
+                          if ($.isPlainObject(value)) {
+                              $.each(value, function (key, value) {
+                                  toastr.error(value,key);
+                              });
+
+                          } else {
+                          }
+                      });
+                  }else {
+
+                      toastr.error('there in an error');
+                  }
+              },//end error method
+
+              cache: false,
+              contentType: false,
+              processData: false
+          });
       });
-      new $.fn.dataTable.FixedHeader(table);
-    });
+
   </script>
 @endsection
 

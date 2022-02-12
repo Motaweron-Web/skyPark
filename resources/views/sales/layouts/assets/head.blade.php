@@ -16,5 +16,14 @@
     background-color: #eee;
 
 }
+.toDay {
+    background-color: #eee7 !important;
+    -webkit-box-shadow: 0px 10px 30px #00000030;
+    box-shadow: 0px 10px 30px #00000030;
+    /* -webkit-transform: scale(1.02); */
+    transform: scale(1.02);
+    z-index: 2;
+    border: 1px solid gray !important;
+}
 </style>
 @toastr_css

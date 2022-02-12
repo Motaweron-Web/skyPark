@@ -2,7 +2,7 @@
 
 use App\Models\CountrySetting;
 use App\Models\Department;
-use App\Models\Setting;
+use App\Models\GeneralSetting;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -255,76 +255,12 @@ if (!function_exists('right_redirect')) {
 // ----------------------------- site text ------------------------------------
 
 
-if (!function_exists('country_setting')) {
-    function country_setting()
-    {
-        $country_settings = \App\Models\CountrySetting::all();
-        return $country_settings;
-    }
-}
 
-if (!function_exists('country_currency')) {
-    function country_currency( $code = '' )
-    {
-        $country = \App\Models\CountrySetting::where('code',$code )->first();
-        return $country ? $country->country_setting_trans_fk->currency : "#";
-    }
-}
 
-if (!function_exists('get_country_setting')) {
-    function get_country_setting( $code = '' )
+if (!function_exists('generalSetting')) {
+    function generalSetting()
     {
-        $country = \App\Models\CountrySetting::where('code',$code )->first();
-        return $country;
-    }
-}
-
-if (!function_exists('get_country_setting_name')) {
-    function get_country_setting_name( $code = '' )
-    {
-        $country = \App\Models\CountrySetting::where('code',$code )->first();
-        return $country->country_setting_trans_fk ? $country->country_setting_trans_fk->title : null;
-    }
-}
-
-if (!function_exists('get_country_setting_name_by_phone_code')) {
-    function get_country_setting_name_by_phone_code( $phone_code = '' )
-    {
-        $country = \App\Models\CountrySetting::where('phone_code',$phone_code )->first();
-        return $country->country_setting_trans_fk ? $country->country_setting_trans_fk->title : null;
-    }
-}
-
-if (!function_exists('get_country_code_by_phone_code')) {
-    function get_country_code_by_phone_code( $phone_code = '' )
-    {
-        $country = \App\Models\CountrySetting::where('phone_code',$phone_code )->first();
-        return $country->code;
-    }
-}
-
-if (!function_exists('setting')) {
-    function setting()
-    {
-        $all_setting       = [];
-        foreach (Setting::all() as $setting)
-        {
-            $all_setting[$setting->key_word] = $setting->value;
-        }
-        return (object)$all_setting;
-    }
-}
-
-if (!function_exists('setting_by_keyword')) {
-    function setting_by_keyword( $keyword = '')
-    {
-        $all_setting       = [];
-        foreach (Setting::all() as $setting)
-        {
-            $all_setting[$setting->key_word] = $setting->value;
-        }
-        $all_setting = (object)$all_setting;
-        return isset( $all_setting->$keyword ) ? $all_setting->$keyword : null;
+      return GeneralSetting::first();
     }
 }
 

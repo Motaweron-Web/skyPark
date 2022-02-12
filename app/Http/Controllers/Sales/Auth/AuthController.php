@@ -25,6 +25,7 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function login(Request $request){
+
         $data = $request->validate([
             'user_name'=>'required|exists:users',
             'password'=>'required'

@@ -1,4 +1,4 @@
-@extends('admin.layouts.master')
+@extends('sales.layouts.master')
 @section('page_title')
     Sky Park | Capacity
 @endsection
@@ -11,203 +11,159 @@
             <div class="calendar">
               <div class="row justify-content-between align-items-end">
                 <div class="col text-center text-sm-start">
-                  <button class="btn btn-success"> today </button>
+                    <button data-href="{{route('capacity.anotherMonth.index')}}?month={{date('Y-m')}}" class="btn btn-success anotherMonth"> today </button>
                 </div>
                 <div class="col">
                   <div class="months justify-content-center justify-content-lg-end">
-                    <button class=" icon prev"> <i class="fad fa-chevron-left"></i> </button>
-                    <p> 2022 <span> october </span> </p>
-                    <button class=" icon next"> <i class="fad fa-chevron-right"></i> </button>
+                    <button   data-href="{{route('capacity.anotherMonth.index')}}?month={{date('Y-m',strtotime('-1 month',strtotime($year.'-'.$month.'-'.'01')))}}"
+                             class="anotherMonth icon prev"> <i class="fad fa-chevron-left"></i> </button>
+                    <p> {{$year}} <span> {{date("F", strtotime($year.'-'.$month.'-01'))}} </span> </p>
+                    <button data-href="{{route('capacity.anotherMonth.index')}}?month={{date('Y-m',strtotime('+1 month',strtotime($year.'-'.$month.'-'.'01')))}}"
+                            class="anotherMonth icon next"> <i class="fad fa-chevron-right"></i> </button>
                   </div>
                 </div>
               </div>
               <div class="calendarHead">
-                <div class="day">Sat</div>
-                <div class="day">Sun</div>
-                <div class="day">Mon</div>
-                <div class="day">Tue</div>
-                <div class="day">Wed</div>
-                <div class="day">Thu</div>
-                <div class="day">Fri</div>
+                  <div class="day">Sun</div>
+                  <div class="day">Mon</div>
+                  <div class="day">Tue</div>
+                  <div class="day">Wed</div>
+                  <div class="day">Thu</div>
+                  <div class="day">Fri</div>
+                  <div class="day">Sat</div>
               </div>
               <div class="calendarBody">
-                <div class="day prevMonth">
-                  <span class="num"> 28</span>
-                </div>
-                <div class="day prevMonth">
-                  <span class="num"> 29</span>
-                </div>
-                <div class="day prevMonth">
-                  <span class="num"> 30</span>
-                </div>
-                <div class="day">
-                  <span class="num"> 01</span>
-                </div>
-                <div class="day">
-                  <span class="num"> 02</span>
-                </div>
-                <div class="day">
-                  <span class="num"> 03</span>
-                </div>
-                <div class="day">
-                  <span class="num"> 04</span>
-                </div>
-                <div class="day">
-                  <span class="num"> 05</span>
-                </div>
-                <div class="day">
-                  <span class="num"> 06</span>
-                  <div class="events">
-                    <div class="event"> <span class="icon"> <i class="fad fa-bus-school"></i> </span></div>
-                    <div class="event"> <span class="icon"> <i class="fas fa-city"></i> </span></div>
-                  </div>
-                  <div class="capacityContainer">
-                    <div class="capacityPercentage" style="width: 20%;">
-                    </div>
-                  </div>
-                </div>
-                <div class="day">
-                  <span class="num"> 07</span>
-                </div>
-                <div class="day">
-                  <span class="num"> 08</span>
-                </div>
-                <div class="day">
-                  <span class="num"> 09</span>
-                </div>
-                <div class="day">
-                  <span class="num"> 10</span>
-                </div>
-                <div class="day">
-                  <span class="num"> 11</span>
-                </div>
-                <div class="day">
-                  <span class="num"> 12</span>
-                </div>
-                <div class="day">
-                  <span class="num"> 13</span>
-                </div>
-                <div class="day">
-                  <span class="num"> 14</span>
-                </div>
-                <div class="day">
-                  <span class="num"> 15</span>
-                  <div class="events">
-                    <div class="event"> <span class="icon"> <i class="fad fa-bus-school"></i> </span></div>
-                    <div class="event"> <span class="icon"> <i class="fas fa-birthday-cake"></i> </span></div>
-                  </div>
-                  <div class="capacityContainer">
-                    <div class="capacityPercentage" style="width: 30%;">
-                    </div>
-                  </div>
-                </div>
-                <div class="day">
-                  <span class="num"> 16</span>
-                </div>
-                <div class="day">
-                  <span class="num"> 17</span>
-                </div>
-                <div class="day active">
-                  <span class="num"> 18</span>
-                  <div class="events">
-                    <div class="event"> <span class="icon"> <i class="fad fa-bus-school"></i> </span></div>
-                    <div class="event"> <span class="icon"> <i class="fas fa-fire-alt"></i> </span></div>
-                    <div class="event"> <span class="icon"> <i class="fas fa-birthday-cake"></i> </span></div>
-                    <div class="event"> <span class="icon"> <i class="fas fa-city"></i> </span></div>
 
-                  </div>
-                  <div class="capacityContainer">
-                    <div class="capacityPercentage" style="width: 60%;">
-                    </div>
-                  </div>
-                </div>
-                <div class="day">
-                  <span class="num"> 19</span>
-                </div>
-                <div class="day">
-                  <span class="num"> 20</span>
-                </div>
-                <div class="day">
-                  <span class="num"> 21</span>
-                </div>
-                <div class="day">
-                  <span class="num"> 22</span>
-                </div>
-                <div class="day">
-                  <span class="num"> 23</span>
-                </div>
-                <div class="day">
-                  <span class="num"> 24</span>
-                </div>
-                <div class="day">
-                  <span class="num"> 25</span>
-                </div>
-                <div class="day">
-                  <span class="num"> 26</span>
-                </div>
-                <div class="day">
-                  <span class="num"> 27</span>
-                </div>
-                <div class="day">
-                  <span class="num"> 28</span>
-                </div>
-                <div class="day">
-                  <span class="num"> 29</span>
-                </div>
-                <div class="day">
-                  <span class="num"> 30</span>
-                </div>
-                <div class="day">
-                  <span class="num"> 31</span>
-                </div>
-                <div class="day prevMonth">
-                  <span class="num"> 1 </span>
-                </div>
+                  <?php
+                  $i = 1;
+                  $flag = 0;
+                  while ($i <= $number_of_day) {
+                      for($j=1 ; $j<=7 ; $j++){
+                          if($i > $number_of_day)
+                              break;
+
+                          if($flag) {
+                              if ($year . '-' . $month . '-' . $i == date('Y') . '-' . date('m') . '-' . (int)date('d'))
+                                  include(resource_path('views\sales\capacity\toDay.blade.php'));
+                              else
+                                  include(resource_path('views\sales\capacity\capacity.blade.php'));
+
+                              $i++;
+                          }elseif($j == $start_day){
+                              if($year.'-'.$month.'-'.$i == date('Y').'-'.date('m').'-'.(int)date('d'))
+                                  include(resource_path('views\sales\capacity\toDay.blade.php'));
+                              else
+                                  include(resource_path('views\sales\capacity\capacity.blade.php'));
+
+                              $flag = 1;
+                              $i++;
+                              continue;
+                          }
+                          else {
+                              include(resource_path('views\sales\capacity\prevMonth.blade.php'));
+                          }
+
+                      }
+                  }
+                  ?>
+
+
 
               </div>
             </div>
           </div>
           <div class="col-lg-3 p-2">
+              <div id="loadDay">
 
-            <div class="dayDetails bg-gradient-primary">
-
-              <h1 class="dateNum"> 18 </h1>
-              <p class="dateName"> Friday </p>
-
-
-                <div class="capacityInfo">
-                  <h4>Capacity <span> ( 900 : 1250 ) </span></h4>
-                  <div class="capacityValue">80%</div>
-                  <div class="capacityContainer" >
-                    <div class="capacityPercentage" style="width: 80%;"></div>
-                  </div>
-                </div>
-
-
-              <div class="details">
-                <h6 class="title"> current events :</h6>
-                <div class="event"> <span class="icon"> <i class="fad fa-bus-school"></i> </span>
-                  <p> Elnahda school </p>
-                </div>
-                <div class="event"> <span class="icon"> <i class="fas fa-fire-alt"></i> </span>
-                  <p> mostafa saeed </p>
-                </div>
-                <div class="event"> <span class="icon"> <i class="fas fa-birthday-cake"></i> </span>
-                  <p> ahmed tarek </p>
-                </div>
-                <div class="event"> <span class="icon"> <i class="fas fa-city"></i> </span>
-                <p> Elmotweron Company </p>
-                </div>
               </div>
-              <a href="{{route('add-reservation')}}" class="btn btn-white w-100"> <i class="fal fa-plus-octagon fs-5 me-2"></i> Add Reservation             </a>
-
-            </div>
-
-
-
           </div>
 
         </div>
       </div>
 @endsection
 
+
+@section('js')
+    <script>
+
+        $('#main-group').addClass('active')
+        $('.capacity').addClass('active')
+        $('#groupSale').addClass('show')
+        loadDay("{{date('Y-m-d')}}")
+
+        $(document).on('click','.anotherMonth',function (e) {
+            e.preventDefault();
+             var url = $(this).data('href')
+            console.log(url)
+            $.ajax({
+                url:url,
+                type: 'GET',
+                beforeSend: function(){
+                    $('.spinner').show()
+                },
+                complete: function(){
+
+
+                },
+                success: function (data) {
+                    if (data.status == 200){
+                        console.log(data.html)
+                        $('.calendar').html(data.html)
+                        var newurl = data.url;
+                        window.history.pushState({path:newurl},'',newurl);
+                    }else {
+                        window.location = "{{route('capacity.index')}}?month={{date('Y-m')}}"
+                    }
+
+                    setTimeout(function () {
+                        $('.spinner').hide()
+                    })
+
+                },
+                error: function (data) {
+                    if (data.status === 500) {
+                        toastr.error('there in an error');
+                    }else {
+
+                        toastr.error('there in an error');
+                    }
+                },//end error method
+
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+
+        })
+
+        $(document).on('click','.getData',function (e) {
+            e.preventDefault();
+            var date = $(this).data('date');
+            console.log(date);
+            loadDay(date)
+        });
+
+        function loadDay(date) {
+            var url = "{{route('capacity.show',':id')}}";
+            url = url.replace(':id',date)
+
+            $('.spinner').show()
+
+            $("#loadDay").load(url,function(){
+                    $('.spinner').hide()
+            });
+
+            $('.day').removeClass('active')
+            $('.'+date).addClass('active')
+            $('.{{date('Y-m-d')}}').addClass('toDay')
+
+
+            if (date == "{{date('Y-m-d')}}"){
+                $('.{{date('Y-m-d')}}').removeClass('toDay')
+            }
+
+
+        }
+
+    </script>
+@endsection
