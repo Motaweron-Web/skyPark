@@ -13,7 +13,7 @@
     </div>
 
 
-    <div class="details" style="height:300px;overflow-y: scroll">
+    <div class="details" style="height:300px;overflow-y: auto">
         <h6 class="title"> current events :</h6>
 
         @foreach($reservations as $reservation)
@@ -22,7 +22,7 @@
         </div>
         @endforeach
     </div>
-    @if(date('Y-m-d') <= $date)
+    @if(date('Y-m-d') <= $date && $countDay < $countOfTheDay)
     <a href="{{route('reservations.create')}}?day={{base64_encode(strtotime($date))}}" class="btn btn-white w-100"> <i class="fal fa-plus-octagon fs-5 me-2"></i> Add Reservation             </a>
     @endif
 </div>

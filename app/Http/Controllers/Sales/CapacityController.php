@@ -131,7 +131,6 @@ class CapacityController extends Controller
         $percent = ($countDay / $countOfTheDay) * 100;
         ////////////////////////////////////// حساب النسبة //////////////////////////////
 
-
         session()->put('activeDate',$date);
         return view('sales.capacity.loadDay',compact('date','countOfTheDay','countDay','percent','reservations'));
     }

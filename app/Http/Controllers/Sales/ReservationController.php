@@ -7,6 +7,8 @@ use App\Models\Event;
 use App\Models\Governorate;
 use App\Models\Reservations;
 use App\Models\ReservationsBirthDayInfo;
+use App\Models\Shifts;
+use App\Models\VisitorTypes;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -118,7 +120,16 @@ class ReservationController extends Controller
     public function edit($id)
     {
         $id = base64_decode($id)/555;
-        return view('sales.reservation-info');
+
+        $reservation = Reservations::findOrFail($id);
+        $customId = strtoupper(date('D').$id.'Re'.substr(time(), -2));
+
+        $shifts = Shifts::latest()->get();
+
+        $visitorTypes = VisitorTypes::latest()->get();
+
+
+        return view('sales.reservation-info',compact('id','customId','shifts','visitorTypes'));
     }
 
     /**
