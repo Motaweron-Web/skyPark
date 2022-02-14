@@ -129,7 +129,7 @@ class ReservationController extends Controller
         $visitorTypes = VisitorTypes::latest()->get();
 
 
-        return view('sales.reservation-info',compact('id','customId','shifts','visitorTypes'));
+        return view('sales.reservation-info',compact('id','reservation','customId','shifts','visitorTypes'));
     }
 
     /**

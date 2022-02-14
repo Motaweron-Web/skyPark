@@ -9,31 +9,35 @@ Sky Park | Event Reservation
         <form  action="{{route('reservations.update',$id)}}" method="POST" enctype="multipart/form-data" class="row">
           @csrf
             @method('PUT')
+            <input type="hidden" id="visit_date" name="visit_date" value="{{$reservation->day}}">
             <div class="col-lg-9 p-1 ">
             <div class="multisteps-form__progress mb-5">
-              <button type="button" class="multisteps-form__progress-btn js-active" title="ReservationInfo"> Reservation Info </button>
-              <button type="button" class="multisteps-form__progress-btn" title="visitors"> visitors</button>
-              <button type="button" class="multisteps-form__progress-btn" title="products"> products</button>
-              <button type="button" class="multisteps-form__progress-btn" title="payment"> payment</button>
+              <button type="button" class="multisteps-form__progress-btn ReservationInfo-multisteps-form__progress-btn js-active" title="ReservationInfo"> Reservation Info </button>
+              <button type="button" class="multisteps-form__progress-btn visitors-multisteps-form__progress-btn" title="visitors"> visitors</button>
+              <button type="button" class="multisteps-form__progress-btn products-multisteps-form__progress-btn" title="products"> products</button>
+              <button type="button" class="multisteps-form__progress-btn payment-multisteps-form__progress-btn" title="payment"> payment</button>
             </div>
             <div class="multisteps-form__form mb-2">
               <!-- step 1 -->
-              <div class="card multisteps-form__panel p-3 border-radius-xl bg-white js-active" data-animation="FadeIn">
+              <div class="card multisteps-form__panel ReservationInfo-multisteps-form__panel p-3 border-radius-xl bg-white js-active" validate="true" data-animation="FadeIn">
                 <h5 class="font-weight-bolder">Reservation Info</h5>
                 <div class="multisteps-form__content">
                   <div class="row mt-3">
                     <div class="col-sm-6 p-2">
                       <label>Reservation Duration (h) </label>
-                      <input class="form-control numbersOnly" id="hours_count" name="hours_count" type="text" placeholder="Reservation Duration (h)"/>
+                      <input class="form-control form-input numbersOnly calculateHourPrice" data-validate="required" id="hours_count"  name="hours_count" type="text" placeholder="Reservation Duration (h)"/>
+                        <span style="color:red;display:none">You shall not pass!</span>
                     </div>
                     <div class="col-sm-6 p-2">
                       <label class="form-label"> shift </label>
-                      <select class="form-control"  id="choices-shift">
-                        <option value="">Choose the Shift</option>
+                      <select class="form-control form-input calculateHourPrice"  data-validate="required"  id="choices-shift">
+                        <option value="" selected disabled>Choose the Shift</option>
                           @foreach($shifts as $shift)
-                              <option value="{{$shift->id}}">{{$shift->from . ' : ' . $shift->to}}  </option>
+                              <option value="{{$shift->id}}">{{date('h:i A',strtotime($shift->from)) . ' : ' . date('h:i A',strtotime($shift->to))}}  </option>
                           @endforeach
                       </select>
+                        <span style="color:red;display:none"></span>
+
                     </div>
                     <div class="col-sm-12 p-2">
                       <label class="form-label"> <i class="fas fa-feather-alt me-1"></i> Note </label>
@@ -41,25 +45,17 @@ Sky Park | Event Reservation
                     </div>
                   </div>
                   <div class="button-row d-flex mt-4">
-                    <button class="btn bg-gradient-dark ms-auto mb-0 js-btn-next" type="button">Next</button>
+                    <button class="btn bg-gradient-dark ms-auto mb-0 js-btn-next" data-title="visitors" data-active="ReservationInfo" type="button">Next</button>
                   </div>
                 </div>
               </div>
               <!-- step 2 -->
-              <div class="card multisteps-form__panel p-3 border-radius-xl bg-white " data-animation="FadeIn">
+              <div class="card multisteps-form__panel visitors-multisteps-form__panel p-3 border-radius-xl bg-white " data-animation="FadeIn">
                 <h5 class="font-weight-bolder">visitors</h5>
                 <div class="multisteps-form__content">
                   <div class="row mt-3">
                     <!-- visitor Type  -->
                     <div class="col-12 p-2">
-{{--                      <div class="visitorType">--}}
-{{--                          <span class="visitor"> toddler </span>--}}
-{{--                        <span class="count">12</span>--}}
-{{--                      </div>--}}
-{{--                      <div class="visitorType">--}}
-{{--                        <span class="visitor"> Kid </span>--}}
-{{--                        <span class="count">1</span>--}}
-{{--                      </div>--}}
                         @foreach($visitorTypes as $visitorType)
                       <div class="visitorType visitorType{{$visitorType->id}}" data-id="{{$visitorType->id}}">
                           <img src="{{get_file($visitorType->photo)}}">
@@ -120,13 +116,13 @@ Sky Park | Event Reservation
                     </div>
                   </div>
                   <div class="button-row d-flex mt-4">
-                    <button class="btn bg-gradient-secondary mb-0 js-btn-prev" type="button">Prev</button>
-                    <button class="btn bg-gradient-dark ms-auto mb-0 js-btn-next" type="button">Next</button>
+                    <button class="btn bg-gradient-secondary mb-0 js-btn-prev" data-title="ReservationInfo" data-active="visitors" type="button">Prev</button>
+                    <button class="btn bg-gradient-dark ms-auto mb-0 js-btn-next" data-title="products" data-active="visitors" type="button">Next</button>
                   </div>
                 </div>
               </div>
               <!-- step 3 -->
-              <div class="card multisteps-form__panel p-3 border-radius-xl bg-white " data-animation="FadeIn">
+              <div class="card multisteps-form__panel products-multisteps-form__panel p-3 border-radius-xl bg-white " data-animation="FadeIn">
                 <h5 class="font-weight-bolder">products</h5>
                 <div class="multisteps-form__content">
                   <div class="row mt-3 align-items-end">
@@ -183,13 +179,13 @@ Sky Park | Event Reservation
                 </div>
                 <div class="row">
                   <div class="button-row d-flex mt-4">
-                    <button class="btn bg-gradient-secondary mb-0 js-btn-prev" type="button">Prev</button>
-                    <button class="btn bg-gradient-dark ms-auto mb-0 js-btn-next" type="button">Next</button>
+                    <button class="btn bg-gradient-secondary mb-0 js-btn-prev" data-title="visitors" data-active="products" type="button">Prev</button>
+                    <button class="btn bg-gradient-dark ms-auto mb-0 js-btn-next" data-title="payment" data-active="products"  type="button">Next</button>
                   </div>
                 </div>
               </div>
               <!-- step 4 -->
-              <div class="card multisteps-form__panel p-3 border-radius-xl bg-white " data-animation="FadeIn">
+              <div class="card multisteps-form__panel payment-multisteps-form__panel p-3 border-radius-xl bg-white " data-animation="FadeIn">
                 <h5 class="font-weight-bolder">payment</h5>
                 <div class="multisteps-form__content">
                   <div class="row   mt-3">
@@ -416,7 +412,7 @@ Sky Park | Event Reservation
                 </div>
                 <div class="row">
                   <div class="button-row d-flex mt-4 col-12">
-                    <button class="btn bg-gradient-secondary mb-0 js-btn-prev" type="button">Prev</button>
+                    <button class="btn bg-gradient-secondary mb-0 js-btn-prev" data-title="products"  data-active="payment" type="button">Prev</button>
                     <!-- <button class="btn bg-gradient-dark ms-auto mb-0" type="submit"> Confirm </button> -->
                   </div>
                 </div>
@@ -492,7 +488,7 @@ Sky Park | Event Reservation
       </div>
 @endsection
 @section('js')
-    <script type="text/javascript" src="{{asset('assets/admin')}}/js/plugins/multistep-form.js"></script>
+{{--    <script type="text/javascript" src="{{asset('assets/admin')}}/js/plugins/multistep-form.js"></script>--}}
 
     <script>
       $('#main-group').addClass('active')

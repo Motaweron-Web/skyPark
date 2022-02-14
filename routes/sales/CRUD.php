@@ -20,3 +20,10 @@ use Illuminate\Support\Facades\Route;
     Route::resource('reservations', 'ReservationController');
     Route::resource('capacity', 'CapacityController');
     Route::get('capacity-anotherMonth', 'CapacityController@anotherMonth')->name('capacity.anotherMonth.index');
+
+
+
+
+
+    //=========================== visitor Types Prices ============================
+    Route::get('visitorTypesPrices','VisitorTypesPricesController@visitorTypesPrices')->name('visitorTypesPrices');
