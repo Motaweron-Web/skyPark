@@ -1,225 +1,127 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="utf-8"/>
-    <title>لوحة التحكم | تسجيل الدخول</title>
-    <link href="https://fonts.googleapis.com/css?family=Cairo&display=swap" rel="stylesheet">
-    <style>
-        .toast-container {
-            float: left !important;
-        }
+    <title>Skypark | Admin</title>
 
-        html {
-            height: 100%;
-        }
+    @include('sales.layouts.assets.head')
+    @include('layouts.loader.mainLoader.loaderCss')
 
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Cairo', sans-serif;
-            background: linear-gradient(#141e30, #243b55);
-        }
-
-        .login-box {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 400px;
-            padding: 40px;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, .5);
-            box-sizing: border-box;
-            box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
-            border-radius: 10px;
-        }
-
-        .login-box h3 {
-            margin: 0 0 30px;
-            padding: 0;
-            color: #fff;
-            text-align: center;
-        }
-
-        .login-box .user-box {
-            position: relative;
-        }
-
-        .login-box .user-box input {
-            width: 100%;
-            padding: 10px 0;
-            font-size: 16px;
-            color: #fff;
-            margin-bottom: 30px;
-            border: none;
-            border-bottom: 1px solid #fff;
-            outline: none;
-            background: transparent;
-        }
-
-        .login-box .user-box label {
-            position: absolute;
-            top: 0;
-            left: 0;
-            padding: 10px 0;
-            font-size: 16px;
-            color: #fff;
-            pointer-events: none;
-            transition: .5s;
-        }
-
-        .login-box .user-box input:focus ~ label,
-        .login-box .user-box input:valid ~ label {
-            top: -20px;
-            left: 0;
-            color: #FFC05E;
-            font-size: 12px;
-        }
-
-        .login-box form button {
-            position: relative;
-            display: inline-block;
-            padding: 5px 20px;
-            color: #FFC05E;
-            font-size: 16px;
-            text-decoration: none;
-            text-transform: uppercase;
-            overflow: hidden;
-            background-color: transparent;
-            border: 0px;
-            transition: .5s;
-            font-family: 'Cairo',sans-serif;
-            margin-top: 40px;
-            letter-spacing: 1px
-        }
-
-        .login-box button:hover {
-            background: #FFC05E;
-            color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 1px #FFC05E, 0 0 1px #FFC05E, 0 0 20px #FFC05E, 0 0 100px #FFC05E;
-        }
-
-        .login-box button span {
-            position: absolute;
-            display: block;
-        }
-
-        .login-box button span:nth-child(1) {
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #FFC05E);
-            animation: btn-anim1 1s linear infinite;
-        }
-
-        @keyframes btn-anim1 {
-            0% {
-                left: -100%;
-            }
-            50%, 100% {
-                left: 100%;
-            }
-        }
-
-        .login-box button span:nth-child(2) {
-            top: -100%;
-            right: 0;
-            width: 2px;
-            height: 100%;
-            background: linear-gradient(180deg, transparent, #FFC05E);
-            animation: btn-anim2 1s linear infinite;
-            animation-delay: .25s
-        }
-
-        @keyframes btn-anim2 {
-            0% {
-                top: -100%;
-            }
-            50%, 100% {
-                top: 100%;
-            }
-        }
-
-        .login-box button span:nth-child(3) {
-            bottom: 0;
-            right: -100%;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(270deg, transparent, #FFC05E);
-            animation: btn-anim3 1s linear infinite;
-            animation-delay: .5s
-        }
-
-        @keyframes btn-anim3 {
-            0% {
-                right: -100%;
-            }
-            50%, 100% {
-                right: 100%;
-            }
-        }
-
-        .login-box button span:nth-child(4) {
-            bottom: -100%;
-            left: 0;
-            width: 2px;
-            height: 100%;
-            background: linear-gradient(360deg, transparent, #FFC05E);
-            animation: btn-anim4 1s linear infinite;
-            animation-delay: .75s
-        }
-
-        @keyframes btn-anim4 {
-            0% {
-                bottom: -100%;
-            }
-            50%, 100% {
-                bottom: 100%;
-            }
-        }
-        .error{
-            background-color: #dc3545!important;
-            text-align: center;
-            color: white;
-            max-width: 50%;
-            margin: auto;
-            border-radius: 20px;
-        }
-        .error p{
-            padding: 2px;
-        }
-    </style>
-    <link href="{{asset('uploads/logo.png')}}" rel="icon">
 </head>
-@if (\Session::has('error'))
-    <div class="error">
-        <p>{!! \Session::get('error') !!}</p>
+
+<body class="g-sidenav-show ">
+@include('layouts.loader.mainLoader.loader')
+<div class="page-header min-vh-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-lg-0 ">
+                <div class="card card-plain">
+                    <div class="card-header pb-0 text-start">
+                        <h2 class="font-weight-bolder mb-3">Admin Login</h2>
+                        <p class="mb-0">Enter your email and password to Login</p>
+                    </div>
+                    <div class="card-body">
+                        <form action="{{route('admin.login')}}" method="post" id="LoginForm" enctype="multipart/form-data">
+                            @csrf
+                            <div class="mb-3 ">
+                                <input type="text" class="form-control form-control-lg" name="email" placeholder="Email">
+                            </div>
+                            <div class="mb-3 ">
+                                <input type="password" class="form-control form-control-lg" name="password" placeholder="Password">
+                            </div>
+
+                            <div class="text-center ">
+                                <button type="submit" id="loginButton" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0"><i id="lockId" class="fa fa-lock" style="margin-left: 6px"></i> Login</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-6 d-md-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
+                <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center">
+                    <img src="{{asset('assets/sales/img/pattern-lines.svg')}}" alt="pattern-lines" class="position-absolute opacity-4 start-0">
+                    <div class="position-relative">
+                        <img class="max-width-500 w-100 position-relative z-index-2" src="{{asset('assets/sales/img/rocket-white.png')}}" alt="chat-img">
+                    </div>
+                    <h3 class="mt-5 text-white font-weight-bolder">" Welcome To Sky Park "</h3>
+                </div>
+            </div>
+        </div>
     </div>
-@endif
-<body>
-<div class="login-box">
-    <h3>
-        <img src="{{asset('uploads/logo.png')}}" style="height: 110px; width:110px"><br>
-    </h3>
-    <form method="POST" action="{{route('do-log')}}">
-        @csrf
-        <div class="user-box">
-            <input type="email" name="email" required autocomplete="off">
-            <label>Email</label>
-        </div>
-        <div class="user-box">
-            <input type="password" name="password" autocomplete="off" required>
-            <label>Password</label>
-        </div>
-        <button type="submit">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            Login
-        </button>
-    </form>
 </div>
+
+<!-- ================================================== -->
+<!-- ================================================== -->
+<!-- ================================================== -->
+<!-- ================== JS Files ====================== -->
+<!-- ================================================== -->
+<!-- ================================================== -->
+<!-- ================================================== -->
+@include('sales.layouts.assets.scripts')
+
+<script>
+    $("form#LoginForm").submit(function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        var url = $('#LoginForm').attr('action');
+        $.ajax({
+            url:url,
+            type: 'POST',
+            data: formData,
+            beforeSend: function(){
+                $('#loginButton').html('<span class="spinner-border spinner-border-sm mr-2" ' +
+                    ' ></span> <span style="margin-left: 4px;">working</span>').attr('disabled', true);
+
+            },
+            complete: function(){
+
+
+            },
+            success: function (data) {
+                if (data == 200){
+                    toastr.success('login successfully');
+                    window.setTimeout(function() {
+                        window.location.href='/';
+                    }, 1000);
+                }else {
+                    toastr.error('wrong password');
+                    $('#loginButton').html(`<i id="lockId" class="fa fa-lock" style="margin-left: 6px"></i> Login`).attr('disabled', false);
+                }
+
+            },
+            error: function (data) {
+                if (data.status === 500) {
+                    $('#loginButton').html(`<i id="lockId" class="fa fa-lock" style="margin-left: 6px"></i> Login`).attr('disabled', false);
+                    toastr.error('هناك خطأ ما');
+                }
+                else if (data.status === 422) {
+                    $('#loginButton').html(`<i id="lockId" class="fa fa-lock" style="margin-left: 6px"></i> Login`).attr('disabled', false);
+                    var errors = $.parseJSON(data.responseText);
+                    $.each(errors, function (key, value) {
+                        if ($.isPlainObject(value)) {
+                            $.each(value, function (key, value) {
+                                toastr.error(value,key);
+                            });
+
+                        } else {
+                        }
+                    });
+                }else {
+                    $('#loginButton').html(`<i id="lockId" class="fa fa-lock" style="margin-left: 6px"></i> Login`).attr('disabled', false);
+
+                    toastr.error('there in an error');
+                }
+            },//end error method
+
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+    });
+
+</script>
+
 </body>
+
 </html>

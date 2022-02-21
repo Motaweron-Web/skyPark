@@ -445,7 +445,7 @@
     </div>
 @endsection
 @section('js')
-    <script type="text/javascript" src="{{asset('assets/admin')}}/js/plugins/multistep-form.js"></script>
+    <script type="text/javascript" src="{{asset('assets/sales')}}/js/plugins/multistep-form.js"></script>
     @include('sales.layouts.assets.adjustDataTable')
     <script>
         $('form').on('submit', function(e) {

@@ -663,12 +663,18 @@ if (!function_exists('get_file')) {
         }else{
             return asset('assets/default/img/empty.png');
         }
-        return $image!=null?asset($image):asset('assets/default/img/empty.png');
+    }
+}
+
+if (!function_exists('loggedAdmin')) {
+    function loggedAdmin($field = null){
+        return auth()->guard('admin')->user()->$field;
     }
 }
 
 if (!function_exists('get_user_photo')) {
-    function get_user_photo($image) {
+    function get_user_photo($image): string
+    {
         if ($image!= null){
             if (!file_exists($image)){
                 return asset('assets/uploads/avatar.png');
@@ -676,7 +682,7 @@ if (!function_exists('get_user_photo')) {
                 return asset($image);
             }
         }else{
-            return asset('assets/default/img/avatar.png');
+            return asset('assets/uploads/avatar.png');
         }
     }
 }
