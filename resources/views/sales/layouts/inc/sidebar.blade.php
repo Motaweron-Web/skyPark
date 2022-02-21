@@ -82,8 +82,8 @@
                             </a>
                         </li>
 
-                        <li class="nav-item ">
-                            <a class="nav-link " href="{{route('group-access')}}">
+                        <li class="nav-item groupAccess">
+                            <a class="nav-link groupAccess" href="{{route('groupAccess.index')}}">
                                 <span class="sidenav-mini-icon"> G </span>
                                 <span class="sidenav-normal"> Group Access </span>
                             </a>
@@ -102,5 +102,6 @@
                 </a>
             </li>
         </ul>
-    </div></aside>
+    </div>
+</aside>
 <!-- ================================ end Side Nav ================== -->

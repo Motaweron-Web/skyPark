@@ -35,7 +35,7 @@ Route::get('capacity', function () {
 })->name('capacity');
 
 Route::get('group-access', function () {
-    return view('admin.group-access');
+    return view('sales.group-access');
 })->name('group-access');
 
 Route::get('exit', function () {

@@ -10,6 +10,11 @@ class TicketRevModel extends Model
     public function reservation()
     {
         return $this->belongsTo(Reservations::class,'rev_id');
+    }//end fun
+
+    public function type()
+    {
+        return $this->belongsTo(VisitorTypes::class,'visitor_type_id');
     }
 
 }//end class

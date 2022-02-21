@@ -18,20 +18,16 @@ class VisitorTypesPricesController extends Controller{
             'hours_count'   =>'required',
             'shift_id'      =>'required|exists:shifts,id|exists:shift_details,shift_id',
             ]);
-        $capacity     = (CapacityDays::where('day',$request->visit_date)->first()->count) ?? generalSetting()->capacity;
 
 
         $visitorTypes = VisitorTypes::latest()->get();
 
         $hoursCount = $request->hours_count;
         $newHoursCount = $request->hours_count;
-        $minHorse = 0;
 
         $shift = Shifts::findOrFail($request->shift_id);
         $shifts = [];
-        $prices = [];
         $pricesArray = [];
-        $searchHourArray = [];
         foreach($visitorTypes as $visitorType){
             $pricesArray[$visitorType->id] = 0;
         }

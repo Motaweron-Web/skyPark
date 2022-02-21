@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
   //==================================== Group ================================
     Route::resource('reservations', 'ReservationController');
     Route::resource('capacity', 'CapacityController');
+    Route::resource('groupAccess', 'GroupAccessController');
     Route::get('capacity-anotherMonth', 'CapacityController@anotherMonth')->name('capacity.anotherMonth.index');
 
 

@@ -535,6 +535,6 @@ Sky Park | Event Reservation
     });
   </script>
     {{--================= custom js ==================--}}
-    @include('sales.layouts.custom.reservationsJs')
+    @include('sales.layouts.customJs.reservationsJs')
 @endsection
 
