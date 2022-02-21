@@ -60,3 +60,8 @@ Route::group(['middleware'=>'auth','namespace'=>'Sales'],function(){
 });
 
 Route::get('creatCapacity','Sales\HomeController@creatCapacity');
+
+
+
+//================================ Admin Dashboard ====================================
+require __DIR__.'/admin.php';

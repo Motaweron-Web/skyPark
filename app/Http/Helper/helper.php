@@ -666,6 +666,13 @@ if (!function_exists('get_file')) {
         return $image!=null?asset($image):asset('assets/default/img/empty.png');
     }
 }
+
+//if (!function_exists('get_user_photo')) {
+//    function get_file($image) {
+//        return $image != null ? asset($image) : asset('assets/uploads/avatar.png');
+//    }
+//}
+
 if (!function_exists('optionForEach')) {
     function optionForEach($array=[] , $of,$name='' , $eq=''){
         $option = '';
