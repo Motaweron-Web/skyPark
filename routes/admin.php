@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix'=>'admin'],function (){
     Route::get('/home', function () {
-        return 1;
+        return view('Admin/index');
     });
 })
 
