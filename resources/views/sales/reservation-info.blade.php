@@ -515,18 +515,6 @@ Sky Park | Event Reservation
 
             // Prevent form submission
         } );
-
-    $(document).ready(function () {
-      var table = $('.customDataTable').DataTable({
-        responsive: true,
-        // "ordering": true,
-        // columnDefs: [{
-        //   'targets': [4, 5],
-        //   'orderable': false
-        // }, ]
-      });
-      new $.fn.dataTable.FixedHeader(table);
-    });
   </script>
     {{--================= custom js ==================--}}
     @include('sales.layouts.customJs.reservationsJs')
