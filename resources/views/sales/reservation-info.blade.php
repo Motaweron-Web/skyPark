@@ -494,6 +494,7 @@ Sky Park | Event Reservation
                 "rand_ticket":RandTicket,
                 "amount":amount,
                 "revenue":revenue,
+                "rev_id":"{{$reservation->id}}",
                 "rem":(Math.round(rem * 100) / 100).toFixed(2),
             }
             $.ajax({
@@ -505,10 +506,10 @@ Sky Park | Event Reservation
                         ' ></span> <span style="margin-left: 4px;">working</span>').attr('disabled', true);
                 },
                 success: function(data){
-                    toastr.success("Ticket is saved successfully");
+                    toastr.success("Reservation is saved successfully");
                     $('#confirmBtn').html('Confirm').attr('disabled', false);
                     window.setTimeout(function() {
-                        window.location.href="{{route('client.create')}}";
+                        window.location.href="{{route('capacity.index')}}?month="+data.day;
                     }, 300);
                 },
             });
