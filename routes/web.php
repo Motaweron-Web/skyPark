@@ -13,9 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/home', function () {
-    return view('admin.index');
-})->name('/home');
 
 Route::get('add-client', function () {
     return view('admin.add-client');
