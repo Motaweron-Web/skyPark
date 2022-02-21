@@ -516,7 +516,6 @@ Sky Park | Event Reservation
             // Prevent form submission
         } );
 
-<<<<<<< HEAD
     $(document).ready(function () {
       var table = $('.customDataTable').DataTable({
         responsive: true,
@@ -531,8 +530,6 @@ Sky Park | Event Reservation
   </script>
     {{--================= custom js ==================--}}
     @include('sales.layouts.customJs.reservationsJs')
-=======
-    </script>
->>>>>>> 6caa3d1f64bbf16ec73f920a11b3e3b74c124aef
+
 @endsection
 
