@@ -187,6 +187,7 @@ class TicketController extends Controller
             'ticket_num'     => $request->rand_ticket,
             'paid_amount'    => $request->amount,
             'grand_total'    => $request->revenue,
+            'rem_amount'     => $request->rem,
         ]);
         for ($i = 0 ; $i < count($request->visitor_type); $i++) {
             TicketRevModel::create([

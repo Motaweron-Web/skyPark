@@ -1,4 +1,6 @@
 <script>
+    var amountCash = $("#amount"),
+        total      = $('#totalPrice');
     // Check Capacity And Get Price Of Visitor Models
     $(document).on('click', '#firstNext', function () {
         var myDate = $('#date').val(),
@@ -321,6 +323,8 @@
             toastr.error("enter valid discount percent !");
             $('#calcDiscount').val('');
             $('#totalInfoDiscount').text(0+ " EGP")
+            $('#discount').text('0');
+            $('#revenue').text($('#totalPrice').text());
         }else {
             $('#discount').text($('#calcDiscount').val() + "%")
             var after = (parseInt($('#totalPrice').text()) - $('#calcDiscount').val() * parseInt($('#totalPrice').text()) / 100).toFixed(2);
@@ -328,6 +332,7 @@
             $('#totalInfoPrice').text($('#totalPrice').text()+" EGP")
             $('#totalInfoRevenue').text(after+" EGP")
             $('#totalInfoDiscount').text($('#calcDiscount').val()+"%")
+            calculateChange()
         }
     }
     function checkAmount(){
@@ -335,6 +340,8 @@
             toastr.error("discount amount more than total !");
             $('#totalInfoDiscount').text(0+ " EGP")
             $('#calcDiscount').val('');
+            $('#discount').text('0');
+            $('#revenue').text($('#totalPrice').text());
         }else {
             $('#discount').text($('#calcDiscount').val()||0)
             var after = (parseInt($('#totalPrice').text()) - $('#calcDiscount').val());
@@ -342,22 +349,22 @@
             $('#totalInfoPrice').text($('#totalPrice').text()+" EGP")
             $('#totalInfoRevenue').text(after+" EGP")
             $('#totalInfoDiscount').text($('#calcDiscount').val()+ " EGP")
+            calculateChange()
         }
     }
     Amount.change(function() {
         checkAmount()
     });
 
-    var amountCash = $("#amount"),
-        total      = $('#totalPrice');
-    amountCash.on("keyup change", function(e) {
-        if(amountCash.val() > parseInt(total.text()))
-            $("#change").text(amountCash.val()-parseInt(total.text()));
-        else
-            $("#change").text('0');
 
-        $('#paid').text(amountCash.val());
-    });
+    function calculateChange(){
+            if(amountCash.val() > parseInt($('#revenue').text()))
+                $("#change").text(amountCash.val()-parseInt($('#revenue').text())||0);
+            else
+                $("#change").text('0');
+
+            $('#paid').text(amountCash.val()||0);
+    }
 
     $(document).on('click', '#lastPrev', function () {
         $('.productInsertRows').remove();

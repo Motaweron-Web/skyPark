@@ -382,7 +382,7 @@ Sky Park | Event Reservation
                                         <div class="row align-items-end">
                                             <div class="col-8 col-md-9 p-2 ">
                                                 <label> Amount </label>
-                                                <input class="form-control" type="number" id="amount"/>
+                                                <input class="form-control" type="number" id="amount" onchange="calculateChange()" onkeyup="calculateChange()"/>
                                             </div>
 {{--                                            <div class="col-4 col-md-3 p-2">--}}
 {{--                                                <button type="button" class="btn w-100 btn-success"> Pay</button>--}}
@@ -471,8 +471,9 @@ Sky Park | Event Reservation
                 discount_value  =  $("#discount").text().replace('%',''),
                 RandTicket      =  $("#RandTicket").text(),
                 revenue         =  $("#revenue").text(),
-                amount          =  $("#amount").val(),
-                discount_type   = $(".discType input:checked").map(function(){return $(this).val();}).get();
+                amount          =  parseFloat($('#paid').text())-parseFloat($('#change').text()),
+                discount_type   = $(".discType input:checked").map(function(){return $(this).val();}).get(),
+                rem             = parseFloat($("#revenue").text())-amount;
 
             var data = {
                 "duration":duration,
@@ -493,6 +494,7 @@ Sky Park | Event Reservation
                 "rand_ticket":RandTicket,
                 "amount":amount,
                 "revenue":revenue,
+                "rem":(Math.round(rem * 100) / 100).toFixed(2),
             }
             $.ajax({
                 type: "POST",
