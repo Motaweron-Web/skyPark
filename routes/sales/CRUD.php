@@ -1,11 +1,15 @@
 <?php
 use Illuminate\Support\Facades\Route;
 
-    Route::resource('client', 'ClientController');
+//==================================== Family ================================
+  Route::resource('client', 'ClientController');
+  Route::get('client-search', 'ClientController@search')->name('client.search');
 
-
-
-
+// Ticket
+  Route::resource('ticket', 'TicketController');
+  Route::get('calcCapacity', 'TicketController@calcCapacity')->name('calcCapacity');
+  Route::POST('storeModels', 'TicketController@storeModels')->name('storeModels');
+  Route::POST('storeRevTicket', 'ReservationController@storeRevTicket')->name('storeRevTicket');
 
 
 

@@ -40,12 +40,12 @@
                                 <span class="sidenav-normal"> Add Client </span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link " href="{{route('ticket')}}">
-                                <span class="sidenav-mini-icon"> T </span>
-                                <span class="sidenav-normal"> Ticket </span>
-                            </a>
-                        </li>
+                        {{--                        <li class="nav-item">--}}
+                        {{--                            <a class="nav-link " href="{{route('ticket.create')}}">--}}
+                        {{--                                <span class="sidenav-mini-icon"> T </span>--}}
+                        {{--                                <span class="sidenav-normal"> Ticket </span>--}}
+                        {{--                            </a>--}}
+                        {{--                        </li>--}}
                         <li class="nav-item ">
                             <a class="nav-link " href="{{route('family-access')}}">
                                 <span class="sidenav-mini-icon"> F </span>

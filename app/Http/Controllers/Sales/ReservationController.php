@@ -3,12 +3,19 @@
 namespace App\Http\Controllers\Sales;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Event;
 use App\Models\Governorate;
+use App\Models\Product;
 use App\Models\Reservations;
 use App\Models\ReservationsBirthDayInfo;
 use App\Models\Shifts;
+use App\Models\Ticket;
+use App\Models\TicketRevModel;
+use App\Models\TicketRevProducts;
 use App\Models\VisitorTypes;
+use Carbon\Carbon;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -95,9 +102,46 @@ class ReservationController extends Controller
         if ($storeMain){
             $url = route('reservations.edit',base64_encode($storeMain->id * 555));
         }
-
         return response()->json(['status'=>200,'url'=>$url]);
 
+    }
+
+    public function storeRevTicket(request $request){
+        Reservations::where('id',$request->rev_id)->first()->update([
+            'shift_id'       => $request->shift_id,
+            'hours_count'    => $request->duration,
+            'total_price'    => $request->total_price,
+            'discount_type'  => $request->discount_type[0],
+            'discount_value' => $request->discount_value,
+            'ticket_num'     => $request->rand_ticket,
+            'paid_amount'    => $request->amount,
+            'grand_total'    => $request->revenue,
+        ]);
+        for ($i = 0 ; $i < count($request->visitor_type); $i++) {
+            TicketRevModel::create([
+                'rev_id'          => Reservations::where('id',$request->rev_id)->first()->id,
+                'visitor_type_id' => $request->visitor_type[$i],
+                'day'             => $request->visit_date,
+                'price'           => $request->visitor_price[$i],
+                'name'            => $request->visitor_name[$i],
+                'birthday'        => $request->visitor_birthday[$i],
+                'gender'          => $request->gender[$i],
+            ]);
+        }
+        if($request->has('product_id')) {
+            for ($i = 0; $i < count($request->product_id); $i++) {
+                TicketRevProducts::create([
+                    'rev_id'      => Reservations::where('id',$request->rev_id)->first()->id,
+                    'product_id'  => $request->product_id[$i],
+                    'category_id' => Product::where('id', $request->product_id[$i])->first()->category_id,
+                    'qty'         => $request->product_qty[$i],
+                    'price'       => $request->product_price[$i] / $request->product_qty[$i],
+                    'total_price' => $request->product_price[$i],
+                ]);
+            }
+        }
+        $day = Carbon::parse(Reservations::where('id',$request->rev_id)->first()->day)->format('Y-m');
+        return response()->json(['day'=>$day,'status' => true]);
     }
 
     /**
@@ -115,21 +159,25 @@ class ReservationController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function edit($id)
     {
         $id = base64_decode($id)/555;
-
-        $reservation = Reservations::findOrFail($id);
-        $customId = strtoupper(date('D').$id.'Re'.substr(time(), -2));
-
-        $shifts = Shifts::latest()->get();
-
+        $types        = VisitorTypes::all();
+        $reservation  = Reservations::findOrFail($id);
+        $customId     = strtoupper(date('D').$id.'Re'.substr(time(), -2));
+        $shifts       = Shifts::latest()->get();
         $visitorTypes = VisitorTypes::latest()->get();
-
-
-        return view('sales.reservation-info',compact('id','reservation','customId','shifts','visitorTypes'));
+        $categories = Category::with(['products'=>function($query){
+            $query->where('status','1');
+        }])
+            ->whereHas('products',function ($q){
+                $q->where('status','1');
+            })
+            ->get();
+        $random = substr(Carbon::now()->format("l"),0,3).rand(0, 999).Carbon::now()->format('is');
+        return view('sales.reservation-info',compact('id','random','categories','types','reservation','customId','shifts','visitorTypes'));
     }
 
     /**

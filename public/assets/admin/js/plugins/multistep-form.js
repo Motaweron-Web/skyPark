@@ -1,6 +1,6 @@
 //DOM elements
 const DOMstrings = {
-    stepsBtnClass: 'multisteps-form__progress-btn',
+    stepsBtnClass: 'multisteps-form__progress-btnn',
     stepsBtns: document.querySelectorAll(`.multisteps-form__progress-btn`),
     stepsBar: document.querySelector('.multisteps-form__progress'),
     stepsForm: document.querySelector('.multisteps-form__form'),
