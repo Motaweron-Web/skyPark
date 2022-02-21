@@ -40,9 +40,9 @@
         </div>
         <div class="col-6 d-md-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
           <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center">
-            <img src="{{asset('assets/admin/img/pattern-lines.svg')}}" alt="pattern-lines" class="position-absolute opacity-4 start-0">
+            <img src="{{asset('assets/sales/img/pattern-lines.svg')}}" alt="pattern-lines" class="position-absolute opacity-4 start-0">
             <div class="position-relative">
-              <img class="max-width-500 w-100 position-relative z-index-2" src="{{asset('assets/admin/img/rocket-white.png')}}" alt="chat-img">
+              <img class="max-width-500 w-100 position-relative z-index-2" src="{{asset('assets/sales/img/rocket-white.png')}}" alt="chat-img">
             </div>
             <h3 class="mt-5 text-white font-weight-bolder">" Welcome To Sky Park "</h3>
           </div>

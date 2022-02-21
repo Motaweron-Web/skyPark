@@ -1,4 +1,4 @@
-@extends('layouts/admin/master')
+@extends('admin/layouts/master')
 @section('title')لوحة التحكم | المشرفين@endsection
 @section('page_name')المشرفين@endsection
 @section('content')
@@ -58,7 +58,7 @@
         </div>
         <!-- MODAL CLOSED -->
     </div>
-    @include('layouts/admin/myAjaxHelper')
+    @include('admin/layouts/myAjaxHelper')
 @endsection
 @section('ajaxCalls')
     <script>
