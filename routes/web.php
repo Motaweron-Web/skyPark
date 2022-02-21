@@ -26,7 +26,7 @@ Route::get('ticket', function () {
 })->name('ticket');
 
 Route::get('family-access', function () {
-    return view('admin.family-access');
+    return view('sales.family-access');
 })->name('family-access');
 
 
@@ -39,7 +39,7 @@ Route::get('group-access', function () {
 })->name('group-access');
 
 Route::get('exit', function () {
-    return view('admin.exit');
+    return view('sales.exit');
 })->name('exit');
 
 

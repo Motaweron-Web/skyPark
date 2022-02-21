@@ -1,4 +1,4 @@
-@extends('admin.layouts.master')
+@extends('sales.layouts.master')
 @section('page_title')
     Sky Park | Family Access
 @endsection

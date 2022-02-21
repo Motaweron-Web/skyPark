@@ -1,5 +1,6 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="csrf-token" content="{{ csrf_token() }}" />
 <link rel="icon" type="image/png" href="{{asset('assets/admin')}}/img/favicon.png">
 <title> Sky Park </title>
 <!-- CSS Files -->
@@ -25,5 +26,10 @@
     z-index: 2;
     border: 1px solid gray !important;
 }
+.to_print{
+    width: 100% !important;
+    height: 100% !important;
+}
 </style>
 @toastr_css
+@yield('css')
