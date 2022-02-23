@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
     Route::resource('capacity', 'CapacityController');
     Route::resource('groupAccess', 'GroupAccessController');
     Route::get('capacity-anotherMonth', 'CapacityController@anotherMonth')->name('capacity.anotherMonth.index');
+    Route::POST('getBracelets', 'GroupAccessController@getBraceletsTwo')->name('capacity.getBracelets');
 
 
 

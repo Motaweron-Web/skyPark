@@ -1,9 +1,6 @@
 @extends('admin/layouts/master')
-@section('title')لوحة التحكم | الصفحة الرئيسية@endsection
-@section('page_name')الرئـيسية@endsection
-
-
-
+@section('title')Sky Park | Dashboard @endsection
+@section('page_name') Home @endsection
 @section('content')
 
     <div class="row">

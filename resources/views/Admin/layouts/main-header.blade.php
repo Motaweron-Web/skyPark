@@ -2,9 +2,9 @@
 <div class="app-header header">
     <div class="container-fluid">
         <div class="d-flex">
-            <a class="header-brand d-md-none" href="https:/laravel.spruko.com/yoha/Sidemenu-Icon-Light-rtl/index">
-                <img src="{{asset('assets/admin')}}/images/brand/logo-3.png" class="header-brand-img mobile-icon" alt="logo">
-                <img src="{{asset('assets/admin')}}/images/brand/logo.png" class="header-brand-img desktop-logo mobile-logo" alt="logo">
+            <a class="header-brand d-md-none" href="#">
+                <img src="{{asset('assets/uploads')}}/logo.png" class="header-brand-img mobile-icon" alt="logo">
+                <img src="{{asset('assets/uploads')}}/logo.png" class="header-brand-img desktop-logo mobile-logo" alt="logo">
             </a>
             <a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-toggle="sidebar" href="#">
                 <svg xmlns="http:/www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
@@ -23,7 +23,7 @@
                     </div>
                 </form>
             </div>
-            <div class="d-flex mr-auto header-right-icons header-search-icon">
+            <div class="d-flex ml-auto header-right-icons header-search-icon">
                 <button class="navbar-toggler navresponsive-toggler d-md-none" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
                     <svg xmlns="http:/www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" class="navbar-toggler-icon">
                         <path d="M0 0h24v24H0V0z" fill="none" />
@@ -80,7 +80,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                         <a href="#" class="dropdown-item d-flex mt-2 pb-3">
-                            <div class="avatar avatar-md brround ml-3 d-block cover-image" data-image-src="https:/laravel.spruko.com/yoha/Sidemenu-Icon-Light-rtl/images/users/4.jpg" style="background: url(&quot;https:/laravel.spruko.com/yoha/Sidemenu-Icon-Light-rtl/images/users/4.jpg&quot;) center center;">
+                            <div class="avatar avatar-md brround mr-3 d-block cover-image" data-image-src="https:/laravel.spruko.com/yoha/Sidemenu-Icon-Light-rtl/images/users/4.jpg" style="background: url(&quot;https:/laravel.spruko.com/yoha/Sidemenu-Icon-Light-rtl/images/users/4.jpg&quot;) center center;">
                                 <span class="avatar-status bg-green"></span>
                             </div>
                             <div>
@@ -90,7 +90,7 @@
                             </div>
                         </a>
                         <a href="#" class="dropdown-item d-flex pb-3">
-                            <div class="avatar avatar-md brround ml-3 d-block cover-image" data-image-src="https:/laravel.spruko.com/yoha/Sidemenu-Icon-Light-rtl/images/users/1.jpg" style="background: url(&quot;https:/laravel.spruko.com/yoha/Sidemenu-Icon-Light-rtl/images/users/1.jpg&quot;) center center;">
+                            <div class="avatar avatar-md brround mr-3 d-block cover-image" data-image-src="https:/laravel.spruko.com/yoha/Sidemenu-Icon-Light-rtl/images/users/1.jpg" style="background: url(&quot;https:/laravel.spruko.com/yoha/Sidemenu-Icon-Light-rtl/images/users/1.jpg&quot;) center center;">
                                 <span class="avatar-status bg-red"></span>
                             </div>
                             <div>
@@ -100,7 +100,7 @@
                             </div>
                         </a>
                         <a href="#" class="dropdown-item d-flex pb-3">
-                            <div class="avatar avatar-md brround ml-3 d-block cover-image" data-image-src="https:/laravel.spruko.com/yoha/Sidemenu-Icon-Light-rtl/images/users/18.jpg" style="background: url(&quot;https:/laravel.spruko.com/yoha/Sidemenu-Icon-Light-rtl/images/users/18.jpg&quot;) center center;">
+                            <div class="avatar avatar-md brround mr-3 d-block cover-image" data-image-src="https:/laravel.spruko.com/yoha/Sidemenu-Icon-Light-rtl/images/users/18.jpg" style="background: url(&quot;https:/laravel.spruko.com/yoha/Sidemenu-Icon-Light-rtl/images/users/18.jpg&quot;) center center;">
                                 <span class="avatar-status bg-yellow"></span>
                             </div>
                             <div>
@@ -114,46 +114,6 @@
                     </div>
                 </div>
                 <!-- MESSAGE-BOX -->
-                <div class="dropdown d-none d-xl-flex country-selector">
-                    <a href="#" class="d-flex nav-link  leading-none" data-toggle="dropdown" aria-expanded="true">
-                        <img src="{{asset('assets/admin')}}/images/flags/us_flag.jpg" alt="img" class="ml-2 align-self-center">
-                        <div>
-                            <strong class="text-dark">English</strong>
-                        </div>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-left dropdown-menu-arrow">
-                        <a href="#" class="dropdown-item d-flex pb-3">
-                            <img src="{{asset('assets/admin')}}/images/flags/french_flag.jpg" alt="flag-img" class="avatar  ml-3 align-self-center">
-                            <div>
-                                <strong>French</strong>
-                            </div>
-                        </a>
-                        <a href="#" class="dropdown-item d-flex pb-3">
-                            <img src="{{asset('assets/admin')}}/images/flags/germany_flag.jpg" alt="flag-img" class="avatar  ml-3 align-self-center">
-                            <div>
-                                <strong>Germany</strong>
-                            </div>
-                        </a>
-                        <a href="#" class="dropdown-item d-flex pb-3">
-                            <img src="{{asset('assets/admin')}}/images/flags/italy_flag.jpg" alt="flag-img" class="avatar  ml-3 align-self-center">
-                            <div>
-                                <strong>Italy</strong>
-                            </div>
-                        </a>
-                        <a href="#" class="dropdown-item d-flex pb-3">
-                            <img src="{{asset('assets/admin')}}/images/flags/russia_flag.jpg" alt="flag-img" class="avatar  ml-3 align-self-center">
-                            <div>
-                                <strong>Russia</strong>
-                            </div>
-                        </a>
-                        <a href="#" class="dropdown-item d-flex pb-3">
-                            <img src="{{asset('assets/admin')}}/images/flags/spain_flag.jpg" alt="flag-img" class="avatar  ml-3 align-self-center">
-                            <div>
-                                <strong>Spain</strong>
-                            </div>
-                        </a>
-                    </div>
-                </div>
                 <div class="dropdown profile-1">
                     @php
                         $name  = loggedAdmin('name');
@@ -161,27 +121,27 @@
                     @endphp
                     <a href="#" data-toggle="dropdown" class="nav-link pl-2 pr-2  leading-none d-flex">
 									<span>
-										<img src="{{$photo}}" alt="profile-user" class="avatar  ml-xl-3 profile-user brround cover-image">
+										<img src="{{$photo}}" alt="profile-user" class="avatar  mr-xl-3 profile-user brround cover-image">
 									</span>
                         <div class="text-center mt-1 d-none d-xl-block">
                             <h6 class="text-dark mb-0 fs-13 font-weight-semibold text-capitalize">{{$name}}</h6>
                         </div>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-left dropdown-menu-arrow">
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                         <a class="dropdown-item" href="{{route('myProfile')}}">
-                            <i class="dropdown-icon mdi mdi-account-outline"></i> الحساب
+                            <i class="dropdown-icon mdi mdi-account-outline"></i> My Profile
                         </a>
                         <a class="dropdown-item" href="#">
-                            <i class="dropdown-icon zmdi zmdi-edit"></i> تعديل حسابي
+                            <i class="dropdown-icon zmdi zmdi-edit"></i> Edit Profile
                         </a>
                         <a class="dropdown-item" href="#">
-                            <i class="dropdown-icon  mdi mdi-settings"></i> اعدادات الحساب
+                            <i class="dropdown-icon  mdi mdi-settings"></i> Account Settings
                         </a>
-                        <a class="dropdown-item" href="https:/rynprogramming.com/">
-                            <i class="dropdown-icon mdi mdi-compass-outline"></i> تحتاج مساعدة ؟
+                        <a class="dropdown-item" href="http://motaweron.com/contact-us.html/">
+                            <i class="dropdown-icon mdi mdi-compass-outline"></i>Need help ?
                         </a>
                         <a class="dropdown-item" href="{{route('admin.logout')}}">
-                            <i class="dropdown-icon mdi  mdi-logout-variant"></i> تسجيل الخروج
+                            <i class="dropdown-icon mdi  mdi-logout-variant"></i> Log out
                         </a>
                     </div>
                 </div>
@@ -196,7 +156,7 @@
 <!-- responsive-navbar -->
 <div class="mb-1 navbar navbar-expand-lg  responsive-navbar navbar-dark d-md-none bg-white">
     <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
-        <div class="d-flex order-lg-2 ml-auto">
+        <div class="d-flex order-lg-2 mr-auto">
             <div class="dropdown d-sm-flex">
                 <a href="#" class="nav-link icon" data-toggle="dropdown">
                     <svg xmlns="http:/www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
@@ -235,7 +195,7 @@
                 <div class="dropdown-menu dropdown-menu-left dropdown-menu-arrow">
                     <div class="notifications-menu">
                         <a class="dropdown-item d-flex pb-4" href="#">
-										<span class="avatar ml-3 br-3 align-self-center avatar-md cover-image bg-primary brround">
+										<span class="avatar mr-3 br-3 align-self-center avatar-md cover-image bg-primary brround">
 											<i class="fe fe-mail"></i></span>
                             <div>
                                 <span class="font-weight-bold"> Commented on your post </span>
@@ -245,7 +205,7 @@
                             </div>
                         </a>
                         <a class="dropdown-item d-flex pb-4" href="#">
-										<span class="avatar avatar-md br-3 ml-3 align-self-center cover-image bg-secondary brround">
+										<span class="avatar avatar-md br-3 mr-3 align-self-center cover-image bg-secondary brround">
 											<i class="fe fe-download"></i>
 										</span>
                             <div>
@@ -256,7 +216,7 @@
                             </div>
                         </a>
                         <a class="dropdown-item d-flex pb-4" href="#">
-										<span class="avatar avatar-md br-3 ml-3 align-self-center cover-image bg-warning brround">
+										<span class="avatar avatar-md br-3 mr-3 align-self-center cover-image bg-warning brround">
 											<i class="fe fe-user"></i>
 										</span>
                             <div>
@@ -267,7 +227,7 @@
                             </div>
                         </a>
                         <a class="dropdown-item d-flex pb-4" href="#">
-										<span class="avatar avatar-md br-3 ml-3 align-self-center cover-image bg-info brround">
+										<span class="avatar avatar-md br-3 mr-3 align-self-center cover-image bg-info brround">
 											<i class="fe fe-shopping-cart"></i>
 										</span>
                             <div>
@@ -278,7 +238,7 @@
                             </div>
                         </a>
                         <a class="dropdown-item d-flex pb-4" href="#">
-										<span class="avatar avatar-md br-3 ml-3 align-self-center cover-image bg-danger brround">
+										<span class="avatar avatar-md br-3 mr-3 align-self-center cover-image bg-danger brround">
 											<i class="fa fa-commenting-o"></i>
 										</span>
                             <div>
@@ -289,7 +249,7 @@
                             </div>
                         </a>
                         <a class="dropdown-item d-flex pb-4" href="#">
-										<span class="avatar avatar-md br-3 ml-3 align-self-center cover-image bg-success brround">
+										<span class="avatar avatar-md br-3 mr-3 align-self-center cover-image bg-success brround">
 											<i class="fe fe-server"></i>
 										</span>
                             <div>
@@ -315,7 +275,7 @@
                 <div class="dropdown-menu dropdown-menu-left dropdown-menu-arrow">
                     <div class="message-menu">
                         <a class="dropdown-item d-flex pb-3" href="#">
-                            <span class="avatar avatar-md brround ml-3 align-self-center cover-image" data-image-src="{{asset('assets/admin')}}/images/users/1.jpg"></span>
+                            <span class="avatar avatar-md brround mr-3 align-self-center cover-image" data-image-src="{{asset('assets/admin')}}/images/users/1.jpg"></span>
                             <div>
                                 <strong>Madeleine</strong> Hey! there I' am available....
                                 <div class="small text-muted">
@@ -324,7 +284,7 @@
                             </div>
                         </a>
                         <a class="dropdown-item d-flex pb-3" href="#">
-                            <span class="avatar avatar-md brround ml-3 align-self-center cover-image" data-image-src="{{asset('assets/admin')}}/images/users/12.jpg"></span>
+                            <span class="avatar avatar-md brround mr-3 align-self-center cover-image" data-image-src="{{asset('assets/admin')}}/images/users/12.jpg"></span>
                             <div>
                                 <strong>Anthony</strong> New product Launching...
                                 <div class="small text-muted">
@@ -333,7 +293,7 @@
                             </div>
                         </a>
                         <a class="dropdown-item d-flex pb-3" href="#">
-                            <span class="avatar avatar-md brround ml-3 align-self-center cover-image" data-image-src="{{asset('assets/admin')}}/images/users/4.jpg"></span>
+                            <span class="avatar avatar-md brround mr-3 align-self-center cover-image" data-image-src="{{asset('assets/admin')}}/images/users/4.jpg"></span>
                             <div>
                                 <strong>Olivia</strong> New Schedule Realease......
                                 <div class="small text-muted">
@@ -342,7 +302,7 @@
                             </div>
                         </a>
                         <a class="dropdown-item d-flex pb-3" href="#">
-                            <span class="avatar avatar-md brround ml-3 align-self-center cover-image" data-image-src="{{asset('assets/admin')}}/images/users/15.jpg"></span>
+                            <span class="avatar avatar-md brround mr-3 align-self-center cover-image" data-image-src="{{asset('assets/admin')}}/images/users/15.jpg"></span>
                             <div>
                                 <strong>Sanderson</strong> New Schedule Realease......
                                 <div class="small text-muted">
@@ -357,38 +317,38 @@
             </div><!-- MESSAGE-BOX -->
             <div class="dropdown d-md-flex country-selector">
                 <a href="#" class="d-flex nav-link icon leading-none" data-toggle="dropdown" aria-expanded="true">
-                    <img src="{{asset('assets/admin')}}/images/flags/us_flag.jpg" alt="img" class="ml-2 align-self-center">
+                    <img src="{{asset('assets/admin')}}/images/flags/us_flag.jpg" alt="img" class="mr-2 align-self-center">
                     <div>
                         <strong class="text-dark fs-13">English</strong>
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-left dropdown-menu-arrow">
                     <a href="#" class="dropdown-item d-flex pb-3">
-                        <img src="{{asset('assets/admin')}}/images/flags/french_flag.jpg" alt="flag-img" class="avatar  ml-3 align-self-center">
+                        <img src="{{asset('assets/admin')}}/images/flags/french_flag.jpg" alt="flag-img" class="avatar  mr-3 align-self-center">
                         <div>
                             <strong>French</strong>
                         </div>
                     </a>
                     <a href="#" class="dropdown-item d-flex pb-3">
-                        <img src="{{asset('assets/admin')}}/images/flags/germany_flag.jpg" alt="flag-img" class="avatar  ml-3 align-self-center">
+                        <img src="{{asset('assets/admin')}}/images/flags/germany_flag.jpg" alt="flag-img" class="avatar  mr-3 align-self-center">
                         <div>
                             <strong>Germany</strong>
                         </div>
                     </a>
                     <a href="#" class="dropdown-item d-flex pb-3">
-                        <img src="{{asset('assets/admin')}}/images/flags/italy_flag.jpg" alt="flag-img" class="avatar  ml-3 align-self-center">
+                        <img src="{{asset('assets/admin')}}/images/flags/italy_flag.jpg" alt="flag-img" class="avatar  mr-3 align-self-center">
                         <div>
                             <strong>Italy</strong>
                         </div>
                     </a>
                     <a href="#" class="dropdown-item d-flex pb-3">
-                        <img src="{{asset('assets/admin')}}/images/flags/russia_flag.jpg" alt="flag-img" class="avatar  ml-3 align-self-center">
+                        <img src="{{asset('assets/admin')}}/images/flags/russia_flag.jpg" alt="flag-img" class="avatar  mr-3 align-self-center">
                         <div>
                             <strong>Russia</strong>
                         </div>
                     </a>
                     <a href="#" class="dropdown-item d-flex pb-3">
-                        <img src="{{asset('assets/admin')}}/images/flags/spain_flag.jpg" alt="flag-img" class="avatar  ml-3 align-self-center">
+                        <img src="{{asset('assets/admin')}}/images/flags/spain_flag.jpg" alt="flag-img" class="avatar  mr-3 align-self-center">
                         <div>
                             <strong>Spain</strong>
                         </div>

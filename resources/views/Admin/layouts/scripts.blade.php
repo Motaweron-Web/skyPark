@@ -45,17 +45,23 @@
 
 {{--<!-- PERFECT SCROLL BAR js-->--}}
 <script src="{{asset('assets/admin')}}/plugins/p-scroll/perfect-scrollbar.min.js"></script>
-<script src="{{asset('assets/admin')}}/plugins/sidemenu/sidemenu-scroll-rtl.js"></script>
+<script src="{{asset('assets/admin')}}/plugins/sidemenu/sidemenu-scroll.js"></script>
 
 <!-- CUSTOM SCROLLBAR JS-->
 <script src="{{asset('assets/admin')}}/plugins/scroll-bar/jquery.mCustomScrollbar.concat.min.js"></script>
 
 <!-- SIDEBAR JS -->
-<script src="{{asset('assets/admin')}}/plugins/sidebar/sidebar-rtl.js"></script>
+<script src="{{asset('assets/admin')}}/plugins/sidebar/sidebar.js"></script>
 
 <!-- CUSTOM JS -->
 <script src="{{asset('assets/admin')}}/js/custom.js"></script>
 
 <!-- Switcher JS -->
-<script src="{{asset('assets/admin')}}/switcher/js/switcher-rtl.js"></script>
+<script src="{{asset('assets/admin')}}/switcher/js/switcher.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.dropify').dropify();
+    });
+</script>
 @yield('js')

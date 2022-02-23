@@ -7,7 +7,7 @@
 Project        :   Yoha - html5 bootstrap admin template
 Version        :   V.1
 Create Date    :   03/06/20
-Copyright      :   Spruko Technologies Private Limited
+Copyright      :   Spruko Technologies Private Limited 
 Author         :   SprukoSoft
 Author URL     :   https://themeforest.net/user/sprukosoft
 Support		   :   support@spruko.com
@@ -17,9 +17,7 @@ License        :   Licensed under ThemeForest License
 body.dark-mode {
   color: #c5c9e6;
   background-color: #212741; }
-.svg-inline--fa fa-cog fa-w-16 fa-spin text_primary{
-    color: black;
-}
+
 .dark-mode caption {
   color: #505662; }
 
@@ -78,7 +76,7 @@ body.dark-mode {
 
 .dark-mode blockquote {
   color: #767a98;
-  border-right: 2px solid #202440; }
+  border-left: 2px solid #202440; }
 
 .dark-mode code {
   background: #1c203c;
@@ -1220,7 +1218,8 @@ body.dark-mode {
 .dark-mode .online-status .status.offline {
   background: rgba(255, 0, 0, 0.7); }
 
-.dark-mode .icons-list-wrap { }
+.dark-mode .icons-list-wrap {
+   }
 
 .dark-mode .icons-list-item {
   border-top: 1px solid #202440;
@@ -2222,7 +2221,7 @@ body.dark-mode {
 .dark-mode .chat .msg_cotainer {
   background-color: #222644; }
   .dark-mode .chat .msg_cotainer:before, .dark-mode .chat .msg_cotainer:after {
-    border-left-color: #222644; }
+    border-right-color: #222644; }
 
 .dark-mode .chat .msg_time, .dark-mode .chat .msg_time_send {
   color: #767a98; }
@@ -2287,13 +2286,13 @@ body.dark-mode {
 .dark-mode .cbp_tmtimeline > li:nth-child(odd) .cbp_tmlabel {
   background: #131632; }
   .dark-mode .cbp_tmtimeline > li:nth-child(odd) .cbp_tmlabel:after {
-    border-left-color: #131632; }
+    border-right-color: #131632; }
 
 .dark-mode .cbp_tmtimeline > li .cbp_tmlabel {
   background: #131632;
   box-shadow: 0 0 2rem 0 rgba(15, 17, 29, 0.15) !important; }
   .dark-mode .cbp_tmtimeline > li .cbp_tmlabel:after {
-    border-left-color: #131632; }
+    border-right-color: #131632; }
   .dark-mode .cbp_tmtimeline > li .cbp_tmlabel .map-checkin {
     border: 5px solid rgba(235, 235, 235, 0.2);
     -moz-box-shadow: 0px 0px 0px 1px #202440;
@@ -2464,20 +2463,17 @@ body.dark-mode {
   .dark-mode .hor-menu .horizontalMenu > .horizontalMenu-list > li > a:hover, .dark-mode .horizontalMenu > .horizontalMenu-list > li > .horizontal-megamenu .link-list li a:hover {
     color: #c5c9e6; }
   .dark-mode .animated-arrow span {
-    background: #fff; } }
-
-.dark-mode .responsive-navbar.navbar .navbar-collapse {
-  border: 1px solid rgba(255, 255, 255, 0.08); }
-
-.dark-mode .hor-menu .horizontalMenu > .horizontalMenu-list > li > a.active {
-  background: #202540; }
-
-.dark-mode .horizontalMenu > .horizontalMenu-list > li > ul.sub-menu {
-  background-color: transparent !important;
-  border: 0 !important; }
-
-.dark-mode .horizontal-overlapbg {
-  background-color: rgba(51, 55, 78, 0.75); }
+    background: #fff; }
+  .dark-mode .responsive-navbar.navbar .navbar-collapse {
+    border: 1px solid rgba(255, 255, 255, 0.08); }
+  .dark-mode .hor-menu .horizontalMenu > .horizontalMenu-list > li > a.active {
+    box-shadow: 0px 1px 5px 0 #07101f;
+    background: #202540; }
+  .dark-mode .horizontalMenu > .horizontalMenu-list > li > ul.sub-menu {
+    background-color: transparent !important;
+    border: 0 !important; }
+  .dark-mode .horizontal-overlapbg {
+    background-color: rgba(51, 55, 78, 0.75); } }
 
 @media only screen and (max-width: 991px) {
   .dark-mode .header-1 .animated-arrow span {
@@ -2771,8 +2767,7 @@ body.dark-mode {
   border: 1px solid #202440; }
 
 .dark-mode .tab_wrapper.right_side > ul li {
-  border-right: 1px solid #202440 !important;
-  border-left: 0; }
+  border-left: 1px solid #202440; }
   .dark-mode .tab_wrapper.right_side > ul li.active {
     border-color: #202440; }
   .dark-mode .tab_wrapper.right_side > ul li:after {
@@ -2812,7 +2807,7 @@ body.dark-mode {
 
 .dark-mode .app-sidebar {
   background: #131632 !important;
-  border-left: 1px solid #191c31;
+  border-right: 1px solid #191c31;
   box-shadow: none; }
 
 .dark-mode .app-sidebar__toggle {
@@ -2854,7 +2849,7 @@ body.dark-mode {
   box-shadow: -6px 5px 8px 0 #272d47; }
 
 .dark-mode .horizontalMenu > .horizontalMenu-list > li > ul.sub-menu {
-  background-color: #1c203c !important;
+  background-color: #1c203c;
   box-shadow: 0 10px 15px rgba(15, 17, 29, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.04) !important; }
   .dark-mode .horizontalMenu > .horizontalMenu-list > li > ul.sub-menu > li > a {
@@ -3002,12 +2997,12 @@ body.dark-mode {
 
 .dark-mode .second-sidemenu {
   background-color: #131632;
-  border-left: 1px solid #131632; }
+  border-right: 1px solid #131632; }
 
 .dark-mode .resp-vtabs .resp-tabs-list li {
-  border-left: 1px solid #191c31 !important;
+  border-right: 1px solid #191c31 !important;
   border: 1px solid #202440 !important;
-  border-right: 0 !important;
+  border-left: 0 !important;
   border-top: 0 !important; }
 
 .dark-mode .toggle-sidemenu .side-menu__icon {
@@ -3026,7 +3021,7 @@ body.dark-mode {
   background: #141627 !important; }
 
 .dark-mode .resp-vtabs li.resp-tab-active {
-  border-left: 0 !important;
+  border-right: 0 !important;
   background: transparent !important; }
 
 .dark-mode.app.sidebar-mini.sidenav-toggled .first-sidemenu li.active {
@@ -3047,7 +3042,7 @@ body.dark-mode {
 
 .dark-mode .app-sidebar.toggle-sidemenu {
   background: none !important;
-  border-left: 0; }
+  border-right: 0; }
 
 .dark-mode .settings-icon {
   border: 1px solid rgba(255, 255, 255, 0.1); }
@@ -3131,7 +3126,7 @@ body.dark-mode {
     color: #414563; }
 
 .dark-mode .iti__selected-flag {
-  border-left: 1px solid #202440; }
+  border-right: 1px solid #202440; }
 
 .dark-mode .iti--allow-dropdown .iti__flag-container:hover .iti__selected-flag {
   background-color: #1c203c; }
@@ -3181,7 +3176,7 @@ body.dark-mode {
 
 .dark-mode .side-header {
   background: #131632;
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
 
 .dark-mode .app-sidebar__toggle svg, .dark-mode .nav-link.icon svg {
@@ -3229,13 +3224,13 @@ body.dark-mode {
   color: #c5c9e6 !important; }
 
 .dark-mode .cal1 .clndr .clndr-table tr .day.event:hover, .dark-mode .cal1 .clndr .clndr-table tr .day.my-event:hover {
-  background: #232c45; }
+  background: #232c45;
+  color: #c5c9e6; }
 
 .dark-mode.active .animated-arrow span {
   background: transparent; }
-
-
-
+  
+  
 .dark-mode .iti__country.iti__highlight {
     background-color: #1c203c;
 }
@@ -3247,6 +3242,7 @@ body.dark-mode {
 .dark-mode .iti__selected-flag :focus {
     border: 1px solid rgb(32, 36 ,64);
 }
+
 .dark-mode .header-1 .nav-link .text-dark, .dark-mode .header-2 .nav-link .text-dark, .dark-mode .header-3 .nav-link .text-dark {
     color: #c5c9e6 !important;
 }
@@ -3256,4 +3252,5 @@ body.dark-mode {
 		background: transparent;
 	}
 }
+
 /*# sourceMappingURL=dark-style.css.map */

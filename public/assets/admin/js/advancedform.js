@@ -4,9 +4,9 @@
 	//accordion-wizard
 	var options = {
 		mode: 'wizard',
-		autoButtonsNextClass: 'btn btn-primary float-left',
+		autoButtonsNextClass: 'btn btn-primary float-right',
 		autoButtonsPrevClass: 'btn btn-info',
-		stepNumberClass: 'badge badge-pill badge-primary ml-1',
+		stepNumberClass: 'badge badge-pill badge-primary mr-1',
 		onSubmit: function() {
 		  alert('Form submitted!');
 		  return true;

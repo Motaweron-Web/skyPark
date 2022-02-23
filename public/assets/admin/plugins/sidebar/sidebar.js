@@ -100,7 +100,7 @@
     return this
   }
 
-  $(document).on('click.bs.sidebar.data-api', '[data-toggle="sidebar-left"]', function (e) {
+  $(document).on('click.bs.sidebar.data-api', '[data-toggle="sidebar-right"]', function (e) {
     var $this = $(this), href
     var target = $this.attr('data-target')
         || e.preventDefault()
@@ -114,7 +114,7 @@
 
   $('html').on('click.bs.sidebar.autohide', function(event){
     var $this = $(event.target);
-    var isButtonOrSidebar = $this.is('.sidebar, [data-toggle="sidebar-left"]') || $this.parents('.sidebar, [data-toggle="sidebar-left"]').length;
+    var isButtonOrSidebar = $this.is('.sidebar, [data-toggle="sidebar-right"]') || $this.parents('.sidebar, [data-toggle="sidebar-right"]').length;
     if (isButtonOrSidebar) {
       return;
     } else {

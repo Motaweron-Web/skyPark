@@ -1,6 +1,9 @@
-@extends('layouts/admin/master')
-@section('title')لوحة التحكم | حسابي@endsection
-@section('page_name')حسابي@endsection
+@extends('admin/layouts/master')
+@section('title') Sky Park | Profile @endsection
+
+@section('page_name')
+    My Profile
+@endsection
 @section('content')
     <div class="row">
         <div class="col-lg-4">
@@ -9,11 +12,12 @@
                     <div class="wideget-user text-center">
                         <div class="wideget-user-desc">
                             <div class="wideget-user-img">
-                                <img class="" src="{{get_file($admin->photo)}}" alt="img">
+                                <img class="" src="{{get_user_photo($admin->photo)}}" alt="img">
                             </div>
                             <div class="user-wrap">
                                 <h4 class="mb-1 text-capitalize">{{$admin->name}}</h4>
 {{--                                <h6 class="text-muted mb-4"> {{$admin->created_at->diffForHumans()}}</h6>--}}
+                                <h6 class="text-muted mb-4"> {{$admin->email}}</h6>
                             </div>
                         </div>
                     </div>
@@ -26,7 +30,7 @@
                     <div class="tab-menu-heading">
                         <div class="tabs-menu1">
                             <ul class="nav">
-                                <li class=""><a href="#tab-51" class="active show" data-toggle="tab">البيانات</a></li>
+                                <li class=""><a href="#tab-51" class="active show" data-toggle="tab">Information</a></li>
                             </ul>
                         </div>
                     </div>
@@ -38,18 +42,23 @@
                         <div class="card-body">
                             <div id="profile-log-switch">
                                 <div class="media-heading">
-                                    <h5><strong>البيانات الشخصية</strong></h5>
+                                    <h5><strong>Personal Information</strong></h5>
                                 </div>
                                 <div class="table-responsive ">
                                     <table class="table row table-borderless">
-                                        <tbody class="col-lg-12 col-xl-6 p-0">
+                                        <tbody class="col-lg-12 col-xl-4 p-0">
                                         <tr>
-                                            <td class="text-capitalize"><strong>الاسم :</strong> {{$admin->name}}</td>
+                                            <td class="text-capitalize"><strong>Name :</strong> {{$admin->name}}</td>
                                         </tr>
                                         </tbody>
-                                        <tbody class="col-lg-12 col-xl-6 p-0">
+                                        <tbody class="col-lg-12 col-xl-4 p-0">
                                         <tr>
-                                            <td><strong>البريد الالكتروني :</strong> {{$admin->email}}</td>
+                                            <td><strong>Email :</strong> {{$admin->email}}</td>
+                                        </tr>
+                                        </tbody>
+                                        <tbody class="col-lg-12 col-xl-4 p-0">
+                                        <tr>
+                                            <td><strong>Register Date :</strong> {{$admin->created_at->diffForHumans()}}</td>
                                         </tr>
                                         </tbody>
                                     </table>

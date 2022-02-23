@@ -24,5 +24,8 @@
     $(document).on('keyup','.numbersOnly',function () {
         this.value = this.value.replace(/[^0-9\.]/g,'');
     });
-
+    $.ajaxSetup({
+        headers:
+            { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+    });
 </script>

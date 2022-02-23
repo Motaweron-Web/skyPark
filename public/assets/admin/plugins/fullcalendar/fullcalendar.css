@@ -14,8 +14,8 @@ body .fc {
 	-khtml-user-select: none
 }
 .fc {
-	direction: rtl;
-	text-align: right
+	direction: ltr;
+	text-align: left
 }
 .fc-rtl {
 	text-align: right
@@ -470,13 +470,13 @@ a.fc-more:hover {
 	user-select: none
 }
 .fc-icon-left-single-arrow:after {
-	content: "\0203A";
+	content: "\02039";
 	font-weight: 700;
 	font-size: 200%;
 	top: -7%
 }
 .fc-icon-right-single-arrow:after {
-	content: "\02039";
+	content: "\0203A";
 	font-weight: 700;
 	font-size: 200%;
 	top: -7%
@@ -555,10 +555,10 @@ a.fc-more:hover {
 	margin-top: 1em
 }
 .fc-toolbar .fc-left {
-	float: right
+	float: left
 }
 .fc-toolbar .fc-right {
-	float: left
+	float: right
 }
 .fc .fc-toolbar>*>* {
 	float: left;

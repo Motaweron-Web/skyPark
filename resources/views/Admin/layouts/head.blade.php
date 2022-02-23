@@ -12,12 +12,12 @@
 <link href="{{asset('assets/admin')}}/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 
 <!-- STYLE CSS -->
-<link href="{{asset('assets/admin')}}/css-rtl/style.css" rel="stylesheet"/>
-<link href="{{asset('assets/admin')}}/css-rtl/skin-modes.css" rel="stylesheet"/>
-<link href="{{asset('assets/admin')}}/css-rtl/dark-style.css" rel="stylesheet"/>
+<link href="{{asset('assets/admin')}}/css/style.css" rel="stylesheet"/>
+<link href="{{asset('assets/admin')}}/css/skin-modes.css" rel="stylesheet"/>
+<link href="{{asset('assets/admin')}}/css/dark-style.css" rel="stylesheet"/>
 
 <!-- SIDE-MENU CSS -->
-<link href="{{asset('assets/admin')}}/css-rtl/sidemenu.css" rel="stylesheet">
+<link href="{{asset('assets/admin')}}/css/sidemenu.css" rel="stylesheet">
 
 <!--PERFECT SCROLL CSS-->
 <link href="{{asset('assets/admin')}}/plugins/p-scroll/perfect-scrollbar.css" rel="stylesheet"/>
@@ -39,10 +39,11 @@
 @toastr_css
 
 <!-- Switcher CSS -->
-<link href="{{asset('assets/admin')}}/switcher/css/switcher-rtl.css" rel="stylesheet">
+<link href="{{asset('assets/admin')}}/switcher/css/switcher.css" rel="stylesheet">
 <link href="{{asset('assets/admin')}}/switcher/demo.css" rel="stylesheet">
 
 <script defer src="{{asset('assets/admin')}}/iconfonts/font-awesome/js/brands.js"></script>
 <script defer src="{{asset('assets/admin')}}/iconfonts/font-awesome/js/solid.js"></script>
 <script defer src="{{asset('assets/admin')}}/iconfonts/font-awesome/js/fontawesome.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" rel="stylesheet" />
 @yield('css')
