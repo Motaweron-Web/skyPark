@@ -1,7 +1,7 @@
 @extends('admin/layouts/master')
 
-@section('title') Sky Park | Admins @endsection
-@section('page_name') Admins @endsection
+@section('title') Sky Park | Capacity @endsection
+@section('page_name') Capacity @endsection
 @section('css')
     @include('layouts.loader.formLoader.loaderCss')
 @endsection
@@ -11,14 +11,8 @@
         <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Sky Park Admins</h3>
-                    <div class="">
-                        <button class="btn btn-secondary btn-icon text-white addBtn">
-									<span>
-										<i class="fe fe-plus"></i>
-									</span> Add Admin
-                        </button>
-                    </div>
+                    <h3 class="card-title">Sky Park Capacity</h3>
+                    <div class="text-gray">You Can Edit Days Capacity Or Close The Park At A Specific Day</div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -26,11 +20,10 @@
                         <table class="table table-striped table-bordered text-nowrap w-100" id="dataTable">
                             <thead>
                             <tr class="fw-bolder text-muted bg-light">
-                                <th class="min-w-25px">#</th>
-                                <th class="min-w-50px">Photo</th>
-                                <th class="min-w-50px">Name</th>
-                                <th class="min-w-125px">Email</th>
-                                <th class="min-w-125px">Register</th>
+{{--                                <th class="min-w-25px">#</th>--}}
+                                <th class="min-w-50px">Day</th>
+                                <th class="min-w-50px">Capacity</th>
+                                <th class="min-w-50px">Status</th>
                                 <th class="min-w-50px rounded-end">Actions</th>
                             </tr>
                             </thead>
@@ -46,7 +39,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Delete Data</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Delete Product</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -88,20 +81,19 @@
         `;
 
         var columns = [
-            {data: 'id', name: 'id'},
-            {data: 'photo', name: 'photo'},
-            {data: 'name', name: 'name'},
-            {data: 'email', name: 'email'},
-            {data: 'created_at', name: 'created_at'},
+            // {data: 'id', name: 'id'},
+            {data: 'day', name: 'day'},
+            {data: 'count', name: 'count'},
+            {data: 'status', name: 'status'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
-        showData('{{route('admins.index')}}', columns);
-        deleteScript('{{route('admins.delete')}}');
+        showData('{{route('capacities.index')}}', columns);
+        deleteScript('{{route('capacities.delete')}}');
 
         // Get Edit View
         $(document).on('click', '.editBtn', function () {
             var id = $(this).data('id')
-            var url = "{{route('admins.edit',':id')}}";
+            var url = "{{route('capacities.edit',':id')}}";
             url = url.replace(':id', id)
             $('#modalContent').html(loader)
             $('#editOrCreate').modal('show')
@@ -112,61 +104,6 @@
             setTimeout(function () {
             }, 500)
         })
-
-        // Get Add View
-        $(document).on('click', '.addBtn', function () {
-            $('#modalContent').html(loader)
-            $('#editOrCreate').modal('show')
-            setTimeout(function () {
-                $('#modalContent').load('{{route('admins.create')}}')
-            }, 250)
-        });
-
-        // Add By Ajax
-        $(document).on('submit','Form#addForm',function(e) {
-            e.preventDefault();
-            var formData = new FormData(this);
-            var url = $('#addForm').attr('action');
-            $.ajax({
-                url: url,
-                type: 'POST',
-                data: formData,
-                beforeSend: function () {
-                    $('#addButton').html('<span class="spinner-border spinner-border-sm mr-2" ' +
-                        ' ></span> <span style="margin-left: 4px;">working</span>').attr('disabled', true);
-                },
-                success: function (data) {
-                    if (data.status == 200) {
-                        $('#dataTable').DataTable().ajax.reload();
-                        toastr.success('Admin added successfully');
-                    }
-                    else
-                        toastr.error('There is an error');
-                    $('#addButton').html(`Create`).attr('disabled', false);
-                    $('#editOrCreate').modal('hide')
-                },
-                error: function (data) {
-                    if (data.status === 500) {
-                        toastr.error('There is an error');
-                    } else if (data.status === 422) {
-                        var errors = $.parseJSON(data.responseText);
-                        $.each(errors, function (key, value) {
-                            if ($.isPlainObject(value)) {
-                                $.each(value, function (key, value){
-                                    toastr.error(value, key);
-                                });
-                            }
-                        });
-                    } else
-                        toastr.error('there in an error');
-                    $('#addButton').html(`Create`).attr('disabled', false);
-                },//end error method
-
-                cache: false,
-                contentType: false,
-                processData: false
-            });
-        });
 
         // Update By Ajax
         $(document).on('submit','Form#updateForm',function(e) {
@@ -185,7 +122,7 @@
                     $('#updateButton').html(`Update`).attr('disabled', false);
                     if (data.status == 200){
                         $('#dataTable').DataTable().ajax.reload();
-                        toastr.success('Admin updated successfully');
+                        toastr.success('Capacity updated successfully');
                     }
                     else
                         toastr.error('There is an error');

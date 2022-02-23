@@ -1,7 +1,7 @@
 @extends('admin/layouts/master')
 
-@section('title') Sky Park | Admins @endsection
-@section('page_name') Admins @endsection
+@section('title') Sky Park | Users @endsection
+@section('page_name') Users @endsection
 @section('css')
     @include('layouts.loader.formLoader.loaderCss')
 @endsection
@@ -11,12 +11,12 @@
         <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Sky Park Admins</h3>
+                    <h3 class="card-title">Sky Park Users</h3>
                     <div class="">
                         <button class="btn btn-secondary btn-icon text-white addBtn">
 									<span>
 										<i class="fe fe-plus"></i>
-									</span> Add Admin
+									</span> Add User
                         </button>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                                 <th class="min-w-25px">#</th>
                                 <th class="min-w-50px">Photo</th>
                                 <th class="min-w-50px">Name</th>
-                                <th class="min-w-125px">Email</th>
+                                <th class="min-w-125px">User Name</th>
                                 <th class="min-w-125px">Register</th>
                                 <th class="min-w-50px rounded-end">Actions</th>
                             </tr>
@@ -91,17 +91,17 @@
             {data: 'id', name: 'id'},
             {data: 'photo', name: 'photo'},
             {data: 'name', name: 'name'},
-            {data: 'email', name: 'email'},
+            {data: 'user_name', name: 'user_name'},
             {data: 'created_at', name: 'created_at'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
-        showData('{{route('admins.index')}}', columns);
-        deleteScript('{{route('admins.delete')}}');
+        showData('{{route('users.index')}}', columns);
+        deleteScript('{{route('users.delete')}}');
 
         // Get Edit View
         $(document).on('click', '.editBtn', function () {
             var id = $(this).data('id')
-            var url = "{{route('admins.edit',':id')}}";
+            var url = "{{route('users.edit',':id')}}";
             url = url.replace(':id', id)
             $('#modalContent').html(loader)
             $('#editOrCreate').modal('show')
@@ -118,7 +118,7 @@
             $('#modalContent').html(loader)
             $('#editOrCreate').modal('show')
             setTimeout(function () {
-                $('#modalContent').load('{{route('admins.create')}}')
+                $('#modalContent').load('{{route('users.create')}}')
             }, 250)
         });
 
@@ -138,7 +138,7 @@
                 success: function (data) {
                     if (data.status == 200) {
                         $('#dataTable').DataTable().ajax.reload();
-                        toastr.success('Admin added successfully');
+                        toastr.success('User added successfully');
                     }
                     else
                         toastr.error('There is an error');
@@ -185,7 +185,7 @@
                     $('#updateButton').html(`Update`).attr('disabled', false);
                     if (data.status == 200){
                         $('#dataTable').DataTable().ajax.reload();
-                        toastr.success('Admin updated successfully');
+                        toastr.success('User updated successfully');
                     }
                     else
                         toastr.error('There is an error');

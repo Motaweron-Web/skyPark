@@ -31,7 +31,7 @@ class CreateClientsTable extends Migration
 
             $table->unsignedBigInteger('ref_id')->comment('المرجعى')->nullable();
             $table->foreign('ref_id')->references('id')
-                ->on('references')->onDelete('cascade');
+                ->on('references')->onDelete('set null');
 
             $table->integer('family_size')->default(0)->nullable();
 
