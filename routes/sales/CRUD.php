@@ -16,10 +16,6 @@ use Illuminate\Support\Facades\Route;
 
 
 
-
-
-
-
   //==================================== Group ================================
     Route::resource('reservations', 'ReservationController');
     Route::resource('capacity', 'CapacityController');
