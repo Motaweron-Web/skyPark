@@ -1,7 +1,8 @@
-@extends('admin/layouts/master')
+@extends('Admin/layouts/master')
 @section('title')Sky Park | Dashboard @endsection
 @section('page_name') Home @endsection
 @section('content')
+{{--    //ahmed--}}
 
     <div class="row">
         <div class="col-md-12">

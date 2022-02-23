@@ -1,4 +1,4 @@
-@extends('admin/layouts/master')
+@extends('Admin/layouts/master')
 
 @section('title') Sky Park | Categories @endsection
 @section('page_name') Categories @endsection

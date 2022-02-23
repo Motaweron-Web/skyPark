@@ -1,4 +1,4 @@
-@extends('admin/layouts/master')
+@extends('Admin/layouts/master')
 
 @section('title') Sky Park | Users @endsection
 @section('page_name') Users @endsection
