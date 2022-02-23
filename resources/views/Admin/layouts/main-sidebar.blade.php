@@ -12,7 +12,7 @@
     <ul class="side-menu">
         <li><h3>Elements</h3></li>
         <li class="slide">
-            <a class="side-menu__item" href="">
+            <a class="side-menu__item" href="{{route('adminHome')}}">
                 <i class="icon icon-home side-menu__icon"></i>
                 <span class="side-menu__label">Home</span>
             </a>
@@ -25,11 +25,47 @@
         </li>
 
         <li class="slide">
-            <a class="side-menu__item" href="">
-                <i class="fe fe-mail side-menu__icon"></i>
-                <span class="side-menu__label">Contact Us</span>
+            <a class="side-menu__item" href="{{route('category.index')}}">
+                <i class="icon icon-menu side-menu__icon"></i>
+                <span class="side-menu__label">Categories</span>
             </a>
         </li>
+
+        <li class="slide">
+            <a class="side-menu__item" href="{{route('product.index')}}">
+                <i class="icon icon-handbag side-menu__icon"></i>
+                <span class="side-menu__label">Products</span>
+            </a>
+        </li>
+
+        <li class="slide">
+            <a class="side-menu__item" href="{{route('bracelet.index')}}">
+                <i class="fe fe-bold side-menu__icon"></i>
+                <span class="side-menu__label">Bracelets</span>
+            </a>
+        </li>
+
+        <li class="slide">
+            <a class="side-menu__item" href="{{route('reference.index')}}">
+                <i class="fe fe-tag side-menu__icon"></i>
+                <span class="side-menu__label">References</span>
+            </a>
+        </li>
+
+        <li class="slide">
+            <a class="side-menu__item" href="{{route('users.index')}}">
+                <i class="fe fe-users side-menu__icon"></i>
+                <span class="side-menu__label">Users</span>
+            </a>
+        </li>
+
+        <li class="slide">
+            <a class="side-menu__item" href="{{route('capacities.index')}}">
+                <i class="fe fe-calendar side-menu__icon"></i>
+                <span class="side-menu__label">Days Capacity</span>
+            </a>
+        </li>
+
         <li class="slide">
             <a class="side-menu__item" href="https://laravel.spruko.com/yoha/Sidemenu-Icon-Light-rtl/widgets">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" class="side-menu__icon"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M5 5h4v4H5zm10 10h4v4h-4zM5 15h4v4H5zM16.66 4.52l-2.83 2.82 2.83 2.83 2.83-2.83z" opacity=".3"/><path d="M16.66 1.69L11 7.34 16.66 13l5.66-5.66-5.66-5.65zm-2.83 5.65l2.83-2.83 2.83 2.83-2.83 2.83-2.83-2.83zM3 3v8h8V3H3zm6 6H5V5h4v4zM3 21h8v-8H3v8zm2-6h4v4H5v-4zm8-2v8h8v-8h-8zm6 6h-4v-4h4v4z"/></svg>

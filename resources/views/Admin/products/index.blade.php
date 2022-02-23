@@ -1,7 +1,7 @@
 @extends('admin/layouts/master')
 
-@section('title') Sky Park | Admins @endsection
-@section('page_name') Admins @endsection
+@section('title') Sky Park | Products @endsection
+@section('page_name') Products @endsection
 @section('css')
     @include('layouts.loader.formLoader.loaderCss')
 @endsection
@@ -11,12 +11,12 @@
         <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Sky Park Admins</h3>
+                    <h3 class="card-title">Sky Park Products</h3>
                     <div class="">
                         <button class="btn btn-secondary btn-icon text-white addBtn">
 									<span>
 										<i class="fe fe-plus"></i>
-									</span> Add Admin
+									</span> Add Product
                         </button>
                     </div>
                 </div>
@@ -27,10 +27,11 @@
                             <thead>
                             <tr class="fw-bolder text-muted bg-light">
                                 <th class="min-w-25px">#</th>
-                                <th class="min-w-50px">Photo</th>
-                                <th class="min-w-50px">Name</th>
-                                <th class="min-w-125px">Email</th>
-                                <th class="min-w-125px">Register</th>
+                                <th class="min-w-50px">Title</th>
+                                <th class="min-w-50px">Category</th>
+                                <th class="min-w-50px">Price</th>
+                                <th class="min-w-50px">Status</th>
+                                <th class="min-w-50px">Creation Time</th>
                                 <th class="min-w-50px rounded-end">Actions</th>
                             </tr>
                             </thead>
@@ -46,7 +47,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Delete Data</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Delete Product</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -89,19 +90,20 @@
 
         var columns = [
             {data: 'id', name: 'id'},
-            {data: 'photo', name: 'photo'},
-            {data: 'name', name: 'name'},
-            {data: 'email', name: 'email'},
+            {data: 'title', name: 'title'},
+            {data: 'category_id', name: 'category_id'},
+            {data: 'price', name: 'price'},
+            {data: 'status', name: 'status'},
             {data: 'created_at', name: 'created_at'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
-        showData('{{route('admins.index')}}', columns);
-        deleteScript('{{route('admins.delete')}}');
+        showData('{{route('product.index')}}', columns);
+        deleteScript('{{route('product.delete')}}');
 
         // Get Edit View
         $(document).on('click', '.editBtn', function () {
             var id = $(this).data('id')
-            var url = "{{route('admins.edit',':id')}}";
+            var url = "{{route('product.edit',':id')}}";
             url = url.replace(':id', id)
             $('#modalContent').html(loader)
             $('#editOrCreate').modal('show')
@@ -118,7 +120,7 @@
             $('#modalContent').html(loader)
             $('#editOrCreate').modal('show')
             setTimeout(function () {
-                $('#modalContent').load('{{route('admins.create')}}')
+                $('#modalContent').load('{{route('product.create')}}')
             }, 250)
         });
 
@@ -138,7 +140,7 @@
                 success: function (data) {
                     if (data.status == 200) {
                         $('#dataTable').DataTable().ajax.reload();
-                        toastr.success('Admin added successfully');
+                        toastr.success('Product added successfully');
                     }
                     else
                         toastr.error('There is an error');
@@ -185,7 +187,7 @@
                     $('#updateButton').html(`Update`).attr('disabled', false);
                     if (data.status == 200){
                         $('#dataTable').DataTable().ajax.reload();
-                        toastr.success('Admin updated successfully');
+                        toastr.success('Product updated successfully');
                     }
                     else
                         toastr.error('There is an error');

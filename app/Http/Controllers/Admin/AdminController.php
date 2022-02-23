@@ -29,7 +29,7 @@ class AdminController extends Controller
                        ';
                 })
                 ->editColumn('created_at', function ($admins) {
-                    return '' . $admins->created_at->diffForHumans();
+                    return $admins->created_at->diffForHumans();
                 })
                 ->editColumn('photo', function ($admins) {
                     return '
@@ -115,10 +115,11 @@ class AdminController extends Controller
     public function update(request $request)
     {
         $inputs = $request->validate([
-            'email' => 'required|unique:admins',
-            'name' => 'required',
+            'id'       => 'required|exists:admins,id',
+            'email'    => 'required|unique:admins,email,'.$request->id,
+            'name'     => 'required',
             'password' => 'nullable|min:6',
-            'photo' => 'nullable',
+            'photo'    => 'nullable',
         ]);
         if ($request->has('photo')) {
             $file_name = $this->saveImage($request->photo, 'assets/uploads/admins');
@@ -126,7 +127,8 @@ class AdminController extends Controller
         }
         if ($request->has('password'))
             $inputs['password'] = Hash::make($request->password);
-        if (Admin::update($inputs))
+        $admin = Admin::findOrFail($request->id);
+        if ($admin->update($inputs))
             return response()->json(['status' => 200]);
         else
             return response()->json(['status' => 405]);

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Bracelets extends Model
 {
+<<<<<<< HEAD
     public function scopeBraceletFree($query)
     {
         return $query->where([
@@ -28,3 +29,7 @@ class Bracelets extends Model
     }
 
 }//end class
+=======
+    protected $guarded = [];
+}
+>>>>>>> 9148ece94347e32e953310fa77edb9dedea0a753
