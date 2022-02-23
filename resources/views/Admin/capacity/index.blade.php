@@ -69,7 +69,7 @@
         </div>
         <!-- Edit MODAL CLOSED -->
     </div>
-    @include('admin/layouts/myAjaxHelper')
+    @include('Admin/layouts/myAjaxHelper')
 @endsection
 @section('ajaxCalls')
     <script>
