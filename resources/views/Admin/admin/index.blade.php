@@ -1,18 +1,23 @@
 @extends('admin/layouts/master')
-@section('title')لوحة التحكم | المشرفين@endsection
-@section('page_name')المشرفين@endsection
+
+@section('title') Sky Park | Admins @endsection
+@section('page_name') Admins @endsection
+@section('css')
+    @include('layouts.loader.formLoader.loaderCss')
+@endsection
 @section('content')
+
     <div class="row">
         <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">مشرفين الموقع</h3>
+                    <h3 class="card-title">Sky Park Admins</h3>
                     <div class="">
-                    <a href="#" class="btn btn-secondary btn-icon text-white">
+                        <button class="btn btn-secondary btn-icon text-white addBtn">
 									<span>
 										<i class="fe fe-plus"></i>
-									</span> اضافة مشرف
-                    </a>
+									</span> Add Admin
+                        </button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -22,11 +27,11 @@
                             <thead>
                             <tr class="fw-bolder text-muted bg-light">
                                 <th class="min-w-25px">#</th>
-                                <th class="min-w-50px">الصورة</th>
-                                <th class="min-w-50px">الاسم</th>
-                                <th class="min-w-125px">الايميل</th>
-                                <th class="min-w-125px">وقت التسجيل</th>
-                                <th class="min-w-50px rounded-end">العمليات</th>
+                                <th class="min-w-50px">Photo</th>
+                                <th class="min-w-50px">Name</th>
+                                <th class="min-w-125px">Email</th>
+                                <th class="min-w-125px">Register</th>
+                                <th class="min-w-50px rounded-end">Actions</th>
                             </tr>
                             </thead>
                         </table>
@@ -35,33 +40,55 @@
             </div>
         </div>
 
-        <!-- MODAL -->
-        <div class="modal fade" id="delete_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <!--Delete MODAL -->
+        <div class="modal fade" id="delete_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">حذف بيانات</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Delete Data</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <input id="delete_id" name="id" type="hidden">
-                        <p>هل انت متأكد من حذف بيانات <span id="title" class="text-danger"></span>؟</p>
+                        <p>Are You Sure Of Deleting This Row <span id="title" class="text-danger"></span>?</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" id="dismiss_delete_modal">تراجع</button>
-                        <button type="button" class="btn btn-danger" id="delete_btn">احذف !</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="dismiss_delete_modal">
+                            Back
+                        </button>
+                        <button type="button" class="btn btn-danger" id="delete_btn">Delete !</button>
                     </div>
                 </div>
             </div>
         </div>
         <!-- MODAL CLOSED -->
+
+        <!-- Edit MODAL -->
+        <div class="modal fade" id="editOrCreate" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" id="modalContent">
+                    <div id="modalBody">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- Edit MODAL CLOSED -->
     </div>
     @include('admin/layouts/myAjaxHelper')
 @endsection
 @section('ajaxCalls')
     <script>
+        var loader = ` <div class="linear-background">
+                            <div class="inter-crop"></div>
+                            <div class="inter-right--top"></div>
+                            <div class="inter-right--bottom"></div>
+                        </div>
+        `;
+
         var columns = [
             {data: 'id', name: 'id'},
             {data: 'photo', name: 'photo'},
@@ -70,8 +97,124 @@
             {data: 'created_at', name: 'created_at'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
-        showData('{{route('admin.index')}}',columns);
-        deleteScript('{{route('delete_admin')}}');
+        showData('{{route('admins.index')}}', columns);
+        deleteScript('{{route('admins.delete')}}');
+
+        // Get Edit View
+        $(document).on('click', '.editBtn', function () {
+            var id = $(this).data('id')
+            var url = "{{route('admins.edit',':id')}}";
+            url = url.replace(':id', id)
+            $('#modalContent').html(loader)
+            $('#editOrCreate').modal('show')
+
+            setTimeout(function () {
+                $('#modalContent').load(url)
+            }, 250)
+            setTimeout(function () {
+            }, 500)
+        })
+
+        // Get Add View
+        $(document).on('click', '.addBtn', function () {
+            $('#modalContent').html(loader)
+            $('#editOrCreate').modal('show')
+            setTimeout(function () {
+                $('#modalContent').load('{{route('admins.create')}}')
+            }, 250)
+        });
+
+        // Add By Ajax
+        $(document).on('submit','Form#addForm',function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            var url = $('#addForm').attr('action');
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                beforeSend: function () {
+                    $('#addButton').html('<span class="spinner-border spinner-border-sm mr-2" ' +
+                        ' ></span> <span style="margin-left: 4px;">working</span>').attr('disabled', true);
+
+                },
+                success: function (data) {
+                    $('#addButton').html(`Create`).attr('disabled', false);
+                    if (data.status == 200)
+                        toastr.success('Admin added successfully');
+                    else
+                        toastr.error('There is an error');
+
+                    $('#editOrCreate').modal('hide')
+                },
+                error: function (data) {
+                    if (data.status === 500) {
+                        toastr.error('There is an error');
+                    } else if (data.status === 422) {
+                        var errors = $.parseJSON(data.responseText);
+                        $.each(errors, function (key, value) {
+                            if ($.isPlainObject(value)) {
+                                $.each(value, function (key, value){
+                                    toastr.error(value, key);
+                                });
+                            }
+                        });
+                    } else
+                        toastr.error('there in an error');
+                    $('#addButton').html(`Create`).attr('disabled', false);
+                },//end error method
+
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
+
+        // Update By Ajax
+        $(document).on('submit','Form#updateForm',function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            var url = $('#updateForm').attr('action');
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                beforeSend: function () {
+                    $('#updateButton').html('<span class="spinner-border spinner-border-sm mr-2" ' +
+                        ' ></span> <span style="margin-left: 4px;">working</span>').attr('disabled', true);
+                },
+                success: function (data) {
+                    $('#updateButton').html(`Update`).attr('disabled', false);
+                    if (data.status == 200)
+                        toastr.success('Admin added successfully');
+                    else
+                        toastr.error('There is an error');
+
+                    $('#editOrCreate').modal('hide')
+                },
+                error: function (data) {
+                    if (data.status === 500) {
+                        toastr.error('There is an error');
+                    } else if (data.status === 422) {
+                        var errors = $.parseJSON(data.responseText);
+                        $.each(errors, function (key, value) {
+                            if ($.isPlainObject(value)) {
+                                $.each(value, function (key, value){
+                                    toastr.error(value, key);
+                                });
+                            }
+                        });
+                    } else
+                        toastr.error('there in an error');
+                    $('#updateButton').html(`Update`).attr('disabled', false);
+                },//end error method
+
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
+
     </script>
 @endsection
 

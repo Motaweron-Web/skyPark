@@ -82,7 +82,7 @@
                 if (data == 200){
                     toastr.success('login successfully');
                     window.setTimeout(function() {
-                        window.location.href='/';
+                        window.location.href='/admin';
                     }, 1000);
                 }else {
                     toastr.error('wrong password');

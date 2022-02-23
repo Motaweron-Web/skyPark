@@ -10,7 +10,7 @@ class AuthController extends Controller
 {
     public function index(){
         if (Auth::guard('admin')->check()){
-            return 'logged';
+            return redirect('admin');
         }
         return view('admin.auth.login');
     }
@@ -30,6 +30,6 @@ class AuthController extends Controller
     public function logout(){
         Auth::guard('admin')->logout();
         toastr()->info('logged out successfully');
-        return redirect('admin.login');
+        return redirect('admin/login');
     }
 }

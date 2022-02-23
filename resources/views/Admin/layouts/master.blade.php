@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 
 <head>
     @include('admin/layouts/head')
@@ -32,9 +32,9 @@
                 <!-- PAGE-HEADER -->
                 <div class="page-header">
                     <div>
-                        <h1 class="page-title">مرحبا بـك ! <i class="fas fa-heart text-danger"></i></h1>
+                        <h1 class="page-title">Welcome Back <i class="fas fa-heart text-danger"></i></h1>
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="">لوحة التحكم</a></li>
+                            <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
                             <li class="breadcrumb-item active" aria-current="page">@yield('page_name')</li>
                         </ol>
                     </div>

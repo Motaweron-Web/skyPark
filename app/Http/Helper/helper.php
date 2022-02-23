@@ -677,12 +677,12 @@ if (!function_exists('get_user_photo')) {
     {
         if ($image!= null){
             if (!file_exists($image)){
-                return asset('assets/uploads/avatar.png');
+                return asset('assets/uploads/avatar.gif');
             }else{
                 return asset($image);
             }
         }else{
-            return asset('assets/uploads/avatar.png');
+            return asset('assets/uploads/avatar.gif');
         }
     }
 }

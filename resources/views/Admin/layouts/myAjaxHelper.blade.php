@@ -10,22 +10,22 @@
                     [0, "desc"]
                 ],
                 "language": {
-                    "sProcessing": "جاري التحميل ..",
-                    "sLengthMenu": "اظهار _MENU_ سجل",
-                    "sZeroRecords": "لا يوجد نتائج",
-                    "sInfo": "اظهار _START_ الى  _END_ من _TOTAL_ سجل",
-                    "sInfoEmpty": "لا نتائج",
-                    "sInfoFiltered": "للبحث",
-                    "sSearch": "بحث :    ",
+                    "sProcessing": "Loading ...",
+                    "sLengthMenu": "Show _MENU_ Row",
+                    "sZeroRecords": "No Data",
+                    "sInfo": "show _START_ to  _END_ from _TOTAL_ rows",
+                    "sInfoEmpty": "No Data",
+                    "sInfoFiltered": "For Search",
+                    "sSearch": "Search : ",
                     "oPaginate": {
-                        "sPrevious": "السابق",
-                        "sNext": "التالي",
+                        "sPrevious": "Previous",
+                        "sNext": "Next",
                     },
                     buttons: {
-                        copyTitle: 'تم النسخ للحافظة <i class="fa fa-check-circle text-success"></i>',
+                        copyTitle: 'Copied To Clipboard<i class="fa fa-check-circle text-success"></i>',
                         copySuccess: {
-                            1: "تم نسخ صف واحد",
-                            _: "تم نسخ %d صفوف بنجاح"
+                            1: "Copied One Row",
+                            _: "Copied %d Rows Successfully"
                         },
                     }
                 },
@@ -34,17 +34,17 @@
                 buttons: [
                     {
                         extend: 'copy',
-                        text: 'نسخ',
+                        text: 'Copy',
                         className: 'btn-primary'
                     },
                     {
                         extend: 'print',
-                        text: 'طباعة',
+                        text: 'Print',
                         className: 'btn-primary'
                     },
                     {
                         extend: 'excel',
-                        text: 'اكسيل',
+                        text: 'Excel',
                         className: 'btn-primary'
                     },
                     {
@@ -54,7 +54,7 @@
                     },
                     {
                         extend: 'colvis',
-                        text: 'عرض',
+                        text: 'Visibility',
                         className: 'btn-primary'
                     },
                 ]
