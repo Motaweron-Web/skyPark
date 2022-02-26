@@ -9,7 +9,7 @@
     @csrf
     <div class="form-group">
         <label for="name" class="form-control-label">Photo</label>
-        <input type="file" class="dropify" name="photo" data-default-file="{{asset('assets/uploads/avatar.gif')}}"/>
+        <input type="file" class="dropify" name="photo" data-default-file="{{asset('assets/uploads/avatar.gif')}}" accept="image/png, image/gif, image/jpeg,image/jpg"/>
     </div>
     <div class="form-group">
         <label for="name" class="form-control-label">Name</label>

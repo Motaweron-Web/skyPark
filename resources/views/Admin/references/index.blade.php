@@ -1,4 +1,4 @@
-@extends('admin/layouts/master')
+@extends('Admin/layouts/master')
 
 @section('title') Sky Park | References @endsection
 @section('page_name') References @endsection
@@ -74,7 +74,7 @@
         </div>
         <!-- Edit MODAL CLOSED -->
     </div>
-    @include('admin/layouts/myAjaxHelper')
+    @include('Admin/layouts/myAjaxHelper')
 @endsection
 @section('ajaxCalls')
     <script>

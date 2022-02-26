@@ -9,6 +9,27 @@
           </advancedOptions>
         </fileTransfer>
       </webServer>
+      <webServer id="085661d0-82f9-4a2c-a18b-1bcba36dd077" name="RAGM-API" url="http://ftp.rynprogramming.com">
+        <fileTransfer host="ftp.rynprogramming.com" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="0d5d53ac-48fb-4169-8c83-2dd05688afd3" name="RAGM-Dashboard" url="http://rynprogramming.com">
+        <fileTransfer host="rynprogramming.com" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="ac739a38-26c9-447b-940f-37a81d3b3ac6" name="Keni Company" url="http://rynprogramming.com">
+        <fileTransfer host="rynprogramming.com" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>

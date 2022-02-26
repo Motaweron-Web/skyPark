@@ -39,7 +39,25 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin','namespace'=>'Admin']
     Route::resource('capacities','CapacityController');
     Route::POST('capacities.delete','CapacityController@delete')->name('capacities.delete');
 
+    #### Clients ####
+    Route::resource('clients','ClientsController');
+    Route::POST('client.delete','ClientsController@delete')->name('client.delete');
 
+    #### Sliders ####
+    Route::resource('sliders','SlidersController');
+    Route::POST('slider.delete','SlidersController@delete')->name('slider.delete');
+
+    #### About Us ####
+    Route::resource('about_us','AboutUsController');
+    Route::POST('about_us.delete','AboutUsController@delete')->name('about_us.delete');
+
+    #### Contact Us ####
+    Route::resource('contact_us','ContactUsController');
+    Route::POST('contact_us.delete','ContactUsController@delete')->name('contact_us.delete');
+
+    #### Contact Us ####
+    Route::get('general_setting','SettingController@index')->name('general_setting.index');
+    Route::POST('edit_setting','SettingController@edit')->name('admin.edit.setting');
 
     #### Auth ####
     Route::get('logout', 'AuthController@logout')->name('admin.logout');
