@@ -95,7 +95,7 @@ class AdminController extends Controller
                 'email'     => 'required|unique:admins',
                 'name'      => 'required',
                 'password'  => 'required|min:6',
-                'photo'     => 'nullable',
+                'photo'     => 'nullable|mimes:jpeg,jpg,png,gif',
             ]);
             if($request->has('photo')){
                 $file_name = $this->saveImage($request->photo,'assets/uploads/admins');
