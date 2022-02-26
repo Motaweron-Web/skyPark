@@ -35,10 +35,6 @@ Route::get('group-access', function () {
     return view('sales.group-access');
 })->name('group-access');
 
-Route::get('exit', function () {
-    return view('sales.exit');
-})->name('exit');
-
 
 
 

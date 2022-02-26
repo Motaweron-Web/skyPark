@@ -37,5 +37,13 @@ class Reservations extends Model
         return $this->hasMany(TicketRevModel::class,'rev_id')
             ->where('status', 'append');
     }//end fun
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function in_models()
+    {
+        return $this->hasMany(TicketRevModel::class,'rev_id')
+            ->where('status', 'in');
+    }//end fun
 
 }//end class

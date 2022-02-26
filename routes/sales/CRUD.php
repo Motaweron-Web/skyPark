@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 
 
 
+    //==================================== Group ================================
+         Route::resource('familyAccess', 'FamilyAccessController');
+
+
 
 
 
@@ -29,3 +33,7 @@ use Illuminate\Support\Facades\Route;
 
     //=========================== visitor Types Prices ============================
     Route::get('visitorTypesPrices','VisitorTypesPricesController@visitorTypesPrices')->name('visitorTypesPrices');
+
+
+    #################################### Exit =======================================
+        Route::resource('exit','ExitController');

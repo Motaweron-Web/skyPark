@@ -408,7 +408,7 @@ Sky Park | Event Reservation
               <div class=" bill" id="bill">
                   <h4 class="font-weight-bolder ps-2">Bill</h4>
                   <div class="info">
-                      <h6 class="billTitle"> ticket <span id="RandTicket">{{$random}}</span></h6>
+                      <h6 class="billTitle"> ticket <span id="RandTicket">{{$customId}}</span></h6>
                       <ul>
                           <li><label> Visit Date : </label> <strong id="dateOfTicket"> </strong></li>
                           <li><label> Reservation Duration : </label> <strong id="hourOfTicket"></strong></li>

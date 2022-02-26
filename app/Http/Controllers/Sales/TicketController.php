@@ -171,8 +171,10 @@ class TicketController extends Controller
                 $q->where('status','1');
             })
             ->get();
-        $random = substr(Carbon::now()->format("l"),0,3).rand(0, 999).Carbon::now()->format('is');
-        return view('sales/ticket',compact('shifts','random','types','categories','id'));
+        $customId     = strtoupper(date('D').$id.'Re'.substr(time(), -2));
+
+        $random = strtoupper(substr(Carbon::now()->format("l"),0,3).rand(0, 999).Carbon::now()->format('is'));
+        return view('sales/ticket',compact('customId','shifts','random','types','categories','id'));
     }
 
     public function storeModels(request $request){
