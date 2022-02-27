@@ -178,8 +178,8 @@
                     success: function (data) {
                         if (data.status === 200) {
                             // $("#dismiss_delete_modal")[0].click();
-                            table.reload();
                             toastr.success(data.message)
+                            // table.ajax.reload();
                         } else {
                             // $("#dismiss_delete_modal")[0].click();
                             toastr.error(data.message)
