@@ -1,11 +1,16 @@
-<span class="controlIcons">
-      <span class="icon" data-bs-toggle="tooltip" title="temp exit"> <i class="fas fa-sign-out me-2"></i>
+
+
+    @if($model->temp_status == 'in')
+            <span class="icon tempStatus" data-bs-toggle="tooltip" data-status="out" data-id="{{$model->id}}" title="temp exit"> <i class="fas fa-sign-out me-2"></i>
         temp exit </span>
-      <span class="icon" data-bs-toggle="tooltip" title="temp return"> <i class="fas fa-sign-in me-2"></i>
+        @elseif($model->temp_status == 'out')
+            <span class="icon tempStatus" data-bs-toggle="tooltip" data-status="in" data-id="{{$model->id}}" title="temp return"> <i class="fas fa-sign-in me-2"></i>
         temp return </span>
-      <span class="icon" data-bs-toggle="modal" data-bs-target="#topUp" data-bs-toggle="tooltip"
+        @endif
+
+      <span class="icon topUpHours" data-id="{{$model->id}}"
             title="topUp"> <i class="fas fa-alarm-plus me-2"></i>
         topUp</span>
-      <span class="icon" data-bs-toggle="tooltip" title=" exit"> <i class="fad fa-door-open me-2"></i>
-        exit</span>
-</span>
+      <a href="{{route('exit.show',base64_encode($model->id))}}" class="icon" data-bs-toggle="tooltip" title=" exit"> <i class="fad fa-door-open me-2"></i>
+        exit</a>
+

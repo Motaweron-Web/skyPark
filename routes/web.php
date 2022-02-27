@@ -51,6 +51,12 @@ Route::group(['middleware'=>'auth','namespace'=>'Sales'],function(){
     require __DIR__.'/sales/CRUD.php';
 
 });
+Route::group(['namespace'=>'Sales'],function(){
+
+    //=========================== visitor Types Prices ============================
+    Route::get('visitorTypesPrices','VisitorTypesPricesController@visitorTypesPrices')->name('visitorTypesPrices');
+
+});
 
 Route::get('creatCapacity','Sales\HomeController@creatCapacity');
 

@@ -2,48 +2,53 @@
 @section('page_title')
     Sky Park | Exit
 @endsection
+@section('css')
+    @include('layouts.loader.formLoader.loaderCss')
+@endsection
 @section('content')
       <h2 class="MainTiltle mb-5 ms-4"> Exit </h2>
       <div class="card py-4 w-100 w-sm-80 m-auto ">
         <form method="get" action="{{route('exit.index')}}" class="card-body ">
           <label class="form-label fs-4"> <i class="fas fa-ticket-alt me-2"></i>phone , bracelet number or ticket number</label>
           <div class="d-flex">
-            <input type="text" class="form-control" name="search" value="{{$_GET['search']??''}}" id="searchValue" placeholder="Type here...">
+            <input type="text" class="form-control" name="search" value="{{count($models)?$_GET['search']:''}}" id="searchValue" placeholder="Type here...">
             <button type="submit" id="searchBtn" class="input-group-text ms-2 bg-gradient-primary px-4 text-body"><i
                 class="fas fa-search text-white"></i></button>
           </div>
         </form>
       </div>
-
-      <div class="card p-2 py-4 mt-3" style="display: {{count($models)?'block':'none'}}"  id="result">
+      @if(count($models))
+      <div class="card p-2 py-4 mt-3"   id="result">
         <div class="screens p-3 row">
           <div class="screen col">
             <span>total</span>
-            <strong> {{$ticket->grand_total}} </strong>
+            <strong> {{collect($models)->count()}} </strong>
           </div>
           <div class="screen col">
             <span>still</span>
-            <strong> 4 </strong>
+            <strong> {{collect($models)->where('temp_status','in')->count()}} </strong>
           </div>
           <div class="screen col">
             <span>migrated</span>
-            <strong> 1 </strong>
+            <strong> {{collect($models)->where('temp_status','out')->count()}} </strong>
           </div>
           <div class="screen col">
             <span>topUp</span>
-            <strong> {{$ticket->total_top_up_price}} </strong>
+            <strong> {{$ticket->total_top_up_price??0}} </strong>
           </div>
         </div>
 
 
         <div class=" topUp w-100 w-md-80 m-auto p-3 mb-5 ">
 
-          <div class="alert alert-primary alert-dismissible fade show text-white bg-gradient-primary" role="alert">
-            <span class="alert-text"><strong>TopUp ! </strong> The customer has an extra time of 2 hours</span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true"><i class="fal fa-times  fs-4"></i></span>
-            </button>
-          </div>
+         @if($hours)
+                <div class="alert alert-primary alert-dismissible fade show text-white bg-gradient-primary" role="alert">
+                    <span class="alert-text"><strong>TopUp ! </strong> The customer has an extra time of {{$hours}} hours</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true"><i class="fal fa-times  fs-4"></i></span>
+                    </button>
+                </div>
+         @endif
 
           <label class="form-label ">payment method</label>
           <div class="paymentMethods">
@@ -108,7 +113,7 @@
                   <td><i class="fas fa-alarm-plus me-1 fa-1x color1"></i> {{$model->top_up_hours}}</td>
                   <td>{{$ticket->first()->client->name ?? $ticket->first()->client_name??''}}</td>
                   <td>{{$ticket->first()->client->phone ?? $ticket->first()->phone??''}}</td>
-                  <td>{!! $returnArray[$model->id] !!}</td>
+                  <td><span class="controlIcons" id="exitActions{{$model->id}}">{!! $returnArray[$model->id] !!}</span></td>
 
               </tr>
           @endforeach
@@ -121,9 +126,10 @@
         </div>
 
         <div class="text-center d-flex justify-content-center">
-          <button type="button" data-bs-toggle="modal" data-bs-target="#modal-print"
-            class="btn bg-gradient-primary m-3 mb-0">Reprint</button>
-          <button type="button" class="btn btn-dark m-3 mb-0"> final exit </button>
+          <button type="button"
+            class="btn bg-gradient-primary m-3 mb-0" id="print"
+                  data-url="{{$type=='rev'?route('reservations.show',$ticket->id):route('reservations.show',$ticket->id)}}">Reprint</button>
+          <a href="{{route('exit-all',$_GET['search']??'')}}" type="button" class="btn btn-dark m-3 mb-0"> final exit </a>
         </div>
 
         <!-- topUp Modal -->
@@ -136,14 +142,8 @@
                   <i class="fal fa-times text-dark fs-4"></i>
                 </button>
               </div>
-              <div class="modal-body text-center">
-                <form class="py-3">
-                  <div>
-                    <label>TopUp Time (h) </label>
-                    <input class="form-control" type="number" />
-                  </div>
-                  <button type="submit" class="btn bg-gradient-primary m-3 mb-0"> Confirm </button>
-                </form>
+              <div class="modal-body text-center" id="topUpBody">
+
               </div>
 
             </div>
@@ -175,10 +175,9 @@
             </div>
           </div>
         </div>
-
-
-
       </div>
+          @include('layouts.print.iframe')
+        @endif
 @endsection
 @section('js')
     {{--================= custom js ==================--}}

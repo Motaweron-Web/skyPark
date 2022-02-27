@@ -154,7 +154,7 @@ class ReservationController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('layouts.print.rev');
     }
 
     /**

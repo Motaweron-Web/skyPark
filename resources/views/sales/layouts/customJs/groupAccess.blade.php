@@ -131,13 +131,18 @@
         if (!braceletNumber.length) {
             toastr.warning('you should fill bracelet number')
         }else {
-            if (submitRow(id)){
-                accessWhenLoad()
-            }
+            submitRow(id)
+            // if (submitRow(id)){
+            // }
         }
 
         setTimeout(function () {
+            accessWhenLoad()
+
+        }, 400)
+        setTimeout(function () {
             $('.spinner').hide()
+
         }, 500)
 
 
