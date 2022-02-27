@@ -1,4 +1,10 @@
 <script>
+    var loader = ` <div class="linear-background">
+                            <div class="inter-crop"></div>
+                            <div class="inter-right--top"></div>
+                            <div class="inter-right--bottom"></div>
+                        </div>
+        `;
         var table = $('.customDataTable').DataTable({
             responsive: true,
             paging:false
@@ -66,6 +72,61 @@
                 },//end error method
             });
         }
+        $(document).on('click','.tempStatus',function () {
+            var id = $(this).data('id')
+            var status = $(this).data('status')
+
+            var url = "{{route('exit.update',':id')}}";
+
+            url = url.replace(':id',id)
+
+            var method_={
+                temp_status:status,
+                _method:"PUT",
+            }
+
+            $('.spinner').show()
+
+            $.post(url,method_,function (data) {
+                if (data.status ==200){
+                    location.reload()
+                }
+            }).then(function (){
+                $('.spinner').hide()
+            })
+        })
+
+        $(document).on('click','.topUpHours',function () {
+            var id = $(this).data('id')
+
+            var url = "{{route('exit.edit',':id')}}";
+
+            url = url.replace(':id',id)
+
+            $('#topUpBody').html(loader)
+
+            $('#topUp').modal('show')
+
+            setTimeout($('#topUpBody').load(url),500)
+        })
+
+    if (!{{count($models)}}){
+        var url = "{{route('exit.index')}}"
+        window.history.pushState({path: url}, '', url);
+    }
+    $(document).on('click','#print',function () {
+        var url = $(this).data('url');
+
+        $('.spinner').show()
+        $('#printIframe').attr('src',url)
+        setTimeout(function () {
+            $('.spinner').hide()
+        },500)
+        setTimeout(function () {
+            $('#modal-print').modal('show')
+        },1000)
+
+    })
 
 
 </script>

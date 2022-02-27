@@ -136,7 +136,20 @@ class FamilyAccessController extends Controller
             'name'=>'nullable|max:500',
             'gender'=>'nullable|in:male,female',
         ]);
+        $model = TicketRevModel::findOrFail($request->id);
 
+        if ($model->rev_id != '') {
+            $ticket = Reservations::findOrFail($model->rev_id);
+        }
+        elseif($model->ticket_id != ''){
+            $ticket = Ticket::findOrFail($model->ticket_id);
+
+        }else{
+            toastr()->info('not found');
+            return response(1,500);
+        }
+
+        $status['status'] = 'in';
         $data['status'] = 'in';
         $data['start_at'] = date('h:i:s');
 
@@ -144,7 +157,9 @@ class FamilyAccessController extends Controller
 
         Bracelets::where('title',$request->bracelet_number)->update($braceletData);
 
-        TicketRevModel::findOrFail($request->id)->update($data);
+
+        $model->update($data);
+        $ticket->update($status);
         return response(1);
     }
 

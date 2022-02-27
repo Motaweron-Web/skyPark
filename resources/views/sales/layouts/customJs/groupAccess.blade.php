@@ -131,13 +131,15 @@
         if (!braceletNumber.length) {
             toastr.warning('you should fill bracelet number')
         }else {
-            if (submitRow(id)){
-                accessWhenLoad()
-            }
+            submitRow(id)
+            // if (submitRow(id)){
+            // }
         }
+
 
         setTimeout(function () {
             $('.spinner').hide()
+
         }, 500)
 
 
@@ -168,7 +170,10 @@
         url = url.replace(':id', id)
         $.post(url, method, function (data) {
             if (data) {
-                return true;
+                setTimeout(function () {
+                    accessWhenLoad()
+
+                }, 400)
             }
         }).fail(function (data) {
             if (data.status === 500) {

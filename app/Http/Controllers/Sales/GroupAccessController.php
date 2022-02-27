@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sales;
 use App\Http\Controllers\Controller;
 use App\Models\Bracelets;
 use App\Models\Reservations;
+use App\Models\Ticket;
 use App\Models\TicketRevModel;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -16,12 +17,12 @@ class GroupAccessController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
+    public function index(Request $request){
 
         if ($request->ajax()) {
 
             $reservation = Reservations::where('custom_id', $request->search)
+                ->where('status','append')
                 ->orWhere('phone', $request->search)->with('append_models.type')
                 ->where('day', date('Y-m-d'));
 
@@ -133,14 +134,27 @@ class GroupAccessController extends Controller
             'name'=>'nullable|max:500',
             'gender'=>'nullable|in:male,female',
         ]);
+        $model = TicketRevModel::findOrFail($request->id);
 
         $data['status'] = 'in';
+        $status['status'] = 'in';
 
+        if ($model->rev_id != '') {
+            $ticket = Reservations::findOrFail($model->rev_id);
+        }
+        elseif($model->ticket_id != ''){
+            $ticket = Ticket::findOrFail($model->ticket_id);
+
+        }else{
+            toastr()->info('not found');
+            return response(1,500);
+        }
         $braceletData['status'] = false;
 
         Bracelets::where('title',$request->bracelet_number)->update($braceletData);
 
-        TicketRevModel::findOrFail($request->id)->update($data);
+        $model->update($data);
+        $ticket->update($status);
         return response(1);
     }
 
