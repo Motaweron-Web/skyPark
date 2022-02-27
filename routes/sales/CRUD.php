@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 // Reservation
 Route::get('searchForReservations', 'ReservationController@searchForReservations')->name('searchForReservations');
 
+    //==================================== Group ================================
+         Route::resource('familyAccess', 'FamilyAccessController');
+
+
 
 
 
@@ -30,3 +34,7 @@ Route::get('searchForReservations', 'ReservationController@searchForReservations
 
     //=========================== visitor Types Prices ============================
     Route::get('visitorTypesPrices','VisitorTypesPricesController@visitorTypesPrices')->name('visitorTypesPrices');
+
+
+    #################################### Exit =======================================
+        Route::resource('exit','ExitController');

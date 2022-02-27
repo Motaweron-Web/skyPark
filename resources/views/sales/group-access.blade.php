@@ -32,41 +32,41 @@
             </tbody>
         </table>
 
-        <div class=" p-4">
-            <label class="form-label fs-5"><i class="fas fa-feather-alt me-1"></i> Note</label>
-            <textarea name="" id="" class="form-control" rows="6" placeholder="Add Note..."></textarea>
-        </div>
+{{--        <div class=" p-4">--}}
+{{--            <label class="form-label fs-5"><i class="fas fa-feather-alt me-1"></i> Note</label>--}}
+{{--            <textarea name="" id="" class="form-control" rows="6" placeholder="Add Note..."></textarea>--}}
+{{--        </div>--}}
 
-        <div class="text-center w-80 w-sm-20 m-auto">
-            <button type="button" data-bs-toggle="modal" data-bs-target="#modal-print"
-                    class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Print</button>
-        </div>
+{{--        <div class="text-center w-80 w-sm-20 m-auto">--}}
+{{--            <button type="button" data-bs-toggle="modal" data-bs-target="#modal-print"--}}
+{{--                    class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Print</button>--}}
+{{--        </div>--}}
 
 
-        <div class="modal fade" id="modal-print" tabindex="-1" role="dialog" aria-labelledby="modal-print"
-             aria-hidden="true">
-            <div class="modal-dialog modal-danger modal-dialog-centered modal-" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h6 class="modal-title" id="modal-title-print">Print Ticket</h6>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                            <i class="fal fa-times text-dark fs-4"></i>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="py-3 text-center">
-                            <i class="fad fa-print fa-4x"></i>
-                            <h5 class="text-gradient text-dark mt-4">Is receipt printed correctly ?</h5>
-                            <!-- <p>Is receipt printed correctly ?</p> -->
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Yes</button>
-                        <button type="button" class="btn btn-link text-dark ml-auto">No</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+{{--        <div class="modal fade" id="modal-print" tabindex="-1" role="dialog" aria-labelledby="modal-print"--}}
+{{--             aria-hidden="true">--}}
+{{--            <div class="modal-dialog modal-danger modal-dialog-centered modal-" role="document">--}}
+{{--                <div class="modal-content">--}}
+{{--                    <div class="modal-header">--}}
+{{--                        <h6 class="modal-title" id="modal-title-print">Print Ticket</h6>--}}
+{{--                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">--}}
+{{--                            <i class="fal fa-times text-dark fs-4"></i>--}}
+{{--                        </button>--}}
+{{--                    </div>--}}
+{{--                    <div class="modal-body">--}}
+{{--                        <div class="py-3 text-center">--}}
+{{--                            <i class="fad fa-print fa-4x"></i>--}}
+{{--                            <h5 class="text-gradient text-dark mt-4">Is receipt printed correctly ?</h5>--}}
+{{--                            <!-- <p>Is receipt printed correctly ?</p> -->--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <div class="modal-footer">--}}
+{{--                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Yes</button>--}}
+{{--                        <button type="button" class="btn btn-link text-dark ml-auto">No</button>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
 
 
 

@@ -1,14 +1,13 @@
 <script>
-    var table = $('.customDataTable').DataTable({
-        responsive: true,
-        paging: false
-
-        // "ordering": true,
-        // columnDefs: [{
-        //   'targets': [4, 5],
-        //   'orderable': false
-        // }, ]
-    });
+        var table = $('.customDataTable').DataTable({
+            responsive: true,
+            paging: false
+            // "ordering": true,
+            // columnDefs: [{
+            //   'targets': [4, 5],
+            //   'orderable': false
+            // }, ]
+        });
     accessWhenLoad()
 
 
@@ -31,7 +30,7 @@
             return true;
         }
 
-        var url = "{{route('groupAccess.index')}}?search=" + searchValue
+        var url = "{{route('familyAccess.index')}}?search=" + searchValue
 
         getSearchValue(url)
 
@@ -81,45 +80,6 @@
         });
     }
 
-    $(document).on('click', '#checkAll', function (e) {
-        e.stopImmediatePropagation();
-
-        var array = [], firstBracelet, count = $('.braceletNumbers').length
-
-        firstBracelet = $('.braceletNumbers').first().val();
-
-        $('.spinner').show()
-
-
-        var method = {
-            count: count,
-            firstBracelet: firstBracelet
-        }
-
-
-        $.post("{{route('capacity.getBracelets')}}", method, function (data) {
-            if (data.length > 0) {
-                $('.braceletNumbers').each(function (key, value) {
-                    $(this).val(data[key])
-                    var id = $(this).data('id')
-                    setTimeout(submitRow(id), 100);
-                })
-            } else {
-                toastr.warning('there is no bracelet free')
-            }
-
-        }).fail(function (data) {
-            if (data.status == 404) {
-                toastr.info('there is no bracelet found')
-            }
-        }).then(function (data) {
-            if (data.length > 0)
-                accessWhenLoad()
-        })
-        setTimeout(function () {
-            $('.spinner').hide()
-        }, 500)
-    })
 
 
     $(document).on('click','.check',function () {
@@ -131,9 +91,10 @@
         if (!braceletNumber.length) {
             toastr.warning('you should fill bracelet number')
         }else {
-            if (submitRow(id)){
-                accessWhenLoad()
-            }
+            submitRow(id)
+            // if (submitRow(id)){
+
+            // }
         }
 
         setTimeout(function () {
@@ -145,7 +106,7 @@
 
     function submitRow(id) {
 
-
+        var return_ = 0;
         var braceletNumber = $('#braceletNumber' + id).val()
         var birthDay = $('#birthDay' + id).val()
         var name = $('#name' + id).val()
@@ -163,12 +124,18 @@
             _method: "PUT",
         }
 
-        var url = "{{route('groupAccess.update',":id")}}"
+        var url = "{{route('familyAccess.update',":id")}}"
 
         url = url.replace(':id', id)
         $.post(url, method, function (data) {
             if (data) {
-                return true;
+                $('#check'+id).addClass('checked');
+                $('#check'+id).removeClass('check');
+                $('#birthDay'+id).attr('disabled', true);
+                $('#braceletNumber'+id).attr('disabled', true);
+                $('#option1'+id).attr('disabled', true);
+                $('#option2'+id).attr('disabled', true);
+                $('#name'+id).attr('disabled', true);
             }
         }).fail(function (data) {
             if (data.status === 500) {
@@ -188,6 +155,10 @@
                 toastr.error('there in an error');
             }
             return true;
+        }).then(function (return_) {
+            return return_
         })
+
+
     }
 </script>

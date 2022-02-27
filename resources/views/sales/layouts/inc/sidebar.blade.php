@@ -46,8 +46,8 @@
                         {{--                                <span class="sidenav-normal"> Ticket </span>--}}
                         {{--                            </a>--}}
                         {{--                        </li>--}}
-                        <li class="nav-item ">
-                            <a class="nav-link " href="{{route('family-access')}}">
+                        <li class="nav-item familyAccess">
+                            <a class="nav-link familyAccess" href="{{route('familyAccess.index')}}">
                                 <span class="sidenav-mini-icon"> F </span>
                                 <span class="sidenav-normal"> Family Access </span>
                             </a>
@@ -93,7 +93,7 @@
             </li>
             <!-- nav-item  -->
             <li class="nav-item">
-                <a href="{{route('exit')}}" class="nav-link ">
+                <a href="{{route('exit.index')}}" class="nav-link" id="main-exit">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
                         <i class="fad fa-door-open"></i>
