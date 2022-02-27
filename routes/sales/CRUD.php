@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Route;
   Route::POST('storeModels', 'TicketController@storeModels')->name('storeModels');
   Route::POST('storeRevTicket', 'ReservationController@storeRevTicket')->name('storeRevTicket');
 
-
+// Reservation
+Route::get('searchForReservations', 'ReservationController@searchForReservations')->name('searchForReservations');
 
 
 

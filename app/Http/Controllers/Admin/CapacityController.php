@@ -21,12 +21,12 @@ class CapacityController extends Controller
             $days = CapacityDays::latest()->get();
             return Datatables::of($days)
                 ->addColumn('action', function ($days) {
-                    if((Carbon::parse($days->day)->isPast()))
-                    return '
+                    if((Carbon::parse($days->day)->isPast()) && !Carbon::parse($days->day)->isToday())
+                        return '<span class="badge badge-info br-7">Past Day</span>';
+                    else
+                        return '
                             <button type="button" data-id="' . $days->id . '" class="btn btn-pill btn-info-light editBtn"><i class="fa fa-edit"></i></button>
                        ';
-                    else
-                        return '<span class="badge badge-info br-7">Past Day</span>';
                 })
                 ->editColumn('status', function ($days) {
                     if($days->status == 0)

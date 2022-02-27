@@ -11,8 +11,8 @@
               <div class="col-sm-9 p-1">
                 <label class="form-label fs-4"> <i class="fas fa-ticket-alt me-2"></i> Search </label>
                 <div class="d-flex">
-                  <input type="text" class="form-control" placeholder="Type here...">
-                  <button type="submit" class="input-group-text ms-2 bg-gradient-primary px-4 text-body"><i
+                  <input type="text" class="form-control" placeholder="Type here..." id="searchText">
+                  <button type="button" id="SearchBtn" class="input-group-text ms-2 bg-gradient-primary px-4 text-body" onclick="doSearch()"><i
                       class="fas fa-search text-white"></i></button>
                 </div>
               </div>
@@ -23,21 +23,21 @@
             </div>
           </div>
           <div class="col-sm-6 p-2">
-            <label class="form-label"> Customer Type </label>
+            <label class="form-label"> Reservation Type </label>
             <select class="form-control" id="choices-type">
-              <option value=""> All </option>
-              <option value=""> School </option>
-              <option value=""> Birthday </option>
-              <option value=""> Event </option>
+              <option value="all"> All </option>
+                @foreach($events as $event)
+                    <option value="{{$event->id}}"> {{$event->title}} </option>
+                @endforeach
             </select>
           </div>
           <div class="col-sm-6 p-2">
             <label class="form-label"> shift </label>
-            <select class="form-control" id="choices-shift">
-              <option value="">10 am : 12 pm</option>
-              <option value="">11 am : 01 pm</option>
-              <option value="">12 pm : 02 pm</option>
-              <option value="">01 pm : 03 pm</option>
+            <select class="form-control" id="choices-shift" name="shift_id">
+                @foreach($shifts as $shift)
+                    <option value="{{$shift->id}}">{{date('h a', strtotime($shift->from))}}
+                        : {{date('h a', strtotime($shift->to))}}</option>
+                @endforeach
             </select>
           </div>
         </div>
@@ -60,27 +60,27 @@
               <th>actions</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>#SADSA566</td>
-              <td> 18 / 10 / 2022 </td>
-              <td> Birthday </td>
-              <td>mahmoud </td>
-              <td>gamal elkomy </td>
-              <td>0123456789</td>
-              <td>10am : 12pm</td>
-              <td> 20 </td>
-              <td>  </td>
-              <td>
-                <span class="controlIcons">
-                  <span class="icon" data-bs-toggle="tooltip" title="edit"> <i class="far fa-edit me-2"></i> Edit </span>
-                  <span class="icon" data-bs-toggle="tooltip" title=" delete "> <i class="far fa-trash-alt me-2"></i> Delete </span>
-                  <span class="icon" data-bs-toggle="tooltip" title=" details "> <i class="fas fa-eye me-2"></i></i> Show </span>
-                  <span class="icon" data-bs-toggle="tooltip" title="Access"> <i class="fal fa-check me-2"></i> Access </span>
+          <tbody id="tableBody">
+{{--            <tr>--}}
+{{--              <td>#SADSA566</td>--}}
+{{--              <td> 18 / 10 / 2022 </td>--}}
+{{--              <td> Birthday </td>--}}
+{{--              <td>mahmoud </td>--}}
+{{--              <td>gamal elkomy </td>--}}
+{{--              <td>0123456789</td>--}}
+{{--              <td>10am : 12pm</td>--}}
+{{--              <td> 20 </td>--}}
+{{--              <td>  </td>--}}
+{{--              <td>--}}
+{{--                <span class="controlIcons">--}}
+{{--                  <span class="icon" data-bs-toggle="tooltip" title="edit"> <i class="far fa-edit me-2"></i> Edit </span>--}}
+{{--                  <span class="icon" data-bs-toggle="tooltip" title=" delete "> <i class="far fa-trash-alt me-2"></i> Delete </span>--}}
+{{--                  <span class="icon" data-bs-toggle="tooltip" title=" details "> <i class="fas fa-eye me-2"></i></i> Show </span>--}}
+{{--                  <span class="icon" data-bs-toggle="tooltip" title="Access"> <i class="fal fa-check me-2"></i> Access </span>--}}
 
-                </span>
-              </td>
-            </tr>
+{{--                </span>--}}
+{{--              </td>--}}
+{{--            </tr>--}}
 
           </tbody>
 
@@ -123,6 +123,55 @@
       });
       new $.fn.dataTable.FixedHeader(table);
     });
+    function doSearch(){
+        var searchText = $('#searchText').val(),
+            choices_type = $('#choices-type').val(),
+            choices_shift = $('#choices-shift').val(),
+            data = {
+            'searchText'   :searchText,
+            'choices_type' :choices_type,
+            'choices_shift':choices_shift,
+            };
+        $.ajax({
+            type: 'GET',
+            data: data,
+            url:"{{route('searchForReservations')}}",
+            beforeSend: function(){
+                $('#SearchBtn').html('<span class="spinner-border spinner-border-sm mr-2" ' +
+                    ' ></span> <span style="margin-left: 4px;"></span>');
+            },
+            success: function (data) {
+                if (data.status == true){
+                    $('#tableBody').append(data.html);
+                }else {
+                    toastr.error('Error !');
+                    $('#addButton').html(`Loading`).attr('disabled', false);
+                }
+
+            },
+            error: function (data) {
+                if (data.status === 500) {
+                    console.log(data)
+                    toastr.error('There is an error');
+                }
+                else if (data.status === 422) {
+                    $('#addButton').html(`ADD`).attr('disabled', false);
+                    var errors = $.parseJSON(data.responseText);
+                    $.each(errors, function (key, value) {
+                        if ($.isPlainObject(value)) {
+                            $.each(value, function (key, value) {
+                                toastr.error(value,key);
+                            });
+                        }
+                    });
+                }else {
+                    $('#addButton').html(`ADD`).attr('disabled', false);
+                    toastr.error('there in an error');
+                }
+            },//end error method
+        });
+
+    }
   </script>
 
 @endsection
