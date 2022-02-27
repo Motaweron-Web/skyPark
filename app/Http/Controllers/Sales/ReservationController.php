@@ -161,6 +161,7 @@ class ReservationController extends Controller
             'discount_type'  => $request->discount_type[0],
             'discount_value' => $request->discount_value,
             'ticket_num'     => $request->rand_ticket,
+            'custom_id'     => $request->rand_ticket,
             'paid_amount'    => $request->amount,
             'grand_total'    => $request->revenue,
             'rem_amount'     => $request->rem,
