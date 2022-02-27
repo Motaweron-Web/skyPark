@@ -170,7 +170,8 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-success" data-bs-dismiss="modal">Yes</button>
-                <button type="button" class="btn btn-link text-dark ml-auto">No</button>
+                <button type="button" id="print"
+                        data-url="{{$type=='rev'?route('reservations.show',$ticket->id):route('reservations.show',$ticket->id)}}" class="btn btn-link text-dark ml-auto">No</button>
               </div>
             </div>
           </div>
