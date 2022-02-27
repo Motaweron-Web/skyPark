@@ -136,10 +136,7 @@
             // }
         }
 
-        setTimeout(function () {
-            accessWhenLoad()
 
-        }, 400)
         setTimeout(function () {
             $('.spinner').hide()
 
@@ -173,7 +170,10 @@
         url = url.replace(':id', id)
         $.post(url, method, function (data) {
             if (data) {
-                return true;
+                setTimeout(function () {
+                    accessWhenLoad()
+
+                }, 400)
             }
         }).fail(function (data) {
             if (data.status === 500) {
