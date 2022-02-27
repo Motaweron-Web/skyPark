@@ -11,8 +11,8 @@
               <div class="col-sm-9 p-1">
                 <label class="form-label fs-4"> <i class="fas fa-ticket-alt me-2"></i> Search </label>
                 <div class="d-flex">
-                  <input type="text" class="form-control" placeholder="Type here...">
-                  <button type="submit" class="input-group-text ms-2 bg-gradient-primary px-4 text-body"><i
+                  <input type="text" class="form-control" placeholder="Type here..." id="searchText">
+                  <button type="button" id="SearchBtn" class="input-group-text ms-2 bg-gradient-primary px-4 text-body" onclick="doSearch()"><i
                       class="fas fa-search text-white"></i></button>
                 </div>
               </div>
@@ -23,71 +23,74 @@
             </div>
           </div>
           <div class="col-sm-6 p-2">
-            <label class="form-label"> Customer Type </label>
+            <label class="form-label"> Reservation Type </label>
             <select class="form-control" id="choices-type">
-              <option value=""> All </option>
-              <option value=""> School </option>
-              <option value=""> Birthday </option>
-              <option value=""> Event </option>
+              <option value="all"> All </option>
+                @foreach($events as $event)
+                    <option value="{{$event->id}}"> {{$event->title}} </option>
+                @endforeach
             </select>
           </div>
           <div class="col-sm-6 p-2">
             <label class="form-label"> shift </label>
-            <select class="form-control" id="choices-shift">
-              <option value="">10 am : 12 pm</option>
-              <option value="">11 am : 01 pm</option>
-              <option value="">12 pm : 02 pm</option>
-              <option value="">01 pm : 03 pm</option>
+            <select class="form-control" id="choices-shift" name="shift_id">
+                @foreach($shifts as $shift)
+                    <option value="{{$shift->id}}">{{date('h a', strtotime($shift->from))}}
+                        : {{date('h a', strtotime($shift->to))}}</option>
+                @endforeach
             </select>
           </div>
         </div>
 
       </form>
-      <form class="card p-2 py-4 mt-3 ">
+      <div class="card p-2 py-4 mt-3 table-responsive">
         <!-- table -->
-        <table class=" customDataTable table table-bordered nowrap">
+        <table class=" customDataTable table table-bordered nowrap" id="DataTable">
           <thead>
             <tr>
               <th>ID</th>
               <th>Date</th>
               <th>Type</th>
               <th> Customer Name </th>
-              <th>Responsible Name </th>
               <th>contact number</th>
               <th>Shift </th>
               <th>Quantity </th>
-              <th>note</th>
               <th>actions</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>#SADSA566</td>
-              <td> 18 / 10 / 2022 </td>
-              <td> Birthday </td>
-              <td>mahmoud </td>
-              <td>gamal elkomy </td>
-              <td>0123456789</td>
-              <td>10am : 12pm</td>
-              <td> 20 </td>
-              <td>  </td>
-              <td>
-                <span class="controlIcons">
-                  <span class="icon" data-bs-toggle="tooltip" title="edit"> <i class="far fa-edit me-2"></i> Edit </span>
-                  <span class="icon" data-bs-toggle="tooltip" title=" delete "> <i class="far fa-trash-alt me-2"></i> Delete </span>
-                  <span class="icon" data-bs-toggle="tooltip" title=" details "> <i class="fas fa-eye me-2"></i></i> Show </span>
-                  <span class="icon" data-bs-toggle="tooltip" title="Access"> <i class="fal fa-check me-2"></i> Access </span>
-
-                </span>
-              </td>
-            </tr>
+          <tbody id="tableBody">
 
           </tbody>
 
 
         </table>
 
-      </form>
+          <!--Delete MODAL -->
+          <div class="modal fade show" id="delete_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+               aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Delete Data</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                          </button>
+                      </div>
+                      <div class="modal-body">
+                          <input id="delete_id" name="id" type="hidden">
+                          <p>Are You Sure Of Deleting This Row <span id="title" class="text-danger"></span>?</p>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal" id="dismiss_delete_modal">
+                              Back
+                          </button>
+                          <button type="button" class="btn btn-danger" id="delete_btn">Delete !</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- MODAL CLOSED -->
+      </div>
 @endsection
 @section('js')
   <script>
@@ -112,17 +115,80 @@
   </script>
 
   <script>
-    $(document).ready(function () {
       var table = $('.customDataTable').DataTable({
-        responsive: true,
-        // "ordering": true,
-        // columnDefs: [{
-        //   'targets': [4, 5],
-        //   'orderable': false
-        // }, ]
+          responsive: true,
       });
       new $.fn.dataTable.FixedHeader(table);
-    });
+    function doSearch(){
+        var searchText = $('#searchText').val(),
+            choices_type = $('#choices-type').val(),
+            choices_shift = $('#choices-shift').val(),
+            data = {
+                'searchText'   :searchText,
+                'choices_type' :choices_type,
+                'choices_shift':choices_shift,
+            };
+        $.ajax({
+            type: 'GET',
+            data: data,
+            url:"{{route('searchForReservations')}}",
+            beforeSend: function(){
+                $('#SearchBtn').html('<span class="spinner-border spinner-border-sm mr-2" ' +
+                    ' ></span> <span style="margin-left: 4px;"></span>');
+            },
+            success: function (data) {
+                if (data.status === 200){
+                    table.clear().draw();
+                    var Rows = data.html;
+                    $.each(Rows, function (key, val) {
+                        table.row.add(data.html[key]).draw(false);
+                    })
+                }else {
+                    toastr.error('There is an error');
+                }
+                $('#SearchBtn').html('<i class="fas fa-search text-white"></i>');
+            },
+            error: function (data) {
+                if (data.status === 500) {
+                    toastr.error('There is an error');
+                }
+                $('#SearchBtn').html('<i class="fas fa-search text-white"></i>');
+            },
+        });
+            $(document).ready(function () {
+                //Show data in the delete form
+                $('#delete_modal').on('show.bs.modal', function (event) {
+                    var span = $(event.relatedTarget)
+                    var id = span.data('id')
+                    // var title = span.data('title')
+                    var modal = $(this)
+                    modal.find('.modal-body #delete_id').val(id);
+                    // modal.find('.modal-body #title').text(title);
+                });
+            });
+            $(document).on('click', '.deleteSpan', function (event) {
+                var id = $(this).attr('data-id');
+                $.ajax({
+                    type: 'POST',
+                    url: "{{route('delete_reservation')}}",
+                    data: {
+                        '_token': "{{csrf_token()}}",
+                        'id': id,
+                    },
+                    success: function (data) {
+                        if (data.status === 200) {
+                            // $("#dismiss_delete_modal")[0].click();
+                            table.reload();
+                            toastr.success(data.message)
+                        } else {
+                            // $("#dismiss_delete_modal")[0].click();
+                            toastr.error(data.message)
+                        }
+                    }
+                });
+            });
+    }
+
   </script>
 
 @endsection

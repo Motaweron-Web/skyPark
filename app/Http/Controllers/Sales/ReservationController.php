@@ -16,20 +16,67 @@ use App\Models\TicketRevProducts;
 use App\Models\VisitorTypes;
 use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\View\View;
 
 class ReservationController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function index()
     {
+        $events = Event::latest()->get();
+        $shifts     = Shifts::all();
+        return view('sales.reservations',compact('events','shifts'));
+    }
 
-        return view('sales.reservations');
+    public function searchForReservations(request $request){
+        $reservation = Reservations::query();
+        if ($request->searchText != null)
+            $reservation->where('ticket_num',$request->searchText);
+
+        if ($request->has('choices_type') && $request->choices_type != 'all')
+            $reservation->where('event_id',$request->choices_type);
+
+        if ($request->has('choices_shift'))
+            $reservation->where('shift_id',$request->choices_shift);
+
+        $reservation = $reservation->latest()->get();
+        $html = [];
+        foreach ($reservation as $rev) {
+            $smallArray =[];
+            $smallArray[] = $rev->ticket_num;
+            $smallArray[] = $rev->day;
+            $smallArray[] = $rev->event->title;
+            $smallArray[] = $rev->client_name;
+            $smallArray[] = $rev->phone;
+            $smallArray[] = date('h a', strtotime($rev->shift->from)).":".date('h a', strtotime($rev->shift->to));
+            $smallArray[] = $rev->models->count();
+            $accessUrl = route('groupAccess.index').'?search='.$rev->ticket_num;
+            $smallArray[] = '<span class="controlIcons">
+                  <span class="icon" data-bs-toggle="tooltip" title="edit"> <i class="far fa-edit me-2"></i> Edit </span>
+                  <span class="icon deleteSpan" data-toggle="modal" data-target="#delete_modal" data-bs-toggle="tooltip" title=" delete " data-id="'.$rev->id.'"> <i class="far fa-trash-alt me-2"></i> Delete </span>
+                  <span class="icon" data-bs-toggle="tooltip" title=" details "> <i class="fas fa-eye me-2"></i></i> Show </span>
+                  <span class="icon" data-bs-toggle="tooltip" title="Access"> <i class="fal fa-check me-2"></i><a href="'.$accessUrl.'">Access</a></span>
+                </span>';
+            $html[] = $smallArray;
+        }
+        return response()->json(['html' => $html,'status' => 200]);
+    }
+
+    public function delete_reservation(request $request){
+        $reservation = Reservations::where('id', $request->id)->first();
+        if($reservation->status == 'append') {
+            $reservation->delete();
+            return response(['message' => 'Data Deleted Successfully', 'status' => 200], 200);
+        }
+        else
+            return response(['message' => "You Can't Delete This Reservation !", 'status' => 405], 200);
     }
 
     /**
@@ -161,7 +208,7 @@ class ReservationController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     * @return Application|Factory|\Illuminate\Http\Response|View
      */
     public function edit($id)
     {
