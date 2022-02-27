@@ -43,51 +43,54 @@
         </div>
 
       </form>
-      <form class="card p-2 py-4 mt-3 ">
+      <div class="card p-2 py-4 mt-3 table-responsive">
         <!-- table -->
-        <table class=" customDataTable table table-bordered nowrap">
+        <table class=" customDataTable table table-bordered nowrap" id="DataTable">
           <thead>
             <tr>
               <th>ID</th>
               <th>Date</th>
               <th>Type</th>
               <th> Customer Name </th>
-              <th>Responsible Name </th>
               <th>contact number</th>
               <th>Shift </th>
               <th>Quantity </th>
-              <th>note</th>
               <th>actions</th>
             </tr>
           </thead>
           <tbody id="tableBody">
-{{--            <tr>--}}
-{{--              <td>#SADSA566</td>--}}
-{{--              <td> 18 / 10 / 2022 </td>--}}
-{{--              <td> Birthday </td>--}}
-{{--              <td>mahmoud </td>--}}
-{{--              <td>gamal elkomy </td>--}}
-{{--              <td>0123456789</td>--}}
-{{--              <td>10am : 12pm</td>--}}
-{{--              <td> 20 </td>--}}
-{{--              <td>  </td>--}}
-{{--              <td>--}}
-{{--                <span class="controlIcons">--}}
-{{--                  <span class="icon" data-bs-toggle="tooltip" title="edit"> <i class="far fa-edit me-2"></i> Edit </span>--}}
-{{--                  <span class="icon" data-bs-toggle="tooltip" title=" delete "> <i class="far fa-trash-alt me-2"></i> Delete </span>--}}
-{{--                  <span class="icon" data-bs-toggle="tooltip" title=" details "> <i class="fas fa-eye me-2"></i></i> Show </span>--}}
-{{--                  <span class="icon" data-bs-toggle="tooltip" title="Access"> <i class="fal fa-check me-2"></i> Access </span>--}}
-
-{{--                </span>--}}
-{{--              </td>--}}
-{{--            </tr>--}}
 
           </tbody>
 
 
         </table>
 
-      </form>
+          <!--Delete MODAL -->
+          <div class="modal fade show" id="delete_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+               aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Delete Data</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                          </button>
+                      </div>
+                      <div class="modal-body">
+                          <input id="delete_id" name="id" type="hidden">
+                          <p>Are You Sure Of Deleting This Row <span id="title" class="text-danger"></span>?</p>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal" id="dismiss_delete_modal">
+                              Back
+                          </button>
+                          <button type="button" class="btn btn-danger" id="delete_btn">Delete !</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- MODAL CLOSED -->
+      </div>
 @endsection
 @section('js')
   <script>
@@ -112,25 +115,18 @@
   </script>
 
   <script>
-    $(document).ready(function () {
       var table = $('.customDataTable').DataTable({
-        responsive: true,
-        // "ordering": true,
-        // columnDefs: [{
-        //   'targets': [4, 5],
-        //   'orderable': false
-        // }, ]
+          responsive: true,
       });
       new $.fn.dataTable.FixedHeader(table);
-    });
     function doSearch(){
         var searchText = $('#searchText').val(),
             choices_type = $('#choices-type').val(),
             choices_shift = $('#choices-shift').val(),
             data = {
-            'searchText'   :searchText,
-            'choices_type' :choices_type,
-            'choices_shift':choices_shift,
+                'searchText'   :searchText,
+                'choices_type' :choices_type,
+                'choices_shift':choices_shift,
             };
         $.ajax({
             type: 'GET',
@@ -141,37 +137,58 @@
                     ' ></span> <span style="margin-left: 4px;"></span>');
             },
             success: function (data) {
-                if (data.status == true){
-                    $('#tableBody').append(data.html);
+                if (data.status === 200){
+                    table.clear().draw();
+                    var Rows = data.html;
+                    $.each(Rows, function (key, val) {
+                        table.row.add(data.html[key]).draw(false);
+                    })
                 }else {
-                    toastr.error('Error !');
-                    $('#addButton').html(`Loading`).attr('disabled', false);
+                    toastr.error('There is an error');
                 }
-
+                $('#SearchBtn').html('<i class="fas fa-search text-white"></i>');
             },
             error: function (data) {
                 if (data.status === 500) {
-                    console.log(data)
                     toastr.error('There is an error');
                 }
-                else if (data.status === 422) {
-                    $('#addButton').html(`ADD`).attr('disabled', false);
-                    var errors = $.parseJSON(data.responseText);
-                    $.each(errors, function (key, value) {
-                        if ($.isPlainObject(value)) {
-                            $.each(value, function (key, value) {
-                                toastr.error(value,key);
-                            });
-                        }
-                    });
-                }else {
-                    $('#addButton').html(`ADD`).attr('disabled', false);
-                    toastr.error('there in an error');
-                }
-            },//end error method
+                $('#SearchBtn').html('<i class="fas fa-search text-white"></i>');
+            },
         });
-
+            $(document).ready(function () {
+                //Show data in the delete form
+                $('#delete_modal').on('show.bs.modal', function (event) {
+                    var span = $(event.relatedTarget)
+                    var id = span.data('id')
+                    // var title = span.data('title')
+                    var modal = $(this)
+                    modal.find('.modal-body #delete_id').val(id);
+                    // modal.find('.modal-body #title').text(title);
+                });
+            });
+            $(document).on('click', '.deleteSpan', function (event) {
+                var id = $(this).attr('data-id');
+                $.ajax({
+                    type: 'POST',
+                    url: "{{route('delete_reservation')}}",
+                    data: {
+                        '_token': "{{csrf_token()}}",
+                        'id': id,
+                    },
+                    success: function (data) {
+                        if (data.status === 200) {
+                            // $("#dismiss_delete_modal")[0].click();
+                            table.reload();
+                            toastr.success(data.message)
+                        } else {
+                            // $("#dismiss_delete_modal")[0].click();
+                            toastr.error(data.message)
+                        }
+                    }
+                });
+            });
     }
+
   </script>
 
 @endsection

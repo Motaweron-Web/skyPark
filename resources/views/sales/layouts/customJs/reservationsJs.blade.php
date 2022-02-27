@@ -54,7 +54,6 @@
                     $.each(errors, function (key, value) {
                         if ($.isPlainObject(value)) {
                             $.each(value, function (key, value) {
-                                // toastr.error(value, key);
                             });
                         }
                     });

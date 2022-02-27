@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 
 // Reservation
 Route::get('searchForReservations', 'ReservationController@searchForReservations')->name('searchForReservations');
+Route::POST('delete_reservation', 'ReservationController@delete_reservation')->name('delete_reservation');
 
     //==================================== Group ================================
          Route::resource('familyAccess', 'FamilyAccessController');

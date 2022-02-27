@@ -36,31 +36,47 @@ class ReservationController extends Controller
     }
 
     public function searchForReservations(request $request){
-        $reservation = Reservations::where('ticket_num',$request->searchText)->first();
-        $models      = TicketRevModel::where('rev_id',$reservation->id)->get();
-        $html        = '
-         <tr>
-              <td>#SADSA566</td>
-              <td> 18 / 10 / 2022 </td>
-              <td> Birthday </td>
-              <td>mahmoud </td>
-              <td>gamal elkomy </td>
-              <td>0123456789</td>
-              <td>10am : 12pm</td>
-              <td> 20 </td>
-              <td>  </td>
-              <td>
-                <span class="controlIcons">
-                  <span class="icon" data-bs-toggle="tooltip" title="edit"> <i class="far fa-edit me-2"></i> Edit </span>
-                  <span class="icon" data-bs-toggle="tooltip" title=" delete "> <i class="far fa-trash-alt me-2"></i> Delete </span>
-                  <span class="icon" data-bs-toggle="tooltip" title=" details "> <i class="fas fa-eye me-2"></i></i> Show </span>
-                  <span class="icon" data-bs-toggle="tooltip" title="Access"> <i class="fal fa-check me-2"></i> Access </span>
+        $reservation = Reservations::query();
+        if ($request->searchText != null)
+            $reservation->where('ticket_num',$request->searchText);
 
-                </span>
-              </td>
-            </tr>
-        ';
-        return response()->json(['html' => $html,'status' => true]);
+        if ($request->has('choices_type') && $request->choices_type != 'all')
+            $reservation->where('event_id',$request->choices_type);
+
+        if ($request->has('choices_shift'))
+            $reservation->where('shift_id',$request->choices_shift);
+
+        $reservation = $reservation->latest()->get();
+        $html = [];
+        foreach ($reservation as $rev) {
+            $smallArray =[];
+            $smallArray[] = $rev->ticket_num;
+            $smallArray[] = $rev->day;
+            $smallArray[] = $rev->event->title;
+            $smallArray[] = $rev->client_name;
+            $smallArray[] = $rev->phone;
+            $smallArray[] = date('h a', strtotime($rev->shift->from)).":".date('h a', strtotime($rev->shift->to));
+            $smallArray[] = $rev->models->count();
+            $accessUrl = route('groupAccess.index').'?search='.$rev->ticket_num;
+            $smallArray[] = '<span class="controlIcons">
+                  <span class="icon" data-bs-toggle="tooltip" title="edit"> <i class="far fa-edit me-2"></i> Edit </span>
+                  <span class="icon deleteSpan" data-toggle="modal" data-target="#delete_modal" data-bs-toggle="tooltip" title=" delete " data-id="'.$rev->id.'"> <i class="far fa-trash-alt me-2"></i> Delete </span>
+                  <span class="icon" data-bs-toggle="tooltip" title=" details "> <i class="fas fa-eye me-2"></i></i> Show </span>
+                  <span class="icon" data-bs-toggle="tooltip" title="Access"> <i class="fal fa-check me-2"></i><a href="'.$accessUrl.'">Access</a></span>
+                </span>';
+            $html[] = $smallArray;
+        }
+        return response()->json(['html' => $html,'status' => 200]);
+    }
+
+    public function delete_reservation(request $request){
+        $reservation = Reservations::where('id', $request->id)->first();
+        if($reservation->status == 'append') {
+            $reservation->delete();
+            return response(['message' => 'Data Deleted Successfully', 'status' => 200], 200);
+        }
+        else
+            return response(['message' => "You Can't Delete This Reservation !", 'status' => 405], 200);
     }
 
     /**
