@@ -63,5 +63,7 @@
     $(document).ready(function () {
         $('.dropify').dropify();
     });
+    $('#contact-span').load("{{route('getCount')}}")
+    $('#nav-span').load("{{route('getCount')}}")
 </script>
 @yield('js')

@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\Route;
     // Reservation
     Route::get('searchForReservations', 'ReservationController@searchForReservations')->name('searchForReservations');
     Route::POST('delete_reservation', 'ReservationController@delete_reservation')->name('delete_reservation');
+    Route::POST('update_reservation', 'ReservationController@update_reservation')->name('update_reservation');
+    Route::get('editReservation/{id}', 'ReservationController@editReservation')->name('editReservation');
+    Route::get('detailsReservation/{id}', 'ReservationController@detailsReservation')->name('detailsReservation');
+
+
 
     //==================================== Group ================================
     Route::resource('familyAccess', 'FamilyAccessController');

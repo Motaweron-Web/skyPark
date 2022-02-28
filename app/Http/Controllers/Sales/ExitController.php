@@ -87,7 +87,7 @@ class ExitController extends Controller
 
 
         if ($request->has('search'))
-            count($models) ? '' : toastr()->warning('there sis no data');
+            count($models) ? '' : toastr()->warning('there is no data');
         return view('sales.exit', compact('ticket', 'returnArray', 'type','models', 'customId', 'hours'));
     }
 

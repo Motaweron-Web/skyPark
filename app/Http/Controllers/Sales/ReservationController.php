@@ -58,10 +58,11 @@ class ReservationController extends Controller
             $smallArray[] = date('h a', strtotime($rev->shift->from)).":".date('h a', strtotime($rev->shift->to));
             $smallArray[] = $rev->models->count();
             $accessUrl = route('groupAccess.index').'?search='.$rev->ticket_num;
+            $title = $rev->client_name." - ".$rev->ticket_num;
             $smallArray[] = '<span class="controlIcons">
-                  <span class="icon" data-bs-toggle="tooltip" title="edit"> <i class="far fa-edit me-2"></i> Edit </span>
-                  <span class="icon deleteSpan" data-toggle="modal" data-target="#delete_modal" data-bs-toggle="tooltip" title=" delete " data-id="'.$rev->id.'"> <i class="far fa-trash-alt me-2"></i> Delete </span>
-                  <span class="icon" data-bs-toggle="tooltip" title=" details "> <i class="fas fa-eye me-2"></i></i> Show </span>
+                  <span class="icon editSpan" data-bs-toggle="tooltip" title="edit" data-id="'.$rev->id.'"> <i class="far fa-edit me-2"></i> Edit </span>
+                  <span class="icon deleteSpan" data-bs-toggle="tooltip" title=" delete "  data-title="'.$title.'" data-id="'.$rev->id.'"> <i class="far fa-trash-alt me-2"></i> Delete </span>
+                  <span class="icon showSpan" data-bs-toggle="tooltip" title=" details " data-id="'.$rev->id.'"> <i class="fas fa-eye me-2"></i></i> Show </span>
                   <span class="icon" data-bs-toggle="tooltip" title="Access"> <i class="fal fa-check me-2"></i><a href="'.$accessUrl.'">Access</a></span>
                 </span>';
             $html[] = $smallArray;
@@ -69,9 +70,38 @@ class ReservationController extends Controller
         return response()->json(['html' => $html,'status' => 200]);
     }
 
+    public function editReservation($id){
+        $rev   = Reservations::where('id',$id)->first();
+        $types = Event::all();
+        return view('sales.layouts.reservations.edit',compact('rev','types'));
+    }
+    public function detailsReservation($id){
+        $rev    = Reservations::where('id',$id)->first();
+        $models = $rev->models->groupBy('visitor_type_id');
+        return view('sales.layouts.reservations.details',compact('rev','models'));
+    }
+
+    public function update_reservation(request $request){
+        $date = $request->validate([
+            'day' => 'required|date_format:Y-m-d|after:yesterday',
+            'client_name' => 'required|string|max:500',
+            'email' => 'nullable|string|max:500',
+            'phone' => 'nullable|string|numeric',
+            'event_id' => 'required|exists:events,id',
+        ]);
+        $rev = Reservations::where('id',$request->id)->first();
+        if($rev->update($date))
+            return response()->json(['status'=>200]);
+        else
+            return response()->json(['status'=>405]);
+    }
+
     public function delete_reservation(request $request){
         $reservation = Reservations::where('id', $request->id)->first();
         if($reservation->status == 'append') {
+            foreach ($reservation->models as $model){
+                $model->delete();
+            }
             $reservation->delete();
             return response(['message' => 'Data Deleted Successfully', 'status' => 200], 200);
         }

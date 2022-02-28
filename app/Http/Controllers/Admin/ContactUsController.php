@@ -22,6 +22,12 @@ class ContactUsController extends Controller
                             </button>
                        ';
                 })
+                ->addColumn('status',function ($contact){
+                    if($contact->status == 0){
+                        return '<button class="btn readSpan" data-id="'.$contact->id.'"><i class="fas fa-envelope fa-2x text-danger"></i></button>';
+                    }else
+                        return '<span class="text-center"><i class="fa fa-envelope-open text-warning fa-2x"></i></span>';
+                })
                 ->editColumn('created_at', function ($contact) {
                     return $contact->created_at->diffForHumans();
                 })
@@ -54,6 +60,21 @@ class ContactUsController extends Controller
     public function store(Request $request)
     {
         //
+    }
+
+    public function read_message(Request $request)
+    {
+        $contact = ContactUs::where('id', $request->id)->first();
+        $contact->status = '1';
+        $contact->save();
+        $count = ContactUs::where('status','0')->count();
+        return response(['message'=>'Message Read Done','count'=>$count,'status'=>200],200);
+    }
+
+    public function getCount(){
+        if(ContactUs::where('status',1)->count() > 0)
+            $html = '<span class="contact text-right nav-unread badge badge-danger badge-pill pulse">'.ContactUs::where('status',1)->count().'</span>';
+        return $html;
     }
 
     /**

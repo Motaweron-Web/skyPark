@@ -76,7 +76,9 @@
                 <div class="dropdown d-md-flex message">
                     <a class="nav-link icon text-center" data-toggle="dropdown">
                         <i class="fe fe-mail"></i>
-                        <span class=" nav-unread badge badge-danger  badge-pill">6</span>
+                        <span id="nav-span">
+
+                        </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                         <a href="#" class="dropdown-item d-flex mt-2 pb-3">

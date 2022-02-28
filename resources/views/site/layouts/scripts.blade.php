@@ -1,0 +1,9 @@
+<script src="{{asset('assets/site')}}/js/jquery.min.js"></script>
+<script src="{{asset('assets/site')}}/js/popper.min.js"></script>
+<script src="{{asset('assets/site')}}/js/bootstrap.min.js"></script>
+<script src="{{asset('assets/site')}}/js/swiper-bundle.min.js"></script>
+{{--<script src="{{asset('assets/site')}}/js/fancybox.js"></script>--}}
+<script src="{{asset('assets/site')}}/js/atropos.min.js"></script>
+<script src="{{asset('assets/site')}}/js/fancybox.umd.js"></script>
+<script src="{{asset('assets/site')}}/js/WOW.js"></script>
+<script src="{{asset('assets/site')}}/js/Custom.js"></script>

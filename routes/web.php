@@ -14,26 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('add-client', function () {
-    return view('admin.add-client');
-})->name('add-client');
+Route::get('/', 'Site\HomeController@index')->name('/');
 
-Route::get('ticket', function () {
-    return view('sales.ticket');
-})->name('ticket');
-
-Route::get('family-access', function () {
-    return view('sales.family-access');
-})->name('family-access');
-
-
-Route::get('capacity', function () {
-    return view('admin.capacity');
-})->name('capacity');
-
-Route::get('group-access', function () {
-    return view('sales.group-access');
-})->name('group-access');
 
 
 
@@ -46,7 +28,7 @@ Route::group(['middleware'=>'auth','namespace'=>'Sales'],function(){
 
 
 //================================ Home ====================================
-    Route::get('/','HomeController@index')->name('/');
+    Route::get('/sales','HomeController@index')->name('/sales');
 
     require __DIR__.'/sales/CRUD.php';
 

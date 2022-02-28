@@ -51,11 +51,27 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin','namespace'=>'Admin']
     Route::resource('about_us','AboutUsController');
     Route::POST('about_us.delete','AboutUsController@delete')->name('about_us.delete');
 
+    #### Activities ####
+    Route::resource('activity','ActivityController');
+    Route::POST('activity.delete','ActivityController@delete')->name('activity.delete');
+
+    #### Offers ####
+    Route::resource('offers','OfferController');
+    Route::POST('offer.delete','OfferController@delete')->name('offer.delete');
+
+    #### Offers Items ####
+    Route::resource('items','OfferItemsController');
+    Route::POST('items.delete','OfferItemsController@delete')->name('items.delete');
+
+
     #### Contact Us ####
     Route::resource('contact_us','ContactUsController');
     Route::POST('contact_us.delete','ContactUsController@delete')->name('contact_us.delete');
+    Route::POST('read_message','ContactUsController@read_message')->name('read_message');
+    Route::get('getCount','ContactUsController@getCount')->name('getCount');
 
-    #### Contact Us ####
+
+    #### Setting ####
     Route::get('general_setting','SettingController@index')->name('general_setting.index');
     Route::POST('edit_setting','SettingController@edit')->name('admin.edit.setting');
 
