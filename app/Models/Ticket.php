@@ -35,5 +35,18 @@ class Ticket extends Model
     {
         return $this->hasMany(TicketRevModel::class,'ticket_id');
     }//end fun
-
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function products()
+    {
+        return $this->hasMany(TicketRevProducts::class,'ticket_id');
+    }//end fun
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function shift()
+    {
+        return $this->belongsTo(Shifts::class,'shift_id');
+    }//end fun
 }//end class

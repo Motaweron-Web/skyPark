@@ -21,10 +21,10 @@ class GroupAccessController extends Controller
 
         if ($request->ajax()) {
 
-            $reservation = Reservations::where('custom_id', $request->search)
-                ->where('status','append')
-                ->orWhere('phone', $request->search)->with('append_models.type')
-                ->where('day', date('Y-m-d'));
+            $reservation = Reservations::where('status','append')
+                ->whereDate('day', date('Y-m-d'))
+                ->where('custom_id', $request->search)
+                ->orWhere('phone', $request->search)->with('append_models.type');
 
 
             $bracelet_numbers = [];

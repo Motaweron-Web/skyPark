@@ -128,7 +128,7 @@
         <div class="text-center d-flex justify-content-center">
           <button type="button"
             class="btn bg-gradient-primary m-3 mb-0" id="print"
-                  data-url="{{$type=='rev'?route('reservations.show',$ticket->id):route('reservations.show',$ticket->id)}}">Reprint</button>
+                  data-url="{{$type=='rev'?route('reservations.show',$ticket->id):route('ticket.edit',$ticket->id)}}">Reprint</button>
           <a href="{{route('exit-all',$_GET['search']??'')}}" type="button" class="btn btn-dark m-3 mb-0"> final exit </a>
         </div>
 
@@ -171,7 +171,7 @@
               <div class="modal-footer">
                 <button type="button" class="btn btn-success" data-bs-dismiss="modal">Yes</button>
                 <button type="button" id="print"
-                        data-url="{{$type=='rev'?route('reservations.show',$ticket->id):route('reservations.show',$ticket->id)}}" class="btn btn-link text-dark ml-auto">No</button>
+                        data-url="{{$type=='rev'?route('reservations.show',$ticket->id):route('ticket.edit',$ticket->id)}}" class="btn btn-link text-dark ml-auto">No</button>
               </div>
             </div>
           </div>

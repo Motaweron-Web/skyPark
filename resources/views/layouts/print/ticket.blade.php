@@ -51,7 +51,7 @@
             <div class=" bill">
                 <h4 class="font-weight-bolder ps-2">Bill</h4>
                 <div class="info">
-                    <h6 class="billTitle"> ticket <span dir="rtl"> {{$ticket->custom_id}}#</span></h6>
+                    <h6 class="billTitle"> ticket <span dir="rtl"> {{$ticket->ticket_num}}#</span></h6>
                     <ul>
                         <li><label> Visit Date : </label>
                             <strong> {{date('d  / m / Y',strtotime($ticket->day))}} </strong></li>
@@ -110,7 +110,7 @@
                         <li><label> Change : </label> <strong> EGP {{$ticket->rem_amount - $ticket->paid_amount}}</strong></li>
                     </ul>
                 </div>
-                <img src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode($ticket->custom_id, $generatorPNG::TYPE_CODE_128)) }}"
+                <img src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode($ticket->ticket_num, $generatorPNG::TYPE_CODE_128)) }}"
                      class="barcode">
             </div>
         </div>
