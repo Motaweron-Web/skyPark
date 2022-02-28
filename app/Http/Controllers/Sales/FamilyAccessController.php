@@ -21,11 +21,11 @@ class FamilyAccessController extends Controller
     {
         if ($request->ajax()) {
 
-            $ticket = Ticket::where('ticket_num', $request->search)
+            $ticket = Ticket::whereDate('visit_date', date('Y-m-d'))
+                ->where('ticket_num', $request->search)
                 ->orWhereHas('client', function($query) use ($request){
                     $query->where('phone',$request->search);
-                })->with('append_models.type')
-                ->where('visit_date', date('Y-m-d'));
+                })->with('append_models.type');
 
 
             $bracelet_numbers = [];

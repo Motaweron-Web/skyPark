@@ -202,7 +202,14 @@ class ReservationController extends Controller
      */
     public function show($id)
     {
-        return view('layouts.print.rev');
+        $ticket = Reservations::with('products.product','shift')->findOrFail($id);
+        $models = TicketRevModel::where('rev_id',$id)
+            ->selectRaw('price, sum(price) as sum_all')
+            ->selectRaw('visitor_type_id, count(*) as count_all')
+            ->groupby('visitor_type_id')
+            ->with('type')
+            ->get();
+        return view('layouts.print.rev',compact('ticket','models'));
     }
 
     /**

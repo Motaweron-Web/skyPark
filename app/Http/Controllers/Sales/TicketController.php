@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Clients;
 use App\Models\GeneralSetting;
 use App\Models\Product;
+use App\Models\Reservations;
 use App\Models\ShiftDetails;
 use App\Models\Shifts;
 use App\Models\Ticket;
@@ -226,7 +227,14 @@ class TicketController extends Controller
      */
     public function edit($id)
     {
-        //
+        $ticket = Ticket::with('products.product','shift')->findOrFail($id);
+        $models = TicketRevModel::where('ticket_id',$id)
+            ->selectRaw('price, sum(price) as sum_all')
+            ->selectRaw('visitor_type_id, count(*) as count_all')
+            ->groupby('visitor_type_id')
+            ->with('type')
+            ->get();
+        return view('layouts.print.ticket',compact('ticket','models'));
     }
 
     /**

@@ -31,30 +31,33 @@ class ExitController extends Controller
 
         if ($request->has('search')) {
 
-            $ticket = Ticket::where('ticket_num', $request->search)
-                ->orWhereHas('client', function ($query) use ($request) {
-                    $query->where('phone', $request->search);
-                })
-                ->orWhereHas('in_models', function ($query) use ($request) {
-                    $query->where('bracelet_number', $request->search);
-                })
-                ->with('in_models.type')
-                ->where('visit_date', date('Y-m-d'));
+            $ticket = Ticket::WhereHas('in_models')
+//                ->whereDate('visit_date', date('Y-m-d'))
+//                ->WhereHas('client', function ($query) use ($request) {
+//                    $query->where('phone', $request->search);
+//                })
+//                ->orwhere('ticket_num', $request->search)
+//                ->orWhereHas('in_models', function ($query) use ($request) {
+//                    $query->where('bracelet_number', $request->search);
+//                })
+                ->with('in_models.type');
 
             if ($ticket->count() == 0) {
                 $ticket = Reservations::whereHas('in_models')
+                    ->WhereHas('in_models')
+                    ->whereDate('day', date('Y-m-d'))
                     ->where('custom_id', $request->search)
                     ->orWhereHas('in_models', function ($query) use ($request) {
                         $query->where('bracelet_number', $request->search);
                     })
                     ->orWhere('phone', $request->search)
-                    ->with('in_models.type')
-                    ->where('day', date('Y-m-d'));
+                    ->with('in_models.type');
                 $type = 'rev';
 
             }else{
                 $type = 'ticket';
             }
+
 
 
             $customId = $ticket->first()->ticket_num ?? $ticket->first()->custom_id ?? '';
