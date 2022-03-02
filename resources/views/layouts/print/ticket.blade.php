@@ -7,38 +7,26 @@
     <link id="pagestyle" href="{{asset('assets/sales')}}/css/app.min.css" rel="stylesheet"/>
     <link rel="icon" type="image/png" href="{{asset('assets/sales')}}/img/favicon.png">
     <link href="{{asset('assets/sales')}}/css/style.css" rel="stylesheet"/>
-
     <style>
-
-
         body {
             margin: 0;
             padding: 0;
-        }
-
-        .barcode {
-            width: 70% !important;
-            margin-right: 16% !important;
         }
 
         @page {
             /*size: A4;*/
             margin: 0;
         }
-
-        @media print {
-            .page {
-                margin: 0;
-                border: initial;
-                border-radius: initial;
-                width: initial;
-                min-height: initial;
-                box-shadow: initial;
-                background: initial;
-                page-break-after: always;
-            }
+        @font-face {
+            font-family: 'Almarai-Regular';
+            font-style: normal;
+            font-weight: 400;
+            src: url({{url('assets/sales/webfonts/Almarai-Regular.ttf')}}) format('ttf');
+            unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
         }
-
+        *{
+            font-family: 'Almarai-Regular';
+        }
     </style>
 </head>
 
@@ -110,8 +98,9 @@
                         <li><label> Change : </label> <strong> EGP {{$ticket->rem_amount - $ticket->paid_amount}}</strong></li>
                     </ul>
                 </div>
-                <img src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode($ticket->ticket_num, $generatorPNG::TYPE_CODE_128)) }}"
-                     class="barcode">
+
+{{--                <img src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode($ticket->ticket_num, $generatorPNG::TYPE_CODE_128)) }}"--}}
+{{--                     class="barcode">--}}
             </div>
         </div>
     </div>

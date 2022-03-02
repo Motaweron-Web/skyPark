@@ -19,18 +19,7 @@ class CreateGeneralSettingsTable extends Migration
             $table->bigInteger('capacity')->default(1250)->nullable();
             $table->string('logo',500)->nullable();
             $table->string('title',500)->nullable();
-            $table->text('terms');
-            $table->text('about');
-            $table->text('address');
-            $table->string('phone')->nullable();
-            $table->string('Team_phone')->nullable();
-            $table->string('group_organization_phone')->nullable();
-            $table->string('info_email')->nullable();
-            $table->string('sales_email')->nullable();
-            $table->string('twitter')->nullable();
-            $table->string('facebook')->nullable();
-            $table->string('instagram')->nullable();
-            $table->string('snap')->nullable();
+
             $table->timestamps();
         });
     }

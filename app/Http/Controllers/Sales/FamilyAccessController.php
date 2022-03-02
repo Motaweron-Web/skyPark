@@ -22,9 +22,11 @@ class FamilyAccessController extends Controller
         if ($request->ajax()) {
 
             $ticket = Ticket::whereDate('visit_date', date('Y-m-d'))
-                ->where('ticket_num', $request->search)
-                ->orWhereHas('client', function($query) use ($request){
-                    $query->where('phone',$request->search);
+                ->where(function ($query) use ($request) {
+                    $query->where('ticket_num', $request->search)
+                        ->orWhereHas('client', function ($query) use ($request) {
+                            $query->where('phone', $request->search);
+                        });
                 })->with('append_models.type');
 
 
@@ -90,7 +92,7 @@ class FamilyAccessController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -101,7 +103,7 @@ class FamilyAccessController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -112,7 +114,7 @@ class FamilyAccessController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -123,30 +125,29 @@ class FamilyAccessController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $data = $request->validate([
-            'bracelet_number'=>['required',Rule::exists('bracelets','title')->where('status',true)],
-            'id'=>['required',Rule::exists('ticket_rev_models','id')->where('status','append')],
-            'birthday'=>'nullable',
-            'name'=>'nullable|max:500',
-            'gender'=>'nullable|in:male,female',
+            'bracelet_number' => ['required', Rule::exists('bracelets', 'title')->where('status', true)],
+            'id' => ['required', Rule::exists('ticket_rev_models', 'id')->where('status', 'append')],
+            'birthday' => 'nullable',
+            'name' => 'nullable|max:500',
+            'gender' => 'nullable|in:male,female',
         ]);
         $model = TicketRevModel::findOrFail($request->id);
 
         if ($model->rev_id != '') {
             $ticket = Reservations::findOrFail($model->rev_id);
-        }
-        elseif($model->ticket_id != ''){
+        } elseif ($model->ticket_id != '') {
             $ticket = Ticket::findOrFail($model->ticket_id);
 
-        }else{
+        } else {
             toastr()->info('not found');
-            return response(1,500);
+            return response(1, 500);
         }
 
         $status['status'] = 'in';
@@ -155,7 +156,7 @@ class FamilyAccessController extends Controller
 
         $braceletData['status'] = false;
 
-        Bracelets::where('title',$request->bracelet_number)->update($braceletData);
+        Bracelets::where('title', $request->bracelet_number)->update($braceletData);
 
 
         $model->update($data);
@@ -166,7 +167,7 @@ class FamilyAccessController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

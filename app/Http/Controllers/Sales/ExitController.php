@@ -31,26 +31,30 @@ class ExitController extends Controller
 
         if ($request->has('search')) {
 
-            $ticket = Ticket::WhereHas('in_models')
-//                ->whereDate('visit_date', date('Y-m-d'))
-//                ->WhereHas('client', function ($query) use ($request) {
-//                    $query->where('phone', $request->search);
-//                })
-//                ->orwhere('ticket_num', $request->search)
-//                ->orWhereHas('in_models', function ($query) use ($request) {
-//                    $query->where('bracelet_number', $request->search);
-//                })
-                ->with('in_models.type');
+            $ticket = Ticket::whereDate('visit_date', date('Y-m-d'))
+                ->where(function ($query_all)use ($request){
+                    $query_all->WhereHas('client', function ($query) use ($request) {
+                        $query->where('phone', $request->search);
+                    })
+                        ->orwhere('ticket_num', $request->search)
+                        ->orWhereHas('in_models', function ($query) use ($request) {
+                            $query->where('bracelet_number', $request->search);
+                        });
+                })
+                ->with('in_models.type','client');
 
             if ($ticket->count() == 0) {
-                $ticket = Reservations::whereHas('in_models')
-                    ->WhereHas('in_models')
-                    ->whereDate('day', date('Y-m-d'))
-                    ->where('custom_id', $request->search)
-                    ->orWhereHas('in_models', function ($query) use ($request) {
-                        $query->where('bracelet_number', $request->search);
+                $ticket = Reservations::whereDate('day', date('Y-m-d'))
+
+                    ->where(function ($query)use($request){
+                        $query->where('custom_id', $request->search)
+                            ->orWhereHas('in_models', function ($query) use ($request) {
+                                $query->where('bracelet_number', $request->search);
+                            })
+                            ->orWhere('phone', $request->search);
                     })
-                    ->orWhere('phone', $request->search)
+
+
                     ->with('in_models.type');
                 $type = 'rev';
 
@@ -61,6 +65,9 @@ class ExitController extends Controller
 
 
             $customId = $ticket->first()->ticket_num ?? $ticket->first()->custom_id ?? '';
+            $phone = $ticket->first()->client->phone ?? $ticket->first()->phone??'';
+            $name = $ticket->first()->client->name ?? $ticket->first()->client_name??'';
+
 
             $returnArray = [];
 
@@ -90,8 +97,8 @@ class ExitController extends Controller
 
 
         if ($request->has('search'))
-            count($models) ? '' : toastr()->warning('there sis no data');
-        return view('sales.exit', compact('ticket', 'returnArray', 'type','models', 'customId', 'hours'));
+            count($models) ? '' : toastr()->warning('there is no data');
+        return view('sales.exit', compact('ticket', 'returnArray','name', 'type','models', 'customId','phone', 'hours'));
     }
 
     /**

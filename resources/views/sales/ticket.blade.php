@@ -491,22 +491,22 @@
                 "rem":(Math.round(rem * 100) / 100).toFixed(2),
             }
             console.log(data)
-            {{--$.ajax({--}}
-            {{--    type: "POST",--}}
-            {{--    data: data,--}}
-            {{--    url: '{{route('storeModels')}}',--}}
-            {{--    beforeSend: function(){--}}
-            {{--        $('#confirmBtn').html('<span class="spinner-border spinner-border-sm mr-2" ' +--}}
-            {{--            ' ></span> <span style="margin-left: 4px;">working</span>').attr('disabled', true);--}}
-            {{--    },--}}
-            {{--    success: function(data){--}}
-            {{--        toastr.success("Ticket is saved successfully");--}}
-            {{--        $('#confirmBtn').html('Confirm').attr('disabled', false);--}}
-            {{--        window.setTimeout(function() {--}}
-            {{--            window.location.href="{{route('client.create')}}";--}}
-            {{--        }, 300);--}}
-            {{--    },--}}
-            {{--});--}}
+            $.ajax({
+                type: "POST",
+                data: data,
+                url: '{{route('storeModels')}}',
+                beforeSend: function(){
+                    $('#confirmBtn').html('<span class="spinner-border spinner-border-sm mr-2" ' +
+                        ' ></span> <span style="margin-left: 4px;">working</span>').attr('disabled', true);
+                },
+                success: function(data){
+                    toastr.success("Ticket is saved successfully");
+                    $('#confirmBtn').html('Confirm').attr('disabled', false);
+                    window.setTimeout(function() {
+                        window.location.href="{{route('client.create')}}";
+                    }, 300);
+                },
+            });
 
             // Prevent form submission
         } );
