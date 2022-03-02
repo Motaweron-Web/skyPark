@@ -24,6 +24,7 @@
                                 <th class="min-w-50px">phone</th>
                                 <th class="min-w-50px">email</th>
                                 <th class="min-w-25px">message</th>
+                                <th class="min-w-25px">status</th>
                                 <th class="min-w-25px">date</th>
                                 <th class="min-w-50px rounded-end">Actions</th>
                             </tr>
@@ -70,11 +71,35 @@
             {data: 'phone', name: 'phone'},
             {data: 'email', name: 'email'},
             {data: 'message', name: 'message'},
+            {data: 'status', name: 'status'},
             {data: 'created_at', name: 'created_at'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
         showData('{{route('contact_us.index')}}', columns);
         deleteScript('{{route('contact_us.delete')}}');
+        // Make Better Using Ajax
+        $(document).on('click', '.readSpan', function () {
+            var id = $(this).attr("data-id")
+            $.ajax({
+                type: 'POST',
+                url: "{{route('read_message')}}",
+                data: {
+                    '_token': "{{csrf_token()}}",
+                    'id': id,
+                },
+                success: function (data) {
+                    if (data.status === 200) {
+                        $('#dataTable').DataTable().ajax.reload();
+                        toastr.success('Message Read Done');
+                        var span = $(".contact");
+                        if(data.count>0)
+                            span.html(data.count);
+                        else
+                            span.remove();
+                    }
+                }
+            });
+        });
     </script>
 @endsection
 

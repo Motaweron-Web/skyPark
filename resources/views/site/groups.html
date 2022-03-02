@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Sky Park </title>
+  <!-- icon -->
+  <link rel="icon" type="image/x-icon" href="img/logo.svg">
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="css/font.awesome.css">
+  <!-- swiper -->
+  <link rel="stylesheet" href="css/swiper-bundle.min.css">
+  <!-- animate -->
+  <link rel="stylesheet" href="css/animate.min.css">
+  <!-- atropos -->
+  <link rel="stylesheet" href="css/atropos.css">
+  <!-- odometer -->
+  <link rel="stylesheet" href="css/odometer.min.css">
+  <!-- fancyBox -->
+  <link rel="stylesheet" href="css/fancybox.css">
+  <!-- Custom style  -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <!-- ================ Header ================= -->
+  <div id="Header"></div>
+  <!-- ================ /Header ================= -->
+  <!--(((((((((((((((((((((((()))))))))))))))))))))))-->
+  <!--((((((((((((((((((( content )))))))))))))))))))-->
+  <!--(((((((((((((((((((((((()))))))))))))))))))))))-->
+  <content>
+
+    <!-- Main Banner  -->
+    <section class="mainBanner">
+      <button onclick="goBack()" class="Back">
+        <i class="fas fa-angle-left"></i>
+      </button>
+      <ul>
+        <li>
+          <a href="index.html"> home </a>
+        </li>
+        <li>
+          <a href="#!" class="active">GROUPS </a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- groups -->
+    <section class="groups">
+      <div class="container">
+        <div class="group">
+          <div class="row align-items-center">
+            <div class="col-md-6 p-3 order-md-2 ">
+              <img src="img/group.svg" >
+            </div>
+            <div class="col-md-6 p-3 order-md-1">
+              <div class="info">
+                <h1 class="title"> GROUPS </h1>
+                <p>
+                  If you want to spice up your adventure, then gather up your group of friends or fellow adventurers and
+                  set your sails towards Sky Park.
+
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="group">
+          <div class="row align-items-center">
+            <div class="col-md-6 p-3 ">
+              <img src="img/team.svg" >
+            </div>
+            <div class="col-md-6 p-3">
+              <div class="info">
+                <h1 class="title"> TEAM BUILDING </h1>
+                <p>
+                  Do you think that your team’s bonds need some enhancement like our ropes are attached to the wooden
+                  platforms? Reach our team and let them organize an unforgettable team-building day for your employees.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="group">
+          <div class="row align-items-center">
+            <div class="col-md-6 p-3 order-md-2 ">
+              <img src="img/birthday.svg" >
+            </div>
+            <div class="col-md-6 p-3 order-md-1">
+              <div class="info">
+                <h1 class="title"> BIRTHDAYS </h1>
+                <p>
+                  Do you think that a Birthday challenge is what your kids need to fire up their joy? We think so too.
+
+
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </section>
+
+
+
+  </content>
+  <!--(((((((((((((((((((((((()))))))))))))))))))))))-->
+  <!--((((((((((((((((( / content )))))))))))))))))))-->
+  <!--(((((((((((((((((((((((()))))))))))))))))))))))-->
+  <!-- ================ Footer ================= -->
+  <div id="Footer"></div>
+  <!-- ================ /Footer ================= -->
+  <!--////////////////////////////////////////////////////////////////////////////////-->
+  <!--////////////////////////////////////////////////////////////////////////////////-->
+  <!--////////////////////////////////////////////////////////////////////////////////-->
+  <!--/////////////////////////////JavaScript/////////////////////////////////////////-->
+  <!--////////////////////////////////////////////////////////////////////////////////-->
+  <!--////////////////////////////////////////////////////////////////////////////////-->
+  <!--////////////////////////////////////////////////////////////////////////////////-->
+  <script src="js/jquery.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/jquery.appear.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/odometer.min.js"></script>
+  <script src="js/swiper-bundle.min.js"></script>
+  <script src="js/fancybox.js"></script>
+  <script src="js/atropos.min.js"></script>
+  <script src="js/fancybox.umd.js"></script>
+  <script src="js/WOW.js"></script>
+  <script src="js/Custom.js"></script>
+  <script>
+    $('#Header').load("Header.html");
+    $('#Footer').load("Footer.html");
+  </script>
+
+  <script>
+    // goBack
+    function goBack() {
+      window.history.back();
+    };
+  </script>
+</body>
+
+</html>

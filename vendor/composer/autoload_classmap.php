@@ -8,6 +8,11 @@ $baseDir = dirname($vendorDir);
 return array(
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
+<<<<<<< HEAD
+=======
+    'App\\Http\\Controllers\\Admin\\AboutUsController' => $baseDir . '/app/Http/Controllers/Admin/AboutUsController.php',
+    'App\\Http\\Controllers\\Admin\\ActivityController' => $baseDir . '/app/Http/Controllers/Admin/ActivityController.php',
+>>>>>>> 0a8bc123279e448fdf53166e9322eb1d2dceef8c
     'App\\Http\\Controllers\\Admin\\AdminController' => $baseDir . '/app/Http/Controllers/Admin/AdminController.php',
     'App\\Http\\Controllers\\Admin\\AuthController' => $baseDir . '/app/Http/Controllers/Admin/AuthController.php',
     'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
@@ -33,6 +38,12 @@ return array(
     'App\\Http\\Middleware\\TrimStrings' => $baseDir . '/app/Http/Middleware/TrimStrings.php',
     'App\\Http\\Middleware\\TrustProxies' => $baseDir . '/app/Http/Middleware/TrustProxies.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
+<<<<<<< HEAD
+=======
+    'App\\Http\\Requests\\UpdateSetting' => $baseDir . '/app/Http/Requests/UpdateSetting.php',
+    'App\\Models\\AboutUs' => $baseDir . '/app/Models/AboutUs.php',
+    'App\\Models\\Activity' => $baseDir . '/app/Models/Activity.php',
+>>>>>>> 0a8bc123279e448fdf53166e9322eb1d2dceef8c
     'App\\Models\\Admin' => $baseDir . '/app/Models/Admin.php',
     'App\\Models\\Bracelets' => $baseDir . '/app/Models/Bracelets.php',
     'App\\Models\\CapacityDays' => $baseDir . '/app/Models/CapacityDays.php',
@@ -42,6 +53,8 @@ return array(
     'App\\Models\\Event' => $baseDir . '/app/Models/Event.php',
     'App\\Models\\GeneralSetting' => $baseDir . '/app/Models/GeneralSetting.php',
     'App\\Models\\Governorate' => $baseDir . '/app/Models/Governorate.php',
+    'App\\Models\\Offer' => $baseDir . '/app/Models/Offer.php',
+    'App\\Models\\OfferItem' => $baseDir . '/app/Models/OfferItem.php',
     'App\\Models\\Payment' => $baseDir . '/app/Models/Payment.php',
     'App\\Models\\Product' => $baseDir . '/app/Models/Product.php',
     'App\\Models\\Reference' => $baseDir . '/app/Models/Reference.php',

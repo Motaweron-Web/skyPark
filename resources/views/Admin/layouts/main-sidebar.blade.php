@@ -83,14 +83,18 @@
         <li class="slide">
             <a class="side-menu__item" href="{{route('about_us.index')}}">
                 <i class="fe fe-info side-menu__icon"></i>
-                <span class="side-menu__label">About us</span>
+                <span class="side-menu__label">About us Page</span>
             </a>
         </li>
 
         <li class="slide">
             <a class="side-menu__item" href="{{route('contact_us.index')}}">
                 <i class="fe fe-mail side-menu__icon"></i>
-                <span class="side-menu__label">Contact us</span>
+                <span class="side-menu__label">Contact Us
+                    <span id="contact-span">
+
+                    </span>
+                </span>
             </a>
         </li>
 
@@ -99,6 +103,24 @@
                 <i class="fe fe-settings side-menu__icon"></i>
                 <span class="side-menu__label">Setting</span>
             </a>
+        </li>
+
+        <li class="slide">
+            <a class="side-menu__item" href="{{route('activity.index')}}">
+                <i class="fe fe-zap side-menu__icon"></i>
+                <span class="side-menu__label">Activities Page</span>
+            </a>
+        </li>
+
+        <li class="slide">
+            <a class="side-menu__item" data-toggle="slide" href="#">
+                <i class="fe fe-hash side-menu__icon"></i>
+                <span class="side-menu__label">Offers</span><i class="angle fa fa-angle-right"></i>
+            </a>
+            <ul class="slide-menu">
+                <li><a href="{{route('offers.index')}}" class="slide-item">Show Offers</a></li>
+                <li><a href="{{route('items.index')}}" class="slide-item">Offers Items</a></li>
+            </ul>
         </li>
 
     </ul>

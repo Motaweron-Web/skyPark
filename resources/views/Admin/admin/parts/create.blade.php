@@ -10,6 +10,7 @@
     <div class="form-group">
         <label for="name" class="form-control-label">Photo</label>
         <input type="file" class="dropify" name="photo" data-default-file="{{asset('assets/uploads/avatar.gif')}}" accept="image/png, image/gif, image/jpeg,image/jpg"/>
+        <span class="form-text text-danger text-center">accept only png, gif, jpeg, jpg</span>
     </div>
     <div class="form-group">
         <label for="name" class="form-control-label">Name</label>

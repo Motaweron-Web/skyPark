@@ -568,6 +568,11 @@ class ComposerStaticInit5adebc6c948317d5c2392b91ea4c80f0
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+<<<<<<< HEAD
+=======
+        'App\\Http\\Controllers\\Admin\\AboutUsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/AboutUsController.php',
+        'App\\Http\\Controllers\\Admin\\ActivityController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ActivityController.php',
+>>>>>>> 0a8bc123279e448fdf53166e9322eb1d2dceef8c
         'App\\Http\\Controllers\\Admin\\AdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/AdminController.php',
         'App\\Http\\Controllers\\Admin\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/AuthController.php',
         'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
@@ -593,6 +598,12 @@ class ComposerStaticInit5adebc6c948317d5c2392b91ea4c80f0
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+<<<<<<< HEAD
+=======
+        'App\\Http\\Requests\\UpdateSetting' => __DIR__ . '/../..' . '/app/Http/Requests/UpdateSetting.php',
+        'App\\Models\\AboutUs' => __DIR__ . '/../..' . '/app/Models/AboutUs.php',
+        'App\\Models\\Activity' => __DIR__ . '/../..' . '/app/Models/Activity.php',
+>>>>>>> 0a8bc123279e448fdf53166e9322eb1d2dceef8c
         'App\\Models\\Admin' => __DIR__ . '/../..' . '/app/Models/Admin.php',
         'App\\Models\\Bracelets' => __DIR__ . '/../..' . '/app/Models/Bracelets.php',
         'App\\Models\\CapacityDays' => __DIR__ . '/../..' . '/app/Models/CapacityDays.php',
@@ -602,6 +613,8 @@ class ComposerStaticInit5adebc6c948317d5c2392b91ea4c80f0
         'App\\Models\\Event' => __DIR__ . '/../..' . '/app/Models/Event.php',
         'App\\Models\\GeneralSetting' => __DIR__ . '/../..' . '/app/Models/GeneralSetting.php',
         'App\\Models\\Governorate' => __DIR__ . '/../..' . '/app/Models/Governorate.php',
+        'App\\Models\\Offer' => __DIR__ . '/../..' . '/app/Models/Offer.php',
+        'App\\Models\\OfferItem' => __DIR__ . '/../..' . '/app/Models/OfferItem.php',
         'App\\Models\\Payment' => __DIR__ . '/../..' . '/app/Models/Payment.php',
         'App\\Models\\Product' => __DIR__ . '/../..' . '/app/Models/Product.php',
         'App\\Models\\Reference' => __DIR__ . '/../..' . '/app/Models/Reference.php',
