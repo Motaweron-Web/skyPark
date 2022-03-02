@@ -848,13 +848,13 @@ table.dataTable>tbody>tr.child span.dtr-title {
                 padding: 5px;
             }
         }
-    
+
         .calendarHead {
             .day {
-                font-size: small;    
+                font-size: small;
             }
         }
-    
+
         .calendarBody {
             .day {
                 min-height: 30px;
@@ -867,35 +867,35 @@ table.dataTable>tbody>tr.child span.dtr-title {
                        display: none;
                     }
                 }
-    
+
                 .num {
                     font-size: small;
                     font-weight: bold;
                 }
-    
+
                 &:hover {
                     box-shadow: $BigShadow;
                     transform: scale(1.02);
                     z-index: 2;
                 }
-    
+
                 &.prevMonth {
                     background-color: #eee;
                     box-shadow: unset;
-    
+
                     &:hover {
                         box-shadow: unset;
                         transform: unset;
                         z-index: unset;
                     }
-    
+
                     .num {
                         font-size: unset;
                         font-weight: unset;
                         color: #999;
                     }
                 }
-    
+
                 &.active {
                     background-color: $mainColor;
                     color: $white-color;
@@ -903,7 +903,7 @@ table.dataTable>tbody>tr.child span.dtr-title {
             }
         }
 
-        
+
     }
 }
 

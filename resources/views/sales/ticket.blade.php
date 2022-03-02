@@ -491,6 +491,10 @@
                 "revenue":revenue,
                 "rem":(Math.round(rem * 100) / 100).toFixed(2),
             }
+<<<<<<< HEAD
+=======
+            console.log(data)
+>>>>>>> b85dc53b841b574093b448e031f57b3a539fe674
             $.ajax({
                 type: "POST",
                 data: data,

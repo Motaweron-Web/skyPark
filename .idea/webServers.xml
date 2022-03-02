@@ -9,6 +9,8 @@
           </advancedOptions>
         </fileTransfer>
       </webServer>
+<<<<<<< HEAD
+=======
       <webServer id="085661d0-82f9-4a2c-a18b-1bcba36dd077" name="RAGM-API" url="http://ftp.rynprogramming.com">
         <fileTransfer host="ftp.rynprogramming.com" port="21">
           <advancedOptions>
@@ -37,6 +39,7 @@
           </advancedOptions>
         </fileTransfer>
       </webServer>
+>>>>>>> 0a8bc123279e448fdf53166e9322eb1d2dceef8c
     </option>
   </component>
 </project>

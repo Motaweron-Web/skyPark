@@ -16,28 +16,33 @@
             padding: 0;
         }
 
-        .barcode {
-            width: 70% !important;
-            margin-right: 16% !important;
-        }
-
         @page {
             /*size: A4;*/
             margin: 0;
         }
-
-        @media print {
-            .page {
-                margin: 0;
-                border: initial;
-                border-radius: initial;
-                width: initial;
-                min-height: initial;
-                box-shadow: initial;
-                background: initial;
-                page-break-after: always;
-            }
+        @font-face {
+            font-family: 'Almarai-Regular';
+            font-style: normal;
+            font-weight: 400;
+            src: url({{url('assets/sales/webfonts/Almarai-Regular.ttf')}}) format('ttf');
+            unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
         }
+        *{
+            font-family: 'Almarai-Regular';
+        }
+
+        /*@media print {*/
+        /*    .page {*/
+        /*        margin: 0;*/
+        /*        border: initial;*/
+        /*        border-radius: initial;*/
+        /*        width: initial;*/
+        /*        min-height: initial;*/
+        /*        box-shadow: initial;*/
+        /*        background: initial;*/
+        /*        page-break-after: always;*/
+        /*    }*/
+        /*}*/
 
     </style>
 </head>
