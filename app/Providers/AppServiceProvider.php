@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\GeneralSetting;
 use Illuminate\Support\ServiceProvider;
+use Picqer\Barcode\BarcodeGeneratorPNG;
 
 class AppServiceProvider extends ServiceProvider
 {
