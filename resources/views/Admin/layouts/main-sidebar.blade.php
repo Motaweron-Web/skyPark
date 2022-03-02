@@ -2,10 +2,10 @@
 <aside class="app-sidebar">
     <div class="side-header">
         <a class="header-brand1" href="#">
-            <img src="{{asset('assets/uploads')}}/logo.png" class="header-brand-img desktop-logo" alt="logo">
-            <img src="{{asset('assets/uploads')}}/logo.png" class="header-brand-img toggle-logo" alt="logo">
-            <img src="{{asset('assets/uploads')}}/logo.png" class="header-brand-img light-logo" alt="logo">
-            <img src="{{asset('assets/uploads')}}/logo.png" class="header-brand-img light-logo1" alt="logo">
+            <img src="" class="header-brand-img desktop-logo" alt="logo">
+            <img src="" class="header-brand-img toggle-logo" alt="logo">
+            <img src="" class="header-brand-img light-logo" alt="logo">
+            <img src="" class="header-brand-img light-logo1" alt="logo">
         </a>
         <!-- LOGO -->
     </div>
@@ -83,7 +83,7 @@
         <li class="slide">
             <a class="side-menu__item" href="{{route('about_us.index')}}">
                 <i class="fe fe-info side-menu__icon"></i>
-                <span class="side-menu__label">About us Page</span>
+                <span class="side-menu__label">About Page</span>
             </a>
         </li>
 

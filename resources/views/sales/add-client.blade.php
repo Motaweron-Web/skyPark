@@ -3,10 +3,9 @@
     Add Client
 @endsection
 @section('page_title')
-    Sky Park | Add Client
+    {{$setting->title}} | Add Client
 @endsection
 @section('content')
-    <h2 class="MainTitle mb-5 ms-4"> add client</h2>
     <form action="{{route('client.search')}}" method="GET" id="SearchForm" class="card p-3 py-4  w-100 w-sm-80 m-auto mb-4 ">
         <label class="form-label fs-4"><i class="fas fa-phone-square-alt me-2"></i> Phone</label>
         <div class="d-flex">
@@ -14,23 +13,24 @@
             <button type="submit" id="SearchBtn" class="input-group-text ms-2 bg-gradient-primary px-4 text-body"><i class="fas fa-search text-white"></i></button>
         </div>
     </form>
-    <form action="{{route('client.store')}}" method="post" enctype="multipart/form-data" id="AddForm" class="card p-2 py-4 mt-3 ">
+    <h2 class="MainTitle mb-2 mt-2 ms-4" id="addClient" style="display:none;"> Add Client</h2>
+    <form action="{{route('client.store')}}" style="display: none" method="post" enctype="multipart/form-data" id="AddForm" class="card p-2 py-4 mt-3 ">
         @csrf
         <div class="row">
             <div class="col-sm-6 p-2">
                 <label class="form-label"> <i class="fas fa-user me-1"></i> Client Name</label>
                 <div class="input-group">
-                    <input class="form-control" name="name" type="text" id="name" placeholder="Type here...">
+                    <input class="form-control" name="name" type="text" id="name" placeholder="Type Here...">
                 </div>
             </div>
             <div class="col-sm-6 p-2">
                 <label class="form-label"> <i class="fas fa-envelope me-1"></i> Email</label>
                 <div class="input-group">
-                    <input class="form-control" name="email" type="email" id="email" placeholder="Type here...">
+                    <input class="form-control" name="email" type="email" id="email" placeholder="Type Here...">
                 </div>
             </div>
             <div class="col-sm-4 p-2">
-                <label class="form-label "><i class="fas fa-venus-mars me-1"></i> gender</label>
+                <label class="form-label "><i class="fas fa-venus-mars me-1"></i> Gender</label>
                 <div class="choose">
                     <div class="genderOption">
                         <input type="radio" class="btn-check" name="gender" value="male" id="option1">
@@ -72,7 +72,7 @@
             <div class="col-sm-6 p-2">
                 <label class="form-label"> <i class="fas fa-users-crown me-1"></i> family size</label>
                 <div class="input-group">
-                    <input class="form-control" type="number" placeholder="Type here..." name="family_size" id="family_size" min="0">
+                    <input class="form-control" type="number" placeholder="Type Here..." name="family_size" id="family_size" min="0">
                 </div>
             </div>
         </div>
@@ -182,7 +182,9 @@
                         $('#choices-governorate').val(data.client.gov_id).change();
                         $('#choices-city').val(data.client.city_id);
                     }else {
-                        toastr.warning('Not Found');
+                        toastr.warning('Welcome To SkyPark');
+                        $("form#AddForm").show();
+                        $("#addClient").show();
                         $('#SearchBtn').html('<i class="fas fa-search text-white"></i>');
                         $('#name').val(null);
                         $('#email').val(null);

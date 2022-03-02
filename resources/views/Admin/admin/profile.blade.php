@@ -1,5 +1,5 @@
 @extends('Admin/layouts/master')
-@section('title') Sky Park | Profile @endsection
+@section('title') {{$setting->title}} | Profile @endsection
 
 @section('page_name')
     My Profile

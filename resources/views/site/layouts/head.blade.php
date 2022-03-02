@@ -1,9 +1,9 @@
 <!-- Required meta tags -->
 <meta charset="UTF-8">
-<meta name="description" content="SkyPark,sky park,Park,Egypt Park">
+<meta name="description" content="SkyPark,Park,Park,Egypt Park">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> Sky Park </title>
+<title> {{$setting->title}} </title>
 <!-- icon -->
 <link rel="icon" type="image/x-icon" href="{{asset('assets/site')}}/img/logo.png">
 <!-- Bootstrap -->

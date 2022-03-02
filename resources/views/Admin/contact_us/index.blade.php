@@ -1,6 +1,6 @@
 @extends('Admin/layouts/master')
 
-@section('title') Sky Park | Contact us @endsection
+@section('title') {{$setting->title}} | Contact us @endsection
 @section('page_name') Contact us @endsection
 @section('css')
     @include('layouts.loader.formLoader.loaderCss')

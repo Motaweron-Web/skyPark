@@ -1,6 +1,6 @@
 @extends('Admin/layouts/master')
 
-@section('title') Sky Park | Clients @endsection
+@section('title') {{$setting->title}} | Clients @endsection
 @section('page_name') Clients @endsection
 @section('content')
 
@@ -8,7 +8,7 @@
         <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Sky Park Clients</h3>
+                    <h3 class="card-title">{{$setting->title}} Clients</h3>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">

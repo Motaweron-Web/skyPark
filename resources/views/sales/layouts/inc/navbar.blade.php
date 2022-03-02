@@ -4,7 +4,7 @@
      data-scroll="true"> <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-2">
             <li class="breadcrumb-item text-sm">
-                <a class="opacity-3 text-dark" href="index.html">
+                <a class="opacity-3 text-dark" href="{{route('sales')}}">
                     <i class="fas fa-house-day"></i>
                 </a>
             </li>

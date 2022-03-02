@@ -74,6 +74,7 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin','namespace'=>'Admin']
     #### Setting ####
     Route::get('general_setting','SettingController@index')->name('general_setting.index');
     Route::POST('edit_setting','SettingController@edit')->name('admin.edit.setting');
+    Route::get('getLogo','SettingController@getLogo')->name('getLogo');
 
     #### Auth ####
     Route::get('logout', 'AuthController@logout')->name('admin.logout');

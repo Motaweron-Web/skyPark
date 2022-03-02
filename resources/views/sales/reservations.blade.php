@@ -1,6 +1,6 @@
 @extends('sales.layouts.master')
 @section('page_title')
-    Sky Park | Reservations
+    {{$setting->title}} | Reservations
 @endsection
 @section('css')
     @include('layouts.loader.formLoader.loaderCss')

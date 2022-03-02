@@ -163,6 +163,7 @@ class TicketController extends Controller
      */
     public function show($id)
     {
+        $id = Clients::findOrFail($id)->first()->id;
         $shifts     = Shifts::all();
         $types      = VisitorTypes::all();
         $categories = Category::with(['products'=>function($query){
@@ -173,8 +174,8 @@ class TicketController extends Controller
             })
             ->get();
         $customId     = strtoupper(date('D').$id.'Re'.substr(time(), -2));
-
-        $random = strtoupper(substr(Carbon::now()->format("l"),0,3).rand(0, 999).Carbon::now()->format('is'));
+//        $random       = strtoupper(date('D').$id.'Re'.substr(time(), -2));
+        $random = strtoupper(substr(Carbon::now()->format("l"),0,3).$id.rand(0, 99).Carbon::now()->format('is'));
         return view('sales/ticket',compact('customId','shifts','random','types','categories','id'));
     }
 

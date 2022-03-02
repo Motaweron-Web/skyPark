@@ -65,5 +65,6 @@
     });
     $('#contact-span').load("{{route('getCount')}}")
     $('#nav-span').load("{{route('getCount')}}")
+    $('.header-brand-img').attr("src","{{asset($setting->logo)}}")
 </script>
 @yield('js')

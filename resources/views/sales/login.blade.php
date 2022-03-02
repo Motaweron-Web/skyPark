@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="icon" type="image/png" href="img/favicon.png">
-  <title> Sky Park </title>
+  <title> {{$setting->title}} </title>
   <!-- CSS Files -->
   <link id="pagestyle" href="css/app.min.css" rel="stylesheet" />
   <link href="css/font.awesome.css" rel="stylesheet" />
@@ -37,7 +37,7 @@
                 </div>
               </form>
             </div>
-          
+
           </div>
         </div>
         <div class="col-6 d-md-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
@@ -46,7 +46,7 @@
             <div class="position-relative">
               <img class="max-width-500 w-100 position-relative z-index-2" src="img/rocket-white.png" alt="chat-img">
             </div>
-            <h3 class="mt-5 text-white font-weight-bolder">" Welcome To Sky Park "</h3>
+            <h3 class="mt-5 text-white font-weight-bolder">" Welcome To {{$setting->title}} "</h3>
           </div>
         </div>
       </div>

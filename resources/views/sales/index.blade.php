@@ -1,6 +1,6 @@
 @extends('sales.layouts.master')
 @section('page_title')
-    Sky Park | Home
+    {{$setting->title}} | Home
 @endsection
 @section('links')
 {{--    <li class="breadcrumb-item text-sm text-dark active" aria-current="page">family Access</li>--}}

@@ -1,6 +1,6 @@
 @extends('sales.layouts.master')
 @section('page_title')
-    Sky Park | Exit
+    {{$setting->title}} | Exit
 @endsection
 @section('css')
     @include('layouts.loader.formLoader.loaderCss')
@@ -9,7 +9,7 @@
       <h2 class="MainTiltle mb-5 ms-4"> Exit </h2>
       <div class="card py-4 w-100 w-sm-80 m-auto ">
         <form method="get" action="{{route('exit.index')}}" class="card-body ">
-          <label class="form-label fs-4"> <i class="fas fa-ticket-alt me-2"></i>phone , bracelet number or ticket number</label>
+          <label class="form-label fs-4"> <i class="fas fa-ticket-alt me-2"></i>phone , bracelet number or Sale Number</label>
           <div class="d-flex">
             <input type="text" class="form-control" name="search" value="{{count($models)?$_GET['search']:''}}" id="searchValue" placeholder="Type here...">
             <button type="submit" id="searchBtn" class="input-group-text ms-2 bg-gradient-primary px-4 text-body"><i
@@ -83,7 +83,7 @@
           <thead>
             <tr>
               <th>Group ID</th>
-              <th>Ticket Number</th>
+              <th>Sale Number</th>
               <th>Bracelet Number </th>
               <th>Type</th>
               <th>Name</th>

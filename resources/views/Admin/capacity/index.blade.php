@@ -1,6 +1,6 @@
 @extends('Admin/layouts/master')
 
-@section('title') Sky Park | Capacity @endsection
+@section('title') {{$setting->title}} | Capacity @endsection
 @section('page_name') Capacity @endsection
 @section('css')
     @include('layouts.loader.formLoader.loaderCss')
@@ -11,7 +11,7 @@
         <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Sky Park Capacity</h3>
+                    <h3 class="card-title">{{$setting->title}} Capacity</h3>
                     <div class="text-gray">You Can Edit Days Capacity Or Close The Park At A Specific Day</div>
                 </div>
                 <div class="card-body">

@@ -25,7 +25,9 @@ class UpdateSetting extends FormRequest
     {
         return [
             'address'     => 'required',
+            'title'       => 'required',
             'terms'       => 'required',
+            'logo'        => 'nullable',
             'about'       => 'required',
             'facebook'    => 'url|nullable',
             'twitter'     => 'url|nullable',
@@ -36,6 +38,8 @@ class UpdateSetting extends FormRequest
     public function messages(){
         return[
             'address.required'     => 'Enter The Address Of The Park',
+            'logo.nullable'        => 'The Logo Is Required',
+            'title.required'       => 'The Title Is Required',
             'terms.required'       => 'Enter The Terms Of The Park',
             'about.required'       => 'Enter The Main Info About The Park',
             'facebook.url'         => 'Enter A Valid Facebook URL Link Start With https://',

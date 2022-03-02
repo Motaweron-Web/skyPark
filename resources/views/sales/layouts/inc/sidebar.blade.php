@@ -5,8 +5,8 @@
         <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-xl-none"
            aria-hidden="true" id="iconSidenav"></i>
         <a class="navbar-brand m-0" href="/">
-            <img src="{{asset('assets/sales')}}/img/logo.png" class="navbar-brand-img h-100" alt="main_logo">
-            <!-- <span class="ms-1 font-weight-bold">Sky Park</span> -->
+            <img src="{{asset($setting->logo)}}" class="navbar-brand-img h-100" alt="main_logo">
+            <!-- <span class="ms-1 font-weight-bold">{{$setting->title}}</span> -->
         </a>
     </div>
     <hr class="horizontal dark mt-0">
@@ -14,7 +14,7 @@
         <ul class="navbar-nav">
             <!-- nav-item  -->
             <li class="nav-item">
-                <a href="{{route('/')}}" class="nav-link" id="mainHome">
+                <a href="{{route('sales')}}" class="nav-link" id="mainHome">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
                         <i class="fas fa-home"></i>

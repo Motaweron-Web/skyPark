@@ -44,7 +44,7 @@
             <div class="position-relative">
               <img class="max-width-500 w-100 position-relative z-index-2" src="{{asset('assets/sales/img/rocket-white.png')}}" alt="chat-img">
             </div>
-            <h3 class="mt-5 text-white font-weight-bolder">" Welcome To Sky Park "</h3>
+            <h3 class="mt-5 text-white font-weight-bolder">" Welcome To {{$setting->title}} "</h3>
           </div>
         </div>
       </div>
@@ -82,7 +82,7 @@
                     if (data == 200){
                         toastr.success('login successfully');
                         window.setTimeout(function() {
-                            window.location.href='/sales';
+                            window.location.href='sales';
                         }, 1000);
                     }else {
                         toastr.error('wrong password');

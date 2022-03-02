@@ -1,6 +1,6 @@
 @extends('Admin/layouts/master')
 
-@section('title') Sky Park | Bracelet @endsection
+@section('title') {{$setting->title}} | Bracelet @endsection
 @section('page_name') Bracelets @endsection
 @section('css')
     @include('layouts.loader.formLoader.loaderCss')
@@ -11,7 +11,7 @@
         <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Sky Park Bracelets</h3>
+                    <h3 class="card-title">{{$setting->title}} Bracelets</h3>
                     <div class="">
                         <button class="btn btn-secondary btn-icon text-white addBtn">
 									<span>

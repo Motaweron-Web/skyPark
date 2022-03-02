@@ -1,6 +1,6 @@
 @extends('sales.layouts.master')
 @section('page_title')
-    Sky Park | Group Access
+    {{$setting->title}} | Group Access
 @endsection
 @section('content')
     <div class="card p-3 py-4 w-100 w-sm-80 m-auto ">
@@ -19,7 +19,7 @@
         <table class=" customDataTable table table-bordered nowrap">
             <thead>
             <tr>
-                <th>Ticket Number</th>
+                <th>Sale Number</th>
                 <th>Type</th>
                 <th>Bracelet Number </th>
                 <th>Name</th>

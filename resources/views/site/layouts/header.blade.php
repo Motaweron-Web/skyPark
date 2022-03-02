@@ -4,7 +4,7 @@
 <!-- ================ Header ================= -->
 <nav class="navbar mainNav  navbar-expand-lg navbar-light fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="index.html"> <img class="logo" src="{{asset('assets/site')}}/img/logo.png" > </a>
+        <a class="navbar-brand" href="{{route('/')}}"> <img class="logo" src="{{asset($setting->logo)}}" > </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -12,10 +12,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto my-3 my-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" href="index.html">Home</a>
+                    <a class="nav-link active" href="{{route('/')}}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="about-us.html">About us</a>
+                    <a class="nav-link" href="{{route('about_us')}}">About us</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="activities.html">Activities</a>

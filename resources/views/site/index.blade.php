@@ -127,7 +127,7 @@
                   <div data-index="2" class="carousel__slide">
                     <div class="info">
                       <h3>with the help of a professional</h3>
-                      <p>Sky Park is an ideal spot for Team Buildings, Birthdays and Corporate Events</p>
+                      <p>{{$setting->title}} is an ideal spot for Team Buildings, Birthdays and Corporate Events</p>
                       <a href="#!" class="default-btn"> Contact Us
                         <span></span>
                       </a>
@@ -223,7 +223,7 @@
                   <span class="icon me-2">
                     <i class="fas fa-map-marked-alt"></i>
                   </span>
-                  westown hub،, Beverly Hills, Al Sheikh Zayed, Giza Governorate
+                  {{$setting->address}}
                 </a>
               </li>
               <li>
@@ -231,7 +231,7 @@
                   <span class="icon me-2">
                     <i class="fas fa-envelope"></i>
                   </span>
-                  info@skypark.fun
+                  {{$setting->info_email}}
                 </a>
               </li>
               <li>
@@ -239,28 +239,28 @@
                   <span class="icon me-2">
                     <i class="fas fa-phone-rotary"></i>
                   </span>
-                  01223303786
+                    {{$setting->phone}}
                 </a>
               </li>
             </ul>
             <h1 class="titleTow"> FOLLOW US </h1>
             <ul class="info">
               <li class="d-inline-block">
-                <a href="#!">
+                <a href="{{$setting->facebook}}" target="_blank">
                   <span class="icon me-2">
                     <i class="fab fa-facebook"></i>
                   </span>
                 </a>
               </li>
               <li class="d-inline-block">
-                <a href="#!">
+                <a href="{{$setting->instagram}}" target="_blank">
                   <span class="icon me-2">
                     <i class="fab fa-instagram"></i>
                   </span>
                 </a>
               </li>
               <li class="d-inline-block">
-                <a href="#!">
+                <a href="{{$setting->twitter}}" target="_blank">
                   <span class="icon me-2">
                     <i class="fab fa-twitter"></i>
                   </span>

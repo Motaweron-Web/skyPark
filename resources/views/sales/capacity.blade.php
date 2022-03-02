@@ -1,9 +1,9 @@
 @extends('sales.layouts.master')
 @section('page_title')
-    Sky Park | Capacity
+    {{$setting->title}} | Capacity
 @endsection
 @section('content')
-      <h2 class="MainTiltle mb-5 ms-4"> Sky Park Capacity </h2>
+      <h2 class="MainTiltle mb-5 ms-4"> {{$setting->title}} Capacity </h2>
 
       <div class="card p-2 py-4">
         <div class=" row ">

@@ -1,6 +1,6 @@
 @extends('sales.layouts.master')
 @section('page_title')
-Sky Park | Event Reservation
+{{$setting->title}} | Event Reservation
 @endsection
 @section('content')
       <h2 class="MainTiltle mb-5 ms-4"> Event Reservation </h2>
@@ -410,6 +410,7 @@ Sky Park | Event Reservation
                   <div class="info">
                       <h6 class="billTitle"> ticket <span id="RandTicket">{{$customId}}</span></h6>
                       <ul>
+                          <li><label> Cashier Name : </label> <strong>{{auth()->user()->name}}</strong></li>
                           <li><label> Visit Date : </label> <strong id="dateOfTicket"> </strong></li>
                           <li><label> Reservation Duration : </label> <strong id="hourOfTicket"></strong></li>
                           <li><label> Shift : </label> <strong id="shiftOfTicket"> </strong></li>

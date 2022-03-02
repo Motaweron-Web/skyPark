@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', 'Site\HomeController@index')->name('/');
+Route::get('about_us', 'Site\HomeController@about')->name('about_us');
 
 
 
@@ -28,7 +29,7 @@ Route::group(['middleware'=>'auth','namespace'=>'Sales'],function(){
 
 
 //================================ Home ====================================
-    Route::get('/sales','HomeController@index')->name('/sales');
+    Route::get('/sales','HomeController@index')->name('sales');
 
     require __DIR__.'/sales/CRUD.php';
 

@@ -1,39 +1,5 @@
-<!doctype html>
-<html>
-
-<head>
-  <!-- Required meta tags -->
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title> Sky Park </title>
-  <!-- icon -->
-  <link rel="icon" type="image/x-icon" href="img/logo.svg">
-  <!-- Bootstrap -->
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="css/font.awesome.css">
-  <!-- swiper -->
-  <link rel="stylesheet" href="css/swiper-bundle.min.css">
-  <!-- animate -->
-  <link rel="stylesheet" href="css/animate.min.css">
-  <!-- atropos -->
-  <link rel="stylesheet" href="css/atropos.css">
-  <!-- odometer -->
-  <link rel="stylesheet" href="css/odometer.min.css">
-  <!-- fancyBox -->
-  <link rel="stylesheet" href="css/fancybox.css">
-  <!-- Custom style  -->
-  <link rel="stylesheet" href="css/style.css">
-</head>
-
-<body>
-  <!-- ================ Header ================= -->
-  <div id="Header"></div>
-  <!-- ================ /Header ================= -->
-  <!--(((((((((((((((((((((((()))))))))))))))))))))))-->
-  <!--((((((((((((((((((( content )))))))))))))))))))-->
-  <!--(((((((((((((((((((((((()))))))))))))))))))))))-->
+@extends('site.layouts.master')
+@section('content')
   <content>
 
     <!-- Main Banner  -->
@@ -56,9 +22,9 @@
         <h1 class="title"> about us </h1>
         <div class="row">
           <div class="col-md-7 p-2 m-auto">
-            <p>At Sky Park, your courage will be put to test. Nothing can satisfy your lust for adventure as a set of
+            <p>At {{$setting->title}}, your courage will be put to test. Nothing can satisfy your lust for adventure as a set of
               professional obstacle courses elevated on three levels. and the higher up you go, the more challenging it
-              will get. So, take a deep breath and set your sails towards Sky Park to prove yourself the ultimate champ.
+              will get. So, take a deep breath and set your sails towards {{$setting->title}} to prove yourself the ultimate champ.
             </p>
             <p>Obstacle courses are established on four levels, Junior, Novice, Intermediate, and Expert. Each path goes
               another level higher than the one before and features some more challenging obstacles. No, we didn’t
@@ -154,7 +120,7 @@
               <h1 class="title"> OUR PHILOSOPHY </h1>
               <p>Diamonds are formed through millions of years of intense heat and pressure, but watch how they came out
                 to be. It’s just the same with humans, we always learn and come out better after passing through
-                hardships and overcoming them. That’s what we aim at spreading through Sky Park. Once you decide to
+                hardships and overcoming them. That’s what we aim at spreading through {{$setting->title}}. Once you decide to
                 cling your harness to the course, there’s only one way down and that’s right at the end of your path.
                 But as soon as you overcome your challenge you won’t be the same person who came up; A new, more joyful,
                 more confident being who is always willing to take the risk and prove to himself that he is stronger.
@@ -172,7 +138,7 @@
         <h1 class="title"> CHALLENGING <br> YET ENERGIZING </h1>
         <div class="row">
           <div class="col-md-7 p-2 ">
-            <p>Sky Park is special in its aura, where you will get the feeling of being an adventurer going through the
+            <p>{{$setting->title}} is special in its aura, where you will get the feeling of being an adventurer going through the
               jungles, as it’s decorated with leaves wall-paintings and garnished with lots of leafy plantings. The park
               is also all built from wood and bamboo that fits and completes the whole concept. In addition, obstacles
               are created with difference of age in-mind, so kids as well as adults can have fun without going through
@@ -187,41 +153,4 @@
 
 
   </content>
-  <!--(((((((((((((((((((((((()))))))))))))))))))))))-->
-  <!--((((((((((((((((( / content )))))))))))))))))))-->
-  <!--(((((((((((((((((((((((()))))))))))))))))))))))-->
-  <!-- ================ Footer ================= -->
-  <div id="Footer"></div>
-  <!-- ================ /Footer ================= -->
-  <!--////////////////////////////////////////////////////////////////////////////////-->
-  <!--////////////////////////////////////////////////////////////////////////////////-->
-  <!--////////////////////////////////////////////////////////////////////////////////-->
-  <!--/////////////////////////////JavaScript/////////////////////////////////////////-->
-  <!--////////////////////////////////////////////////////////////////////////////////-->
-  <!--////////////////////////////////////////////////////////////////////////////////-->
-  <!--////////////////////////////////////////////////////////////////////////////////-->
-  <script src="js/jquery.min.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/jquery.appear.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/odometer.min.js"></script>
-  <script src="js/swiper-bundle.min.js"></script>
-  <script src="js/fancybox.js"></script>
-  <script src="js/atropos.min.js"></script>
-  <script src="js/fancybox.umd.js"></script>
-  <script src="js/WOW.js"></script>
-  <script src="js/Custom.js"></script>
-  <script>
-    $('#Header').load("Header.html");
-    $('#Footer').load("Footer.html");
-  </script>
-
-  <script>
-    // goBack
-    function goBack() {
-      window.history.back();
-    };
-  </script>
-</body>
-
-</html>
+@endsection

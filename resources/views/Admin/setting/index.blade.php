@@ -1,5 +1,5 @@
 @extends('Admin/layouts/master')
-@section('title') Sky Park | Settings @endsection
+@section('title') {{$setting->title}} | Settings @endsection
 @section('page_name') Settings @endsection
 @section('content')
     @if(count($errors) > 0 )
@@ -16,11 +16,11 @@
     @endif
     <div class="row">
         <div class="col-md-12">
-            <form action="{{route('admin.edit.setting')}}" method="POST">
+            <form action="{{route('admin.edit.setting')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="mb-0 card-title">Sky Park General Settings</h3>
+                        <h3 class="mb-0 card-title">{{$setting->title}} General Settings</h3>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -31,7 +31,7 @@
                                            placeholder="Enter A Phone Number" value="{{$setting->phone}}">
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label">Sky Park Team</label>
+                                    <label class="form-label">{{$setting->title}} Team</label>
                                     <input type="text" class="form-control" name="Team_phone"
                                            placeholder="Enter A Phone Number" value="{{$setting->Team_phone}}">
                                 </div>
@@ -82,6 +82,13 @@
                                 </div>
                             </div>
                             <div class="col-md-12 ">
+                                <div class="form-group">
+                                    <label class="form-label">Logo</label>
+                                    <input type="file" class="dropify" name="logo" data-default-file="{{asset($setting->logo)}}" accept="image/png, image/gif, image/jpeg,image/jpg"/>
+                                    <span class="form-text text-danger text-center">accept only png, gif, jpeg, jpg</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 ">
                                 <div class="form-group mb-0">
                                     <label class="form-label">Address</label>
 {{--                                    {{($errors->has('address')) ? 'is-invalid state-invalid' : ''}}--}}
@@ -90,6 +97,13 @@
 {{--                                    @if($errors->has('address'))--}}
 {{--                                        <div class="invalid-feedback">{{$errors->first('address')}}</div>--}}
 {{--                                    @endif--}}
+                                </div>
+                            </div>
+                            <div class="col-md-6 ">
+                                <div class="form-group mb-0">
+                                    <label class="form-label">Title</label>
+                                    <input type="text" class="form-control" name="title"
+                                           placeholder="Title Of The Site" value="{{$setting->title}}">
                                 </div>
                             </div>
                             <div class="col-md-12 ">

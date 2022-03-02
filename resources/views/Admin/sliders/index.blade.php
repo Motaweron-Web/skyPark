@@ -1,6 +1,6 @@
 @extends('Admin/layouts/master')
 
-@section('title') Sky Park | Sliders @endsection
+@section('title') {{$setting->title}} | Sliders @endsection
 @section('page_name') Sliders @endsection
 @section('css')
     @include('layouts.loader.formLoader.loaderCss')
@@ -11,7 +11,7 @@
         <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Sky Park Sliders</h3>
+                    <h3 class="card-title">{{$setting->title}} Sliders</h3>
                     <i class="text-gray">" Appears In The Site Home Page "</i>
                     <div class="">
                         <button class="btn btn-secondary btn-icon text-white addBtn">

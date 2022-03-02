@@ -3,7 +3,7 @@
     Ticket
 @endsection
 @section('page_title')
-    Sky Park | Ticket
+    {{$setting->title}} | Ticket
 @endsection
 @section('content')
     <h2 class="MainTitle mb-5 ms-4">ticket</h2>
@@ -30,7 +30,7 @@
                                     <input class="form-control" type="date" id="date" value="{{ date('Y-m-d') }}" name="visit_date"/>
                                 </div>
                                 <div class="col-sm-6 p-2">
-                                    <label>Reservation Duration (h) </label>
+                                    <label style="text-transform: initial !important;">Reservation Duration (h) </label>
                                     <input class="form-control" type="number" name="duration" id="duration" min="1" max="24"
                                            onKeyUp="if(this.value>24){this.value='24';}else if(this.value<=0){this.value='1';}"/>
                                     <label id="durationError" class="text-danger"></label>
@@ -403,8 +403,9 @@
                     <div class="info">
                         <h6 class="billTitle"> ticket <span id="RandTicket">{{$random}}</span></h6>
                         <ul>
+                            <li><label> Cashier Name : </label> <strong>{{auth()->user()->name}}</strong></li>
                             <li><label> Visit Date : </label> <strong id="dateOfTicket"> </strong></li>
-                            <li><label> Reservation Duration : </label> <strong id="hourOfTicket"></strong></li>
+                            <li><label> Reservation Duration : </label> <strong id="hourOfTicket" style="text-transform: initial !important;"></strong></li>
                             <li><label> Shift : </label> <strong id="shiftOfTicket"> </strong></li>
                         </ul>
                     </div>
@@ -490,23 +491,22 @@
                 "revenue":revenue,
                 "rem":(Math.round(rem * 100) / 100).toFixed(2),
             }
-            console.log(data)
-            {{--$.ajax({--}}
-            {{--    type: "POST",--}}
-            {{--    data: data,--}}
-            {{--    url: '{{route('storeModels')}}',--}}
-            {{--    beforeSend: function(){--}}
-            {{--        $('#confirmBtn').html('<span class="spinner-border spinner-border-sm mr-2" ' +--}}
-            {{--            ' ></span> <span style="margin-left: 4px;">working</span>').attr('disabled', true);--}}
-            {{--    },--}}
-            {{--    success: function(data){--}}
-            {{--        toastr.success("Ticket is saved successfully");--}}
-            {{--        $('#confirmBtn').html('Confirm').attr('disabled', false);--}}
-            {{--        window.setTimeout(function() {--}}
-            {{--            window.location.href="{{route('client.create')}}";--}}
-            {{--        }, 300);--}}
-            {{--    },--}}
-            {{--});--}}
+            $.ajax({
+                type: "POST",
+                data: data,
+                url: '{{route('storeModels')}}',
+                beforeSend: function(){
+                    $('#confirmBtn').html('<span class="spinner-border spinner-border-sm mr-2" ' +
+                        ' ></span> <span style="margin-left: 4px;">working</span>').attr('disabled', true);
+                },
+                success: function(data){
+                    toastr.success("Ticket is saved successfully");
+                    $('#confirmBtn').html('Confirm').attr('disabled', false);
+                    window.setTimeout(function() {
+                        window.location.href="{{route('client.create')}}";
+                    }, 300);
+                },
+            });
 
             // Prevent form submission
         } );

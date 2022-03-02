@@ -1,6 +1,6 @@
 @extends('Admin/layouts/master')
 
-@section('title') Sky Park | Categories @endsection
+@section('title') {{$setting->title}} | Categories @endsection
 @section('page_name') Categories @endsection
 @section('css')
     @include('layouts.loader.formLoader.loaderCss')
@@ -11,7 +11,7 @@
         <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Sky Park Categories</h3>
+                    <h3 class="card-title">{{$setting->title}} Categories</h3>
                     <div class="">
                         <button class="btn btn-secondary btn-icon text-white addBtn">
 									<span>

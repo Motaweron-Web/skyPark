@@ -1,6 +1,6 @@
 @extends('sales.layouts.master')
 @section('page_title')
-    Sky Park | Add Reservation
+    {{$setting->title}} | Add Reservation
 @endsection
 @section('content')
       <h2 class="MainTiltle mb-5 ms-4"> Add Reservation </h2>

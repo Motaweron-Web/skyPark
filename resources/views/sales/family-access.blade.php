@@ -1,11 +1,11 @@
 @extends('sales.layouts.master')
 @section('page_title')
-    Sky Park | Family Access
+    {{$setting->title}} | Family Access
 @endsection
 @section('content')
       <h2 class="MainTiltle mb-5 ms-4"> Family Access </h2>
       <div class="card p-3 py-4 w-100 w-sm-80 m-auto ">
-          <label class="form-label fs-4"> <i class="fas fa-ticket-alt me-2"></i>Ticket Number Or Phone</label>
+          <label class="form-label fs-4"> <i class="fas fa-ticket-alt me-2"></i>Sale Number Or Phone</label>
           <div class="d-flex">
               <input type="text" class="form-control" id="searchValue" placeholder="Type here...">
               <button type="button" id="searchButton" class="input-group-text ms-2 bg-gradient-primary px-4 text-body"><i
@@ -18,7 +18,7 @@
         <table class=" customDataTable table table-bordered nowrap">
           <thead>
             <tr>
-              <th>Ticket Number</th>
+              <th>Sale Number</th>
               <th>Type</th>
               <th>Bracelet Number </th>
               <th>Name</th>

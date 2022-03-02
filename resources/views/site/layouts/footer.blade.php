@@ -1,7 +1,7 @@
 <footer class="footer">
     <div class="container">
         <div class="logo">
-            <img src="{{asset('assets/site')}}/img/logo.png" >
+            <img src="{{asset($setting->logo)}}" >
         </div>
         <div class="links">
             <ul>
@@ -43,7 +43,7 @@
                 </div>
             </div>
             <div class="col-md-6 p-2">
-                <p> All rights reserved © 2022 <a href="#"> Sky Park </a></p>
+                <p> All rights reserved © {{date('Y')}} <a href="#"> {{asset($setting->title)}} </a></p>
             </div>
         </div>
     </div>
