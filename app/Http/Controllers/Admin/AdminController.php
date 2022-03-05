@@ -64,25 +64,6 @@ class AdminController extends Controller
         return view('Admin/admin/profile',compact('admin'));
     }//end fun
 
-    public function saveProfile(Request $request): \Illuminate\Http\RedirectResponse
-    {
-        if (auth()->guard('admin')->user()->email != $request->email) {
-            $data = Validator::make($request->all(), [
-                'email' => ['unique:admins'],
-            ]);
-            if ($data->fails()) {
-                return back()->with(notification('This email is already used', 'warning'));
-            }
-        }
-        $admin = Admin::find(auth()->guard('admin')->user()->id);
-        $admin->name = $request->name;
-        $admin->email = $request->email;
-        if (isset($request->password)) {
-            $admin->password = Hash::make($request->password);
-        }
-        $admin->save();
-        return back()->with(notification('Data Edited Successfully', 'info'));
-    }
 
 
     public function create(){

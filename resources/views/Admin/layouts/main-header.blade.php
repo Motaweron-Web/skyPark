@@ -14,12 +14,12 @@
             <div class="header-search d-none d-md-flex">
                 <form class="form-inline">
                     <div class="search-element">
-                        <input type="search" class="form-control header-search" placeholder="Search…" aria-label="Search" tabindex="1">
-                        <button class="btn btn-primary-color" type="submit">
-                            <svg xmlns="http:/www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-                                <path d="M0 0h24v24H0V0z" fill="none" />
-                                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" /></svg>
-                        </button>
+{{--                        <input type="search" class="form-control header-search" placeholder="Search…" aria-label="Search" tabindex="1">--}}
+{{--                        <button class="btn btn-primary-color" type="submit">--}}
+{{--                            <svg xmlns="http:/www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">--}}
+{{--                                <path d="M0 0h24v24H0V0z" fill="none" />--}}
+{{--                                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" /></svg>--}}
+{{--                        </button>--}}
                     </div>
                 </form>
             </div>
@@ -35,45 +35,45 @@
                     </a>
                 </div>
                 <!-- FULL-SCREEN -->
-                <div class="dropdown d-md-flex notifications">
-                    <a class="nav-link icon" data-toggle="dropdown">
-                        <i class="fe fe-bell"></i>
-                        <span class="nav-unread badge badge-success badge-pill">2</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                        <a href="#" class="dropdown-item mt-2 d-flex pb-3">
-                            <div class="notifyimg bg-success">
-                                <i class="fa fa-thumbs-o-up"></i>
-                            </div>
-                            <div>
-                                <strong>Someone likes our posts.</strong>
-                                <div class="small text-muted">3 hours ago</div>
-                            </div>
-                        </a>
-                        <a href="#" class="dropdown-item d-flex pb-3">
-                            <div class="notifyimg bg-warning">
-                                <i class="fa fa-commenting-o"></i>
-                            </div>
-                            <div>
-                                <strong> 3 New Comments</strong>
-                                <div class="small text-muted">5  hour ago</div>
-                            </div>
-                        </a>
-                        <a href="#" class="dropdown-item d-flex pb-3">
-                            <div class="notifyimg bg-danger">
-                                <i class="fa fa-cogs"></i>
-                            </div>
-                            <div>
-                                <strong> Server Rebooted.</strong>
-                                <div class="small text-muted">45 mintues ago</div>
-                            </div>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item text-center">View all Notification</a>
-                    </div>
-                </div>
+{{--                <div class="dropdown d-md-flex notifications">--}}
+{{--                    <a class="nav-link icon" data-toggle="dropdown">--}}
+{{--                        <i class="fe fe-bell"></i>--}}
+{{--                        <span class="nav-unread badge badge-success badge-pill">2</span>--}}
+{{--                    </a>--}}
+{{--                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">--}}
+{{--                        <a href="#" class="dropdown-item mt-2 d-flex pb-3">--}}
+{{--                            <div class="notifyimg bg-success">--}}
+{{--                                <i class="fa fa-thumbs-o-up"></i>--}}
+{{--                            </div>--}}
+{{--                            <div>--}}
+{{--                                <strong>Someone likes our posts.</strong>--}}
+{{--                                <div class="small text-muted">3 hours ago</div>--}}
+{{--                            </div>--}}
+{{--                        </a>--}}
+{{--                        <a href="#" class="dropdown-item d-flex pb-3">--}}
+{{--                            <div class="notifyimg bg-warning">--}}
+{{--                                <i class="fa fa-commenting-o"></i>--}}
+{{--                            </div>--}}
+{{--                            <div>--}}
+{{--                                <strong> 3 New Comments</strong>--}}
+{{--                                <div class="small text-muted">5  hour ago</div>--}}
+{{--                            </div>--}}
+{{--                        </a>--}}
+{{--                        <a href="#" class="dropdown-item d-flex pb-3">--}}
+{{--                            <div class="notifyimg bg-danger">--}}
+{{--                                <i class="fa fa-cogs"></i>--}}
+{{--                            </div>--}}
+{{--                            <div>--}}
+{{--                                <strong> Server Rebooted.</strong>--}}
+{{--                                <div class="small text-muted">45 mintues ago</div>--}}
+{{--                            </div>--}}
+{{--                        </a>--}}
+{{--                        <div class="dropdown-divider"></div>--}}
+{{--                        <a href="#" class="dropdown-item text-center">View all Notification</a>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
                 <!-- NOTIFICATIONS -->
-                <div class="dropdown d-md-flex message">
+                <div class="dropdown d-md-flex message mr-2">
                     <a class="nav-link icon text-center" data-toggle="dropdown">
                         <i class="fe fe-mail"></i>
                         <span id="nav-span">
@@ -81,38 +81,18 @@
                         </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                        <a href="#" class="dropdown-item d-flex mt-2 pb-3">
-                            <div class="avatar avatar-md brround mr-3 d-block cover-image" data-image-src="https:/laravel.spruko.com/yoha/Sidemenu-Icon-Light-rtl/images/users/4.jpg" style="background: url(&quot;https:/laravel.spruko.com/yoha/Sidemenu-Icon-Light-rtl/images/users/4.jpg&quot;) center center;">
-                                <span class="avatar-status bg-green"></span>
-                            </div>
+                        @foreach($contacts as $contact)
+                        <a href="{{route('contact_us.index')}}" class="dropdown-item d-flex {{($loop->iteration == 1) ? 'mt-2' : ''}} pb-3">
+                            <span class="avatar avatar-md brround mr-3">{{$contact->first_name[0]}}</span>
                             <div>
-                                <strong>Madeleine</strong>
-                                <p class="mb-0 fs-13 text-muted ">Hey! there I' am available</p>
-                                <div class="small text-muted">3 hours ago</div>
+                                <strong class="{{($contact->status == '1') ? 'text-muted' : ''}}">{{$contact->first_name.' '.$contact->last_name}}</strong>
+                                <p class="mb-0 fs-13 text-muted ">{{Str::limit($contact->message,30)}}</p>
+                                <div class="small text-muted">{{$contact->created_at->diffForHumans()}}</div>
                             </div>
                         </a>
-                        <a href="#" class="dropdown-item d-flex pb-3">
-                            <div class="avatar avatar-md brround mr-3 d-block cover-image" data-image-src="https:/laravel.spruko.com/yoha/Sidemenu-Icon-Light-rtl/images/users/1.jpg" style="background: url(&quot;https:/laravel.spruko.com/yoha/Sidemenu-Icon-Light-rtl/images/users/1.jpg&quot;) center center;">
-                                <span class="avatar-status bg-red"></span>
-                            </div>
-                            <div>
-                                <strong>Anthony</strong>
-                                <p class="mb-0 fs-13 text-muted ">New product Launching</p>
-                                <div class="small text-muted">5  hour ago</div>
-                            </div>
-                        </a>
-                        <a href="#" class="dropdown-item d-flex pb-3">
-                            <div class="avatar avatar-md brround mr-3 d-block cover-image" data-image-src="https:/laravel.spruko.com/yoha/Sidemenu-Icon-Light-rtl/images/users/18.jpg" style="background: url(&quot;https:/laravel.spruko.com/yoha/Sidemenu-Icon-Light-rtl/images/users/18.jpg&quot;) center center;">
-                                <span class="avatar-status bg-yellow"></span>
-                            </div>
-                            <div>
-                                <strong>Olivia</strong>
-                                <p class="mb-0 fs-13 text-muted ">New Schedule Realease</p>
-                                <div class="small text-muted">45 mintues ago</div>
-                            </div>
-                        </a>
+                        @endforeach
                         <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item text-center">See all Messages</a>
+                        <a href="{{route('contact_us.index')}}" class="dropdown-item text-center">See all Messages</a>
                     </div>
                 </div>
                 <!-- MESSAGE-BOX -->
@@ -133,12 +113,12 @@
                         <a class="dropdown-item" href="{{route('myProfile')}}">
                             <i class="dropdown-icon mdi mdi-account-outline"></i> My Profile
                         </a>
-                        <a class="dropdown-item" href="#">
-                            <i class="dropdown-icon zmdi zmdi-edit"></i> Edit Profile
-                        </a>
-                        <a class="dropdown-item" href="#">
-                            <i class="dropdown-icon  mdi mdi-settings"></i> Account Settings
-                        </a>
+{{--                        <a class="dropdown-item" href="#">--}}
+{{--                            <i class="dropdown-icon zmdi zmdi-edit"></i> Edit Profile--}}
+{{--                        </a>--}}
+{{--                        <a class="dropdown-item" href="#">--}}
+{{--                            <i class="dropdown-icon  mdi mdi-settings"></i> Account Settings--}}
+{{--                        </a>--}}
                         <a class="dropdown-item" href="http://motaweron.com/contact-us.html/">
                             <i class="dropdown-icon mdi mdi-compass-outline"></i>Need help ?
                         </a>
@@ -166,16 +146,16 @@
                         <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" /></svg>
                 </a>
                 <div class="dropdown-menu header-search dropdown-menu-left">
-                    <div class="input-group w-100 p-2">
-                        <input type="text" class="form-control " placeholder="Search....">
-                        <div class="input-group-append ">
-                            <button type="button" class="btn btn-primary ">
-                                <svg xmlns="http:/www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-                                    <path d="M0 0h24v24H0V0z" fill="none" />
-                                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" /></svg>
-                            </button>
-                        </div>
-                    </div>
+{{--                    <div class="input-group w-100 p-2">--}}
+{{--                        <input type="text" class="form-control " placeholder="Search....">--}}
+{{--                        <div class="input-group-append ">--}}
+{{--                            <button type="button" class="btn btn-primary ">--}}
+{{--                                <svg xmlns="http:/www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">--}}
+{{--                                    <path d="M0 0h24v24H0V0z" fill="none" />--}}
+{{--                                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" /></svg>--}}
+{{--                            </button>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                 </div>
             </div><!-- SEARCH -->
             <div class="dropdown d-md-flex">

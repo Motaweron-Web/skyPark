@@ -104,9 +104,10 @@
 
     function getCount(className, type_id) {
         $('.visitorType' + type_id).find('.count').text(table.rows('[class*=' + className + ']').count());
+        $('.visitorType' + type_id).find('.inputCount').val(table.rows('[class*=' + className + ']').count());
     }
 
-    $(document).on('click', '.visitorType', function () {
+    $(document).on('click', '.visitorTypeDiv', function () {
         var type = $(this).find('.visitor').text();
         var visitor_type_id = $(this).find('#visitor_type_id').val();
         appendRow(visitor_type_id, type, $(this).find('input').val())
@@ -358,8 +359,10 @@
 
 
     function calculateChange(){
-            if(amountCash.val() > parseInt($('#revenue').text()))
-                $("#change").text(amountCash.val()-parseInt($('#revenue').text())||0);
+            if(amountCash.val() > parseFloat($('#revenue').text())) {
+                var change = (parseFloat(amountCash.val()).toFixed(2) - parseFloat($('#revenue').text()).toFixed(2)).toFixed(2);
+                $("#change").text(change || 0);
+            }
             else
                 $("#change").text('0');
 
@@ -394,13 +397,24 @@
         $('.firstTable').DataTable().clear().draw();
         $('.visitorType').each(function () {
             $(this).find('span.count').text('0');
+            $(this).find('input.inputCount').val(0);
         });
     }
     $('.inputCount').focusout(function(){
-        var type = $(this).parent().parent().find('.visitor').text();
-        var visitor_type_id = $(this).parent().parent().find('#visitor_type_id').val();
-        for(var i = 0 ; i < $(this).val() ; i++) {
-            appendRow(visitor_type_id, type, $(this).parent().parent().find('input').val())
+        var type   = $(this).parent().parent().find('.visitor').text();
+        var number = Math.abs(parseInt($(this).parent().parent().find('.count').text()) - $(this).val());
+        // add only if input number more than count --> to prevent multiple insertion
+        if($(this).val() > parseInt($(this).parent().parent().find('.count').text())) {
+            var visitor_type_id = $(this).parent().parent().find('#visitor_type_id').val();
+            for (var i = 0; i < number; i++) {
+                appendRow(visitor_type_id, type, $(this).parent().parent().find('input').val())
+            }
+        }else if($(this).val() < parseInt($(this).parent().parent().find('.count').text())){
+            // means the user enter a number less than count so he want to delete not insert
+            for (var j = 0; j < number; j++) {
+                table.row('tr.'+type.toLowerCase()).remove().draw();
+            }
+            $(this).parent().parent().find('.count').text($(this).val())
         }
     });
 </script>

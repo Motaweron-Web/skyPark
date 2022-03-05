@@ -8,6 +8,7 @@
     <form id="updateForm" method="POST" enctype="multipart/form-data" action="{{route('sliders.update',$slider->id)}}" >
     @csrf
         @method('PUT')
+        <input type="hidden" name="id" value="{{$slider->id}}">
         <div class="form-group">
             <label for="photo" class="form-control-label">Photo</label>
             <input type="file" class="dropify" name="photo" accept="image/png, image/gif, image/jpeg,image/jpg" data-default-file="{{get_user_photo($slider->photo)}}"/>

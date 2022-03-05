@@ -93,7 +93,7 @@ class SlidersController extends Controller
     {
         $inputs = $request->validate([
             'id'         => 'required',
-            'photo'      => 'required|mimes:jpeg,jpg,png,gif',
+            'photo'      => 'nullable|mimes:jpeg,jpg,png,gif',
             'title'      => 'nullable|max:255',
             'sub_title'  => 'nullable|max:255',
             'button_text'=> 'nullable|max:255',

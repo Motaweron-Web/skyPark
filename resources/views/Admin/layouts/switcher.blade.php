@@ -6,16 +6,16 @@
                 <div class="predefined_styles">
                     <div class="swichermainleft">
                         <div class="p-3">
-                            <a href="" class="btn btn-warning btn-block mt-0">Home</a>
+                            <a href="{{route('adminHome')}}" class="btn btn-warning btn-block mt-0">Home</a>
                         </div>
                     </div>
                     <div class="swichermainleft">
                         <h4>Quick Access</h4>
                         <div class="pl-3 pr-3">
-                            <a class="btn btn-info btn-block" href="#">
+                            <a class="btn btn-info btn-block" href="{{route('admins.index')}}">
                                 Show Admin
                             </a>
-                            <a class="btn btn-danger btn-block" href="">
+                            <a class="btn btn-danger btn-block" href="{{route('contact_us.index')}}">
                                 Client Messages
                             </a>
                         </div>

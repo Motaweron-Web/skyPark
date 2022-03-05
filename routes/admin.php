@@ -13,7 +13,6 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin','namespace'=>'Admin']
     Route::resource('admins','AdminController');
     Route::POST('admins.delete','AdminController@delete')->name('admins.delete');
     Route::get('my_profile','AdminController@myProfile')->name('myProfile');
-    Route::post('store-profile','AdminController@saveProfile')->name('store-profile');
 
     #### Categories ####
     Route::resource('category','CategoryController');

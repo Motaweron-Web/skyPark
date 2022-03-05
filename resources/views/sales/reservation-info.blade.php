@@ -24,7 +24,7 @@
                 <div class="multisteps-form__content">
                   <div class="row mt-3">
                     <div class="col-sm-6 p-2">
-                      <label>Reservation Duration (h) </label>
+                      <label style="text-transform: none !important;">Reservation Duration (h) </label>
                         <input class="form-control" type="number" name="duration" id="duration" min="1" max="24"
                                onKeyUp="if(this.value>24){this.value='24';}else if(this.value<=0){this.value='1';}"/>
                         <label id="durationError" class="text-danger"></label>
@@ -32,7 +32,7 @@
                       <input class="form-control" type="hidden" id="date" value="{{$reservation->day}}" name="visit_date"/>
                       <div class="col-sm-6 p-2">
                         <label class="form-label"> shift </label>
-                        <select class="form-control" id="choices-shift" name="shift_id">
+                        <select class="form-control" id="choices-shift" name="shift_id" >
                             @foreach($shifts as $shift)
                                 <option value="{{$shift->id}}">{{date('h a', strtotime($shift->from))}}
                                     : {{date('h a', strtotime($shift->to))}}</option>
@@ -61,9 +61,9 @@
                             <div class="col-10 p-2">
                                 @foreach($types as $type)
                                     <div class="visitorType visitorType{{$type->id}}">
-                                        <div class="visitorTypeRev">
+                                        <div class="visitorTypeDiv">
                                             <img src="{{get_file($type->photo)}}" alt="{{$type->title}}" title="{{$type->title}}">
-                                            <span class="visitor"> {{$type->title}} </span>
+                                            <span class="visitor">{{$type->title}}</span>
                                             <span class="count">0</span>
                                             <input type="hidden" value="" name="price[]" id="price{{$type->id}}">
                                             <input type="hidden" value="{{$type->id}}"
@@ -412,8 +412,8 @@
                       <ul>
                           <li><label> Cashier Name : </label> <strong>{{auth()->user()->name}}</strong></li>
                           <li><label> Visit Date : </label> <strong id="dateOfTicket"> </strong></li>
-                          <li><label> Reservation Duration : </label> <strong id="hourOfTicket"></strong></li>
-                          <li><label> Shift : </label> <strong id="shiftOfTicket"> </strong></li>
+                          <li><label> Reservation Duration : </label> <strong id="hourOfTicket" style="text-transform: none !important;"></strong></li>
+                          <li><label> Shift : </label> <strong id="shiftOfTicket" style="text-transform: none !important;"> </strong></li>
                       </ul>
                   </div>
                   <div class="info firstInfo">

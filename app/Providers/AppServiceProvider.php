@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\ContactUs;
 use App\Models\GeneralSetting;
 use Illuminate\Support\ServiceProvider;
 use Picqer\Barcode\BarcodeGeneratorPNG;
@@ -29,5 +30,6 @@ class AppServiceProvider extends ServiceProvider
         $generatorPNG = new BarcodeGeneratorPNG();
         View::share('generatorPNG',$generatorPNG);
         View::share('setting',GeneralSetting::first());
+        View::share('contacts',ContactUs::latest()->take(3)->get());
     }
 }

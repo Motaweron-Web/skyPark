@@ -24,9 +24,9 @@ class ContactUsController extends Controller
                 })
                 ->addColumn('status',function ($contact){
                     if($contact->status == 0){
-                        return '<button class="btn readSpan" data-id="'.$contact->id.'"><i class="fas fa-envelope fa-2x text-danger"></i></button>';
+                        return '<span class="readSpan badge badge-success" data-id="'.$contact->id.'" style="cursor: pointer">new</span>';
                     }else
-                        return '<span class="text-center"><i class="fa fa-envelope-open text-warning fa-2x"></i></span>';
+                        return '<span class="badge badge-default">read <i class="fas fa-check-circle"></i></span>';
                 })
                 ->editColumn('created_at', function ($contact) {
                     return $contact->created_at->diffForHumans();

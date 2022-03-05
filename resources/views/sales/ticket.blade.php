@@ -62,12 +62,14 @@
                                 <div class="col-12 p-2">
                                     @foreach($types as $type)
                                         <div class="visitorType visitorType{{$type->id}}">
+                                            <div class="visitorTypeDiv">
                                             <img src="{{get_file($type->photo)}}" alt="">
                                             <span class="visitor"> {{$type->title}} </span>
                                             <span class="count">0</span>
                                             <input type="hidden" value="" name="price[]" id="price{{$type->id}}">
                                             <input type="hidden" value="{{$type->id}}"
                                                    id="visitor_type_id">
+                                            </div>
                                         </div>
                                     @endforeach
                                 </div>
