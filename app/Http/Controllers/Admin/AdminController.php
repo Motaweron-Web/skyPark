@@ -99,15 +99,17 @@ class AdminController extends Controller
             'id'       => 'required|exists:admins,id',
             'email'    => 'required|unique:admins,email,'.$request->id,
             'name'     => 'required',
-            'password' => 'nullable|min:6',
             'photo'    => 'nullable',
+            'password' => 'nullable|min:6',
         ]);
         if ($request->has('photo')) {
             $file_name = $this->saveImage($request->photo, 'assets/uploads/admins');
             $inputs['photo'] = 'assets/uploads/admins/' . $file_name;
         }
-        if ($request->has('password'))
+        if ($request->has('password') && $request->password != null)
             $inputs['password'] = Hash::make($request->password);
+        else
+            unset($inputs['password']);
         $admin = Admin::findOrFail($request->id);
         if ($admin->update($inputs))
             return response()->json(['status' => 200]);

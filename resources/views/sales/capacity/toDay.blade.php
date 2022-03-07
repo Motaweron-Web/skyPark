@@ -41,7 +41,7 @@
 
     </div>
     <div class="capacityContainer">
-        <div class="capacityPercentage" style="width: <?php echo $percent??0;?>%;">
+        <div class="capacityPercentage" style="width: <?php echo $percent ?? 0;?>%;">
         </div>
     </div>
 </div>

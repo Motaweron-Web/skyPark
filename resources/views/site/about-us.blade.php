@@ -106,51 +106,44 @@
 
     </div>
     <!-- PHILOSOPHY -->
-    <section class="philosophy">
+      @foreach($abouts as $about)
+    <section class="{{($loop->first) ? 'philosophy' : 'challenging'}}">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-md-6 p-2">
+              @if($about->type == 'video')
             <div class="video">
-              <video controls muted src="video/video.mp4"></video>
+              <video controls muted src="{{asset($about->video)}}"></video>
             </div>
+              @elseif($about->type == 'image')
+                <img src="{{asset($about->video)}}" alt="">
+              @endif
           </div>
           <div class="col-md-6 p-2">
             <div class="philosophyInfo">
-              <h3 class="titleTow text-muted m-0"> Self Accomplishment Is </h3>
-              <h1 class="title"> OUR PHILOSOPHY </h1>
-              <p>Diamonds are formed through millions of years of intense heat and pressure, but watch how they came out
-                to be. It’s just the same with humans, we always learn and come out better after passing through
-                hardships and overcoming them. That’s what we aim at spreading through {{$setting->title}}. Once you decide to
-                cling your harness to the course, there’s only one way down and that’s right at the end of your path.
-                But as soon as you overcome your challenge you won’t be the same person who came up; A new, more joyful,
-                more confident being who is always willing to take the risk and prove to himself that he is stronger.
+              <h3 class="titleTow text-muted m-0"> {{$about->title}} </h3>
+              <h1 class="title"> {{$about->sub_title}} </h1>
+              <p>
+                  {{$about->desc}}
               </p>
-
             </div>
           </div>
         </div>
       </div>
     </section>
-    <!-- CHALLENGING -->
-    <section class="challenging">
-      <div class="container">
-        <p class=" titleTow text-muted m-0"> Unmatched Concept </p>
-        <h1 class="title"> CHALLENGING <br> YET ENERGIZING </h1>
-        <div class="row">
-          <div class="col-md-7 p-2 ">
-            <p>{{$setting->title}} is special in its aura, where you will get the feeling of being an adventurer going through the
-              jungles, as it’s decorated with leaves wall-paintings and garnished with lots of leafy plantings. The park
-              is also all built from wood and bamboo that fits and completes the whole concept. In addition, obstacles
-              are created with difference of age in-mind, so kids as well as adults can have fun without going through
-              much risk.
+      @endforeach
+{{--      <section class="challenging">--}}
+{{--          <div class="container">--}}
+{{--              <p class=" titleTow text-muted m-0"> Unmatched Concept </p>--}}
+{{--              <h1 class="title"> CHALLENGING <br> YET ENERGIZING </h1>--}}
+{{--              <div class="row">--}}
+{{--                  <div class="col-md-7 p-2 ">--}}
+{{--                      <p>{{$setting->about}}--}}
+{{--                      </p>--}}
+{{--                  </div>--}}
 
-            </p>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-
+{{--              </div>--}}
+{{--          </div>--}}
+{{--      </section>--}}
   </content>
 @endsection

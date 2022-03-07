@@ -15,7 +15,23 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', 'Site\HomeController@index')->name('/');
+Route::get('offer_details/{id}', 'Site\HomeController@offerDetails')->name('offer_details');
+
+## About
 Route::get('about_us', 'Site\HomeController@about')->name('about_us');
+
+## Terms
+Route::get('terms', 'Site\HomeController@terms')->name('terms');
+
+## Groups
+Route::get('groups', 'Site\HomeController@groups')->name('groups');
+
+## Activities
+Route::get('activities', 'Site\HomeController@activities')->name('activities');
+
+## Contact
+Route::get('contact_us', 'Site\HomeController@contact')->name('contact_us');
+Route::post('storeContact', 'Site\HomeController@storeContact')->name('storeContact');
 
 
 

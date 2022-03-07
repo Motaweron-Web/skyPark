@@ -6,19 +6,19 @@
         <div class="links">
             <ul>
                 <li>
-                    <a href="index.html">Home</a>
+                    <a href="{{route('/')}}">Home</a>
                 </li>
                 <li>
-                    <a href="about-us.html">About us</a>
+                    <a href="{{route('about_us')}}">About us</a>
                 </li>
                 <li>
-                    <a href="activities.html">Activities</a>
+                    <a href="{{route('activities')}}">Activities</a>
                 </li>
                 <li>
-                    <a href="groups.html">Groups</a>
+                    <a href="{{route('groups')}}">Groups</a>
                 </li>
                 <li>
-                    <a href="contact.html">contact us</a>
+                    <a href="{{route('contact_us')}}">Contact us</a>
                 </li>
 
             </ul>
@@ -28,22 +28,22 @@
                 <div class="social ">
                     <ul>
                         <li>
-                            <a target="_blank" href="#!"><i class="fab fa-twitter"></i></a>
+                            <a target="_blank" href="{{$setting->twitter}}"><i class="fab fa-twitter"></i></a>
                         </li>
                         <li>
-                            <a target="_blank" href="#!"><i class="fab fa-facebook"></i></a>
+                            <a target="_blank" href="{{$setting->facebook}}"><i class="fab fa-facebook"></i></a>
                         </li>
                         <li>
-                            <a target="_blank" href="#!"><i class="fab fa-instagram"></i></a>
+                            <a target="_blank" href="{{$setting->instagram}}"><i class="fab fa-instagram"></i></a>
                         </li>
                         <li>
-                            <a target="_blank" href="#!"><i class="fab fa-snapchat-ghost"></i></a>
+                            <a target="_blank" href="{{$setting->snap}}"><i class="fab fa-snapchat-ghost"></i></a>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="col-md-6 p-2">
-                <p> All rights reserved © {{date('Y')}} <a href="#"> {{asset($setting->title)}} </a></p>
+                <p> All rights reserved © {{date('Y')}} <a href="{{route('/')}}"> {{$setting->title}} </a></p>
             </div>
         </div>
     </div>

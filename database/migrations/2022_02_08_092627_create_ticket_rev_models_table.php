@@ -41,6 +41,9 @@ class CreateTicketRevModelsTable extends Migration
             $table->double('top_up_hours')->default(0)->nullable();
             $table->double('top_up_price')->default(0)->nullable();
 
+            $table->time('shift_start')->nullable();
+            $table->time('shift_end')->nullable();
+
             $table->time('start_at')->nullable();
             $table->time('end_at')->nullable();
 

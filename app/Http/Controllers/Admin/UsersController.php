@@ -89,8 +89,8 @@ class UsersController extends Controller
             'id'        => 'required|exists:users,id',
             'user_name' => 'required|unique:users,user_name,' . $request->id,
             'name'      => 'required',
-            'password'  => 'nullable|min:6',
             'photo'     => 'nullable',
+            'password'  => 'nullable|min:6',
         ]);
         if ($request->has('photo')) {
             $file_name = $this->saveImage($request->photo, 'assets/uploads/users');
@@ -98,6 +98,8 @@ class UsersController extends Controller
         }
         if ($request->has('password'))
             $inputs['password'] = Hash::make($request->password);
+        else
+            unset($inputs['password']);
         $user = User::findOrFail($request->id);
         if ($user->update($inputs))
             return response()->json(['status' => 200]);

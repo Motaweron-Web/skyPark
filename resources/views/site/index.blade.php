@@ -72,7 +72,7 @@
                         </div>
                         <h1 data-atropos-offset="5"> welcome to </h1>
                         <img class="logo animate__animated animate__fadeInUp wow" data-wow-delay="2s"
-                          data-atropos-offset="5" src="{{asset('assets/site')}}/img/logo.png">
+                          data-atropos-offset="5" src="{{asset($setting->logo)}}">
                       </div>
                     </div>
                   </div>
@@ -169,7 +169,7 @@
                   </div>
                   <h2> {{$item->title}} </h2>
                   <p>{{Str::limit($item->desc,200)}} </p>
-                  <a href="#"> VIEW COURSES </a>
+                  <a href="{{route('offer_details',$offer->id)}}"> VIEW COURSE </a>
                 </div>
               </div>
                 @endforeach

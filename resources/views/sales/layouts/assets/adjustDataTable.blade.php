@@ -1,12 +1,74 @@
 <script>
     var amountCash = $("#amount"),
         total      = $('#totalPrice');
+    function checkDay(e){
+        // Create date from input value
+        var inputDate = new Date(e.target.value);
+        // Get today's date
+        var Today = new Date();
+        // call setHours to take the time out of the comparison
+        if(inputDate.setHours(0,0,0,0) === Today.setHours(0,0,0,0)){
+            $('#dayError').text("")
+            $('#start').val('')
+            $('#timeDiv').hide(500);
+            checkTime()
+        }
+        else if(inputDate.setHours(0,0,0,0) > Today.setHours(0,0,0,0)){
+            $('#dayError').text("")
+            $('#duration').val("")
+            $('#choices_times').empty()
+            $('#start').val($('#first_shift_start').val())
+            // $('#timeDiv').show(500);
+        }
+        else{
+            $('#dayError').text("The Day Can't Be Past !")
+            $('#duration').val("")
+            $('#choices_times').empty()
+        }
+    }
+
+    function checkTime(){
+        var myDuration = $('#duration').val(),
+            time = $('#start').val(),
+             myDate     = $('#date').val();
+            if(time.length == 0){
+            var now = new Date(Date.now());
+            time = now.getHours();
+        }
+        $('#startError').text('')
+            $('#durationError').text('')
+            $.ajax({
+                type: 'GET',
+                url: "{{route('getShifts')}}",
+                data: {
+                    'duration'      : myDuration,
+                    'time'          : time,
+                    'visit_date'    : myDate,
+                },
+                success: function (data) {
+                    if (data.status === 200) {
+                        $('#choices_times').empty()
+                        if (data.times.length !== 0){
+                            localStorage.setItem('shift_id', data.shift_id);
+                            $.each(data.times,function(key, value)
+                            {
+                                // if(data.shift_id[key].id.length !=null){
+                                    $("#choices_times").append('<option value=' + data.shift_id[key] + '>' + value + '</option>');
+                                // }
+                            });
+                        }else
+                            toastr.error("Can't Enter To The Next Shift !");
+                }
+                }
+            });
+    }
     // Check Capacity And Get Price Of Visitor Models
     $(document).on('click', '#firstNext', function () {
-        var myDate = $('#date').val(),
+        var myDate     = $('#date').val(),
             myDuration = $('#duration').val(),
-            shift = $('#choices-shift').val();
-        if(myDuration.length > 0) {
+            shift      = localStorage.getItem('shift_id'),
+            time       = $('#start').val();
+        if(myDuration.length > 0 && time.length > 0) {
             $.ajax({
                 type: 'GET',
                 url: "{{route('calcCapacity')}}",
@@ -57,7 +119,10 @@
             $("#visitorsTab").removeClass('js-active');
             $("button[title='ticket']").addClass('js-active');
             $("#ticketTab").addClass('js-active');
-            $('#durationError').text('Reservation Duration is required')
+            if(myDuration.length === 0)
+                $('#durationError').text('Reservation Duration Is Required')
+            if(time.length === 0)
+                $('#startError').text('Start Time Is Required')
         }
     });
 
@@ -128,6 +193,12 @@
             searchEnabled: false
         });
     }
+    // if (document.getElementById('choices_times')) {
+    //     var element = document.getElementById('choices_times');
+    //     const options = new Choices(element, {
+    //         searchEnabled: false
+    //     });
+    // }
     if (document.getElementById('choices-category')) {
         var element = document.getElementById('choices-category');
         const options = new Choices(element, {
@@ -293,7 +364,7 @@
                 }
             });
         }
-        $('#totalPrice').text(totalBeforeDiscount);
+        total.text(totalBeforeDiscount);
         $('#totalInfoPrice').text(totalBeforeDiscount+" EGP")
         $('#totalInfoDiscount').text(0+" EGP")
         $('#totalInfoRevenue').text(totalBeforeDiscount+" EGP")
@@ -307,7 +378,7 @@
                             <li><label> Revenue : </label> <strong id="totalInfoRevenue">${totalBeforeDiscount} EGP</strong></li>
             `)
     });
-    var totalPrice = parseInt($('#totalPrice').text());
+    var totalPrice = parseInt(total.text());
     Percent.prop("checked", true);
     $('#revenue').text(totalBeforeDiscount)
     $("#calcDiscount").on("keyup change", function(e) {
@@ -325,29 +396,29 @@
             $('#calcDiscount').val('');
             $('#totalInfoDiscount').text(0+ " EGP")
             $('#discount').text('0');
-            $('#revenue').text($('#totalPrice').text());
+            $('#revenue').text(total.text());
         }else {
             $('#discount').text($('#calcDiscount').val() + "%")
-            var after = (parseInt($('#totalPrice').text()) - $('#calcDiscount').val() * parseInt($('#totalPrice').text()) / 100).toFixed(2);
+            var after = (parseInt(total.text()) - $('#calcDiscount').val() * parseInt(total.text()) / 100).toFixed(2);
             $('#revenue').text(after)
-            $('#totalInfoPrice').text($('#totalPrice').text()+" EGP")
+            $('#totalInfoPrice').text(total.text()+" EGP")
             $('#totalInfoRevenue').text(after+" EGP")
             $('#totalInfoDiscount').text($('#calcDiscount').val()+"%")
             calculateChange()
         }
     }
     function checkAmount(){
-        if($('#calcDiscount').val() > parseInt($('#totalPrice').text() || $('#calcDiscount').val() < 0)){
+        if($('#calcDiscount').val() > parseInt(total.text() || $('#calcDiscount').val() < 0)){
             toastr.error("discount amount more than total !");
             $('#totalInfoDiscount').text(0+ " EGP")
             $('#calcDiscount').val('');
             $('#discount').text('0');
-            $('#revenue').text($('#totalPrice').text());
+            $('#revenue').text(total.text());
         }else {
             $('#discount').text($('#calcDiscount').val()||0)
-            var after = (parseInt($('#totalPrice').text()) - $('#calcDiscount').val());
+            var after = (parseInt(total.text()) - $('#calcDiscount').val());
             $('#revenue').text(after)
-            $('#totalInfoPrice').text($('#totalPrice').text()+" EGP")
+            $('#totalInfoPrice').text(total.text()+" EGP")
             $('#totalInfoRevenue').text(after+" EGP")
             $('#totalInfoDiscount').text($('#calcDiscount').val()+ " EGP")
             calculateChange()

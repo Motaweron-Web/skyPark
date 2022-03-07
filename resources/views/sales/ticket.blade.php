@@ -20,6 +20,38 @@
                 </div>
                 <div class="multisteps-form__form mb-2">
                     <!-- step 1 -->
+{{--                    <div class="card multisteps-form__panel p-3 border-radius-xl bg-white js-active" id="ticketTab"--}}
+{{--                         data-animation="FadeIn">--}}
+{{--                        <h5 class="font-weight-bolder">ticket</h5>--}}
+{{--                        <div class="multisteps-form__content">--}}
+{{--                            <div class="row mt-3">--}}
+{{--                                <div class="col-sm-6 p-2">--}}
+{{--                                    <label>Visit Date</label>--}}
+{{--                                    <input class="form-control" type="date" id="date" value="{{ date('Y-m-d') }}" name="visit_date"/>--}}
+{{--                                </div>--}}
+{{--                                <div class="col-sm-6 p-2">--}}
+{{--                                    <label style="text-transform: initial !important;">Reservation Duration (h) </label>--}}
+{{--                                    <input class="form-control" type="number" name="duration" id="duration" min="1" max="24"--}}
+{{--                                           onKeyUp="if(this.value>24){this.value='24';}else if(this.value<=0){this.value='1';}"/>--}}
+{{--                                    <label id="durationError" class="text-danger"></label>--}}
+{{--                                </div>--}}
+{{--                                <div class="col-12 p-2">--}}
+{{--                                    <label class="form-label"> shift </label>--}}
+{{--                                    <select class="form-control" id="choices-shift" name="shift_id">--}}
+{{--                                        @foreach($shifts as $shift)--}}
+{{--                                            <option value="{{$shift->id}}">{{date('h a', strtotime($shift->from))}}--}}
+{{--                                                : {{date('h a', strtotime($shift->to))}}</option>--}}
+{{--                                        @endforeach--}}
+{{--                                    </select>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="button-row d-flex mt-4">--}}
+{{--                                <button class="btn bg-gradient-dark ms-auto mb-0 js-btn-next" type="button"--}}
+{{--                                        id="firstNext">Next--}}
+{{--                                </button>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                     <div class="card multisteps-form__panel p-3 border-radius-xl bg-white js-active" id="ticketTab"
                          data-animation="FadeIn">
                         <h5 class="font-weight-bolder">ticket</h5>
@@ -27,25 +59,31 @@
                             <div class="row mt-3">
                                 <div class="col-sm-6 p-2">
                                     <label>Visit Date</label>
-                                    <input class="form-control" type="date" id="date" value="{{ date('Y-m-d') }}" name="visit_date"/>
+                                    <input class="form-control" type="date" id="date" value="{{ date('Y-m-d') }}" name="visit_date" onchange="checkDay(event)"/>
+                                    <label id="dayError" class="text-danger"></label>
                                 </div>
                                 <div class="col-sm-6 p-2">
                                     <label style="text-transform: initial !important;">Reservation Duration (h) </label>
-                                    <input class="form-control" type="number" name="duration" id="duration" min="1" max="24"
-                                           onKeyUp="if(this.value>24){this.value='24';}else if(this.value<=0){this.value='1';}"/>
+                                    <input class="form-control" type="number" name="duration" onchange="checkTime()" id="duration" min="1" max="24"
+                                           onKeyUp="if(this.value>24){this.value='24';}else if(this.value<=0){this.value='1';}$('#durationError').text('')"/>
                                     <label id="durationError" class="text-danger"></label>
                                 </div>
-                                <div class="col-12 p-2">
+{{--                                <div class="col-sm-6 p-2" id="timeDiv" style="display: none">--}}
+{{--                                    <label for="start">Start Time </label>--}}
+{{--                                    <input type="time" id="start" name="start" class="form-control" required step="3600" onkeydown="checkTime()"--}}
+{{--                                           onkeyup="checkTime()" onchange="checkTime()">--}}
+{{--                                    <label id="startError" class="text-danger"></label>--}}
+{{--                                </div>--}}
+                                <input type="hidden" id="first_shift_start" value="{{$first_shift_start}}">
+                                <input type="hidden" id="start" value="">
+                                <div class="col-sm-6 p-2">
                                     <label class="form-label"> shift </label>
-                                    <select class="form-control" id="choices-shift" name="shift_id">
-                                        @foreach($shifts as $shift)
-                                            <option value="{{$shift->id}}">{{date('h a', strtotime($shift->from))}}
-                                                : {{date('h a', strtotime($shift->to))}}</option>
-                                        @endforeach
+                                    <select class="form-control" id="choices_times" name="choices_times">
+
                                     </select>
                                 </div>
                             </div>
-                            <div class="button-row d-flex mt-4">
+                            <div class="button-row d-flex mt-4 ">
                                 <button class="btn bg-gradient-dark ms-auto mb-0 js-btn-next" type="button"
                                         id="firstNext">Next
                                 </button>

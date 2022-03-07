@@ -430,6 +430,7 @@ if (!function_exists('active_menu')) {
     }
 }
 
+
 if (!function_exists('trans_if_web')) {
     function trans_if_web($text, $ar_text = null)
     {
