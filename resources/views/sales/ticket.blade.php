@@ -68,12 +68,6 @@
                                            onKeyUp="if(this.value>24){this.value='24';}else if(this.value<=0){this.value='1';}$('#durationError').text('')"/>
                                     <label id="durationError" class="text-danger"></label>
                                 </div>
-{{--                                <div class="col-sm-6 p-2" id="timeDiv" style="display: none">--}}
-{{--                                    <label for="start">Start Time </label>--}}
-{{--                                    <input type="time" id="start" name="start" class="form-control" required step="3600" onkeydown="checkTime()"--}}
-{{--                                           onkeyup="checkTime()" onchange="checkTime()">--}}
-{{--                                    <label id="startError" class="text-danger"></label>--}}
-{{--                                </div>--}}
                                 <input type="hidden" id="first_shift_start" value="{{$first_shift_start}}">
                                 <input type="hidden" id="start" value="">
                                 <div class="col-sm-6 p-2">
@@ -493,7 +487,9 @@
             e.preventDefault();
             var duration     = $('#duration').val(),
                 visit_date   = $('#date').val(),
-                shift_id     = $('#choices-shift').val(),
+                shift_id     = $('#choices_times').val(),
+                shift_start  = $('#choices_times').find(':selected').attr('data-starts'),
+                shift_end    = $('#choices_times').find(':selected').attr('data-ends'),
                 visitor_type = $("span[id='visitor_type[]']").map(function(){return $(this).attr('data-type_id');}).get(),
                 visitor_price= $("span[id='visitor_price[]']").map(function(){return $(this).attr('data-price');}).get(),
                 visitor_birthday= $("input[id='visitor_birthday[]']").map(function(){return $(this).val();}).get(),
@@ -514,6 +510,8 @@
                 "duration":duration,
                 "visit_date":visit_date,
                 "shift_id":shift_id,
+                "shift_start":shift_start,
+                "shift_end":shift_end,
                 "visitor_type":visitor_type,
                 "visitor_price":visitor_price,
                 "visitor_birthday":visitor_birthday,
@@ -541,11 +539,12 @@
                         ' ></span> <span style="margin-left: 4px;">working</span>').attr('disabled', true);
                 },
                 success: function(data){
+                    alert(1)
                     toastr.success("Ticket is saved successfully");
                     $('#confirmBtn').html('Confirm').attr('disabled', false);
-                    window.setTimeout(function() {
-                        window.location.href="{{route('client.create')}}";
-                    }, 300);
+                    {{--window.setTimeout(function() {--}}
+                    {{--    window.location.href="{{route('client.create')}}";--}}
+                    {{--}, 300);--}}
                 },
             });
 

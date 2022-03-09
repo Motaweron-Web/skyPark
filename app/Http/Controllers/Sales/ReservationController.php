@@ -195,11 +195,14 @@ class ReservationController extends Controller
             'paid_amount'    => $request->amount,
             'grand_total'    => $request->revenue,
             'rem_amount'     => $request->rem,
+            'note'           => $request->note,
 
         ]);
         for ($i = 0 ; $i < count($request->visitor_type); $i++) {
             TicketRevModel::create([
                 'rev_id'          => Reservations::where('id',$request->rev_id)->first()->id,
+                'shift_start' => $request->shift_start.':00'.':00',
+                'shift_end' => $request->shift_end.':00'.':00',
                 'visitor_type_id' => $request->visitor_type[$i],
                 'day'             => $request->visit_date,
                 'price'           => $request->visitor_price[$i],
@@ -251,6 +254,7 @@ class ReservationController extends Controller
     public function edit($id)
     {
         $id = base64_decode($id)/555;
+        $first_shift_start = Carbon::parse(Shifts::orderBy('from', 'ASC')->first()->from)->format('H');
         $types        = VisitorTypes::all();
         $reservation  = Reservations::findOrFail($id);
         $customId     = strtoupper(date('D').$id.'Re'.substr(time(), -2));
@@ -264,7 +268,7 @@ class ReservationController extends Controller
             })
             ->get();
         $random = substr(Carbon::now()->format("l"),0,3).rand(0, 999).Carbon::now()->format('is');
-        return view('sales.reservation-info',compact('id','random','categories','types','reservation','customId','shifts','visitorTypes'));
+        return view('sales.reservation-info',compact('id','first_shift_start','random','categories','types','reservation','customId','shifts','visitorTypes'));
     }
 
     /**

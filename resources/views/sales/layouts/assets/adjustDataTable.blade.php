@@ -1,74 +1,92 @@
 <script>
+    var table;
+    table = $('.firstTable').DataTable({
+        responsive: true,
+    });
     var amountCash = $("#amount"),
-        total      = $('#totalPrice');
-    function checkDay(e){
+        total = $('#totalPrice');
+    localStorage.setItem('prevent', '0')
+    function checkDay(e) {
         // Create date from input value
         var inputDate = new Date(e.target.value);
         // Get today's date
         var Today = new Date();
         // call setHours to take the time out of the comparison
-        if(inputDate.setHours(0,0,0,0) === Today.setHours(0,0,0,0)){
+        if (inputDate.setHours(0, 0, 0, 0) === Today.setHours(0, 0, 0, 0)) {
+            localStorage.setItem('prevent', '0')
+            $('#duration').removeAttr('disabled');
+            $('#choices_times').removeAttr('disabled');
+            $('#firstNext').removeAttr('disabled');
             $('#dayError').text("")
             $('#start').val('')
             $('#timeDiv').hide(500);
             checkTime()
-        }
-        else if(inputDate.setHours(0,0,0,0) > Today.setHours(0,0,0,0)){
+        } else if (inputDate.setHours(0, 0, 0, 0) > Today.setHours(0, 0, 0, 0)) {
+            localStorage.setItem('prevent', '0')
             $('#dayError').text("")
+            $('#duration').removeAttr('disabled');
+            $('#choices_times').removeAttr('disabled');
+            $('#firstNext').removeAttr('disabled');
             $('#duration').val("")
             $('#choices_times').empty()
             $('#start').val($('#first_shift_start').val())
             // $('#timeDiv').show(500);
-        }
-        else{
+        } else {
             $('#dayError').text("The Day Can't Be Past !")
+            localStorage.setItem('prevent', '1')
             $('#duration').val("")
+            $('#duration').attr('disabled', 'disabled')
+            $('#choices_times').attr('disabled', 'disabled')
+            $('#firstNext').attr('disabled', 'disabled');
             $('#choices_times').empty()
         }
     }
 
-    function checkTime(){
+    function checkTime() {
         var myDuration = $('#duration').val(),
             time = $('#start').val(),
-             myDate     = $('#date').val();
-            if(time.length == 0){
+            myDate = $('#date').val();
+        if (time.length === 0) {
             var now = new Date(Date.now());
             time = now.getHours();
         }
         $('#startError').text('')
-            $('#durationError').text('')
+        $('#durationError').text('')
+        if (localStorage.getItem('prevent') !== '1' && myDuration.length > 0) {
             $.ajax({
                 type: 'GET',
                 url: "{{route('getShifts')}}",
                 data: {
-                    'duration'      : myDuration,
-                    'time'          : time,
-                    'visit_date'    : myDate,
+                    'duration': myDuration,
+                    'time': time,
+                    'visit_date': myDate,
                 },
                 success: function (data) {
                     if (data.status === 200) {
                         $('#choices_times').empty()
-                        if (data.times.length !== 0){
-                            localStorage.setItem('shift_id', data.shift_id);
-                            $.each(data.times,function(key, value)
-                            {
-                                // if(data.shift_id[key].id.length !=null){
-                                    $("#choices_times").append('<option value=' + data.shift_id[key] + '>' + value + '</option>');
-                                // }
+                        if (data.times.length !== 0) {
+                            $.each(data.times, function (key, value) {
+                                $("#choices_times").append(`<option data-starts = ${data.starts[key]} data-ends = ${data.ends[key]}  value= ${data.shift_id[key]}> ${value} </option>`);
                             });
-                        }else
-                            toastr.error("Can't Enter To The Next Shift !");
-                }
+                        } else
+                            toastr.error("Can't Enter To The Next Day !");
+                    }
                 }
             });
+        }
     }
+
+    $(document).on('click', '#secondPrev', function () {
+        DeleteRows();
+    });
+
+
     // Check Capacity And Get Price Of Visitor Models
     $(document).on('click', '#firstNext', function () {
-        var myDate     = $('#date').val(),
+        var myDate = $('#date').val(),
             myDuration = $('#duration').val(),
-            shift      = localStorage.getItem('shift_id'),
-            time       = $('#start').val();
-        if(myDuration.length > 0 && time.length > 0) {
+            shift = $('#choices_times').val();
+        if (myDuration.length > 0) {
             $.ajax({
                 type: 'GET',
                 url: "{{route('calcCapacity')}}",
@@ -85,7 +103,7 @@
                         for (var i = 0; i < data.shift_prices.length; i++) {
                             $('#price' + data.shift_prices[i].visitor_type_id).val(data.shift_prices[i].price)
                         }
-                        localStorage.setItem('available',data.available)
+                        localStorage.setItem('available', data.available)
                         toastr.success(data.available + " places are still available");
                     } else {
                         toastr.error(data.day + " is fully booked");
@@ -114,27 +132,21 @@
                     }
                 },//end error method
             });
-        }else{
+        } else {
             $("button[title='visitors']").removeClass('js-active');
             $("#visitorsTab").removeClass('js-active');
             $("button[title='ticket']").addClass('js-active');
             $("#ticketTab").addClass('js-active');
-            if(myDuration.length === 0)
+            if (myDuration.length === 0)
                 $('#durationError').text('Reservation Duration Is Required')
-            if(time.length === 0)
-                $('#startError').text('Start Time Is Required')
         }
     });
 
-    var table;
-    table = $('.firstTable').DataTable({
-        responsive: true,
-    });
     var count = 1;
     table.clear();
 
     function appendRow(type_id, type, price) {
-        if(localStorage.getItem('available') > table.rows().count()) {
+        if (localStorage.getItem('available') > table.rows().count()) {
             var row = table.row.add([
                 `<span data-type_id="${type_id}" id="visitor_type[]">${type}</span>`,
                 `<span data-price="${price}" id="visitor_price[]">${price}</span>`,
@@ -162,7 +174,7 @@
             count++;
             $(row).addClass(type);
             getCount(type, type_id)
-        }else{
+        } else {
             toastr.error("The park is full")
         }
     }
@@ -211,7 +223,6 @@
             searchEnabled: false
         });
     }
-
 
 
     // Show categories
@@ -265,10 +276,10 @@
                 $(row).addClass('productrow' + product_id);
             }
         } else {
-            var oldQty = parseInt($('#qtyVal'+product_id).val()||0)
-            $('#qtyVal'+product_id).val(oldQty+ 1)
-            var qty =  $('#qtyVal'+product_id).val();
-            $('#productTotalPrice'+product_id).text(price*qty)
+            var oldQty = parseInt($('#qtyVal' + product_id).val() || 0)
+            $('#qtyVal' + product_id).val(oldQty + 1)
+            var qty = $('#qtyVal' + product_id).val();
+            $('#productTotalPrice' + product_id).text(price * qty)
         }
     });
     myNewTable.on('click', 'tbody tr .Delete', function () {
@@ -292,7 +303,7 @@
     });
     var totalBeforeDiscount = 0;
     $(document).on('click', '#secondNext', function () {
-        if(table.rows().count() !=0) {
+        if (table.rows().count() != 0) {
             $('.firstInfo').append(`
                         <h6 class="billTitle"> visitors</h6>
                         <div class="items">
@@ -319,7 +330,7 @@
                     totalBeforeDiscount += price;
                 }
             });
-        }else{
+        } else {
             toastr.error("at least one model should be exists");
             $("button[title='products']").removeClass('js-active');
             $("#productsTab").removeClass('js-active');
@@ -332,9 +343,9 @@
         $('.firstInfo').html('');
     });
     var Percent = $('#offerType1'),
-        Amount  = $('#offerType2');
+        Amount = $('#offerType2');
     $(document).on('click', '#thirdNext', function () {
-        if(myTable.rows().count() !=0) {
+        if (myTable.rows().count() != 0) {
             $('.secondInfo').append(`
                 <h6 class="billTitle"> products</h6>
                 <div class="items">
@@ -346,8 +357,8 @@
             `)
             $('#myNewTable tr').each(function () {
                 var div = $(this),
-                    name  = div.find('td:first').text(),
-                    product_id  = div.find('#spanProductId').attr('data-product_id'),
+                    name = div.find('td:first').text(),
+                    product_id = div.find('#spanProductId').attr('data-product_id'),
                     total = parseInt(div.find('span.productTotalPrice').text()),
                     qty = div.find('input.qtyVal').val();
                 if (qty != undefined) {
@@ -365,9 +376,9 @@
             });
         }
         total.text(totalBeforeDiscount);
-        $('#totalInfoPrice').text(totalBeforeDiscount+" EGP")
-        $('#totalInfoDiscount').text(0+" EGP")
-        $('#totalInfoRevenue').text(totalBeforeDiscount+" EGP")
+        $('#totalInfoPrice').text(totalBeforeDiscount + " EGP")
+        $('#totalInfoDiscount').text(0 + " EGP")
+        $('#totalInfoRevenue').text(totalBeforeDiscount + " EGP")
         $('#revenue').text(totalBeforeDiscount)
         $('#calcDiscount').val('')
         $('.thirdInfo').append(`
@@ -381,63 +392,65 @@
     var totalPrice = parseInt(total.text());
     Percent.prop("checked", true);
     $('#revenue').text(totalBeforeDiscount)
-    $("#calcDiscount").on("keyup change", function(e) {
+    $("#calcDiscount").on("keyup change", function (e) {
         if (Percent.is(':checked'))
             checkPercent()
         else if (Amount.is(':checked'))
             checkAmount()
     });
-    Percent.change(function() {
+    Percent.change(function () {
         checkPercent()
     });
-    function checkPercent(){
-        if($('#calcDiscount').val() > 100 || $('#calcDiscount').val() < 0){
+
+    function checkPercent() {
+        if ($('#calcDiscount').val() > 100 || $('#calcDiscount').val() < 0) {
             toastr.error("enter valid discount percent !");
             $('#calcDiscount').val('');
-            $('#totalInfoDiscount').text(0+ " EGP")
+            $('#totalInfoDiscount').text(0 + " EGP")
             $('#discount').text('0');
             $('#revenue').text(total.text());
-        }else {
+        } else {
             $('#discount').text($('#calcDiscount').val() + "%")
             var after = (parseInt(total.text()) - $('#calcDiscount').val() * parseInt(total.text()) / 100).toFixed(2);
             $('#revenue').text(after)
-            $('#totalInfoPrice').text(total.text()+" EGP")
-            $('#totalInfoRevenue').text(after+" EGP")
-            $('#totalInfoDiscount').text($('#calcDiscount').val()+"%")
+            $('#totalInfoPrice').text(total.text() + " EGP")
+            $('#totalInfoRevenue').text(after + " EGP")
+            $('#totalInfoDiscount').text($('#calcDiscount').val() + "%")
             calculateChange()
         }
     }
-    function checkAmount(){
-        if($('#calcDiscount').val() > parseInt(total.text() || $('#calcDiscount').val() < 0)){
+
+    function checkAmount() {
+        if ($('#calcDiscount').val() > parseInt(total.text() || $('#calcDiscount').val() < 0)) {
             toastr.error("discount amount more than total !");
-            $('#totalInfoDiscount').text(0+ " EGP")
+            $('#totalInfoDiscount').text(0 + " EGP")
             $('#calcDiscount').val('');
             $('#discount').text('0');
             $('#revenue').text(total.text());
-        }else {
-            $('#discount').text($('#calcDiscount').val()||0)
+        } else {
+            $('#discount').text($('#calcDiscount').val() || 0)
             var after = (parseInt(total.text()) - $('#calcDiscount').val());
             $('#revenue').text(after)
-            $('#totalInfoPrice').text(total.text()+" EGP")
-            $('#totalInfoRevenue').text(after+" EGP")
-            $('#totalInfoDiscount').text($('#calcDiscount').val()+ " EGP")
+            $('#totalInfoPrice').text(total.text() + " EGP")
+            $('#totalInfoRevenue').text(after + " EGP")
+            $('#totalInfoDiscount').text($('#calcDiscount').val() + " EGP")
             calculateChange()
         }
     }
-    Amount.change(function() {
+
+    Amount.change(function () {
         checkAmount()
     });
 
 
-    function calculateChange(){
-            if(amountCash.val() > parseFloat($('#revenue').text())) {
-                var change = (parseFloat(amountCash.val()).toFixed(2) - parseFloat($('#revenue').text()).toFixed(2)).toFixed(2);
-                $("#change").text(change || 0);
-            }
-            else
-                $("#change").text('0');
+    function calculateChange() {
+        if (amountCash.val() > parseFloat($('#revenue').text())) {
+            var change = (parseFloat(amountCash.val()).toFixed(2) - parseFloat($('#revenue').text()).toFixed(2)).toFixed(2);
+            $("#change").text(change || 0);
+        } else
+            $("#change").text('0');
 
-            $('#paid').text(amountCash.val()||0);
+        $('#paid').text(amountCash.val() || 0);
     }
 
     $(document).on('click', '#lastPrev', function () {
@@ -453,9 +466,9 @@
     });
     $(document).on('click', '#printBtn', function () {
         var mywindow = window.open('', 'PRINT', 'height=400,width=600');
-        mywindow.document.write('<html><head><title>' + document.title  + '</title>');
+        mywindow.document.write('<html><head><title>' + document.title + '</title>');
         mywindow.document.write('</head><body >');
-        mywindow.document.write('<h1>' + document.title  + '</h1>');
+        mywindow.document.write('<h1>' + document.title + '</h1>');
         mywindow.document.write(document.getElementById('bill').innerHTML);
         mywindow.document.write('</body></html>');
         mywindow.document.close(); // necessary for IE >= 10
@@ -464,26 +477,28 @@
         mywindow.close();
         return true;
     });
-    function DeleteRows(){
+
+    function DeleteRows() {
         $('.firstTable').DataTable().clear().draw();
         $('.visitorType').each(function () {
             $(this).find('span.count').text('0');
             $(this).find('input.inputCount').val(0);
         });
     }
-    $('.inputCount').focusout(function(){
-        var type   = $(this).parent().parent().find('.visitor').text();
+
+    $('.inputCount').focusout(function () {
+        var type = $(this).parent().parent().find('.visitor').text();
         var number = Math.abs(parseInt($(this).parent().parent().find('.count').text()) - $(this).val());
         // add only if input number more than count --> to prevent multiple insertion
-        if($(this).val() > parseInt($(this).parent().parent().find('.count').text())) {
+        if ($(this).val() > parseInt($(this).parent().parent().find('.count').text())) {
             var visitor_type_id = $(this).parent().parent().find('#visitor_type_id').val();
             for (var i = 0; i < number; i++) {
                 appendRow(visitor_type_id, type, $(this).parent().parent().find('input').val())
             }
-        }else if($(this).val() < parseInt($(this).parent().parent().find('.count').text())){
+        } else if ($(this).val() < parseInt($(this).parent().parent().find('.count').text())) {
             // means the user enter a number less than count so he want to delete not insert
             for (var j = 0; j < number; j++) {
-                table.row('tr.'+type.toLowerCase()).remove().draw();
+                table.row('tr.' + type.toLowerCase()).remove().draw();
             }
             $(this).parent().parent().find('.count').text($(this).val())
         }

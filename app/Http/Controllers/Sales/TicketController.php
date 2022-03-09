@@ -200,6 +200,8 @@ class TicketController extends Controller
         for ($i = 0; $i < count($request->visitor_type); $i++) {
             TicketRevModel::create([
                 'ticket_id' => $ticket->id,
+                'shift_start' => $request->shift_start.':00'.':00',
+                'shift_end' => $request->shift_end.':00'.':00',
                 'visitor_type_id' => $request->visitor_type[$i],
                 'day' => $request->visit_date,
                 'price' => $request->visitor_price[$i],
@@ -270,51 +272,49 @@ class TicketController extends Controller
         $visit_date = $request->visit_date;
         $times = [];
         $shift_id = [];
-//        foreach ($shifts as $shift) {
-//            $shift_from = $shift->from;
-//            $shift_to = $shift->to;
-//            if ($start_time > $shift_from && $start_time < $shift_to) {
-//                $i = ((int)$start_time + (int)$request->duration);
-//                while ($i <= $shift_to) {
-//                    if (((int)$start_time + (int)$request->duration) < 12)
-//                        $times[] = 'From ' . (((int)$start_time) % 12) . ' To ' . ((((int)$start_time + (int)$request->duration)) % 12) . ' AM';
-//                    else
-//                        $times[] = 'From ' . (((int)$start_time) % 12) . ' To ' . ((((int)$start_time + (int)$request->duration)) % 12) . ' PM';
-//                    $shift_id[] = $shift->id;
-//                    $start_time = ((int)$start_time + (int)$request->duration);
-//                    $i = $i + (int)$request->duration;
-//                }
-//                return response(['times' => $times, 'shift_id' => $shift_id, 'status' => 200], 200);
-//            }
-//        }
+        $starts = [];
+        $ends   = [];
         if (Carbon::parse($visit_date)->isToday()) {
             $start_time  = date('H:i', strtotime('+2 hours'));
-            $time_format = date('H:i', strtotime('+2 hours'));
+            $time_format = date('H:i', strtotime('+2 hours')).':00';
         } else {
             $start_time  = Carbon::parse(Shifts::orderBy('from', 'ASC')->first()->from)->format('H');
-            $time_format = Carbon::parse(Shifts::orderBy('from', 'ASC')->first()->from)->format('H');
+            $time_format = Carbon::parse(Shifts::orderBy('from', 'ASC')->first()->from)->format('H').':00';
         }
         $i = (int)$start_time + $request->duration;
         while ($i <= 24) {
             $shift = Shifts::where(function ($query) use ($time_format){
-                $query->where('from', '<', (string)$time_format);
-                $query->where('to', '>', (string)$time_format);
+                $query->where('from', '<=', $time_format)->where('to', '>', $time_format);
             })->first();
             if($shift != null){
                 $shift_id[] = $shift->id;
-                if (((int)$start_time + $request->duration) < 12)
-                    $times[] = 'From ' . (((int)$start_time) % 12) . ' To ' . ((((int)$start_time + (int)$request->duration)) % 12) . ' AM';
-                else
+                if (((int)$start_time + $request->duration) < 12 && ((int)$start_time + $request->duration) % 12 != 0 && ((((int)$start_time + (int)$request->duration)) % 12) != 0 && (((int)$start_time) % 12) != 0)
+                    $times[]  = 'From ' . (((int)$start_time) % 12) . ' To ' . ((((int)$start_time + (int)$request->duration)) % 12) . ' AM';
+                else if(((int)$start_time + $request->duration) > 12 && ((int)$start_time + $request->duration) % 12 != 0 && ((((int)$start_time + (int)$request->duration)) % 12) != 0 && (((int)$start_time) % 12) != 0)
                     $times[] = 'From ' . (((int)$start_time) % 12) . ' To ' . ((((int)$start_time + (int)$request->duration)) % 12) . ' PM';
+                else{
+                    $from = (((int)$start_time) % 12) == 0 ? '12' : (((int)$start_time) % 12);
+                    $to   = ((((int)$start_time + (int)$request->duration)) == 12) == 12 ? '12 PM' : '12 AM';
+                    if((((int)$start_time + (int)$request->duration)) == 12){
+                        $to = '12 PM';
+                    }elseif ((((int)$start_time + (int)$request->duration)) == 24){
+                        $to = '12 AM';
+                    }elseif((((int)$start_time + (int)$request->duration)) > 12 && (((int)$start_time + (int)$request->duration)) != 24){
+                        $to = ((((int)$start_time + (int)$request->duration)) % 12).' PM';
+                    }
+                    $times[] = 'From ' . $from . ' To ' .$to;
+                }
+                $starts[] = ((int)$start_time);
+                $ends[]   = (((int)$start_time + (int)$request->duration));
                 $time_format = ((int)$start_time + (int)$request->duration).':00';
                 $start_time  = ((int)$start_time + (int)$request->duration);
-                $i = $i + (int)$request->duration;
+                $i += (int)$request->duration;
             }else{
                 $time_format = ((int)$start_time + (int)$request->duration).':00';
                 $start_time  = ((int)$start_time + (int)$request->duration);
-                $i = $i + (int)$request->duration;
+                $i += (int)$request->duration;
             }
         }
-        return response(['times' => $times, 'shift_id' => $shift_id, 'status' => 200], 200);
+        return response(['times' => $times,'starts'=> $starts,'ends'=>$ends,'shift_id' => $shift_id, 'status' => 200], 200);
     }
 }
