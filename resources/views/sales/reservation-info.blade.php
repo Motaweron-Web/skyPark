@@ -467,14 +467,14 @@
                     <div class="myBarcode">
                         {!! $generator->getBarcode($random, $generator::TYPE_CODE_128) !!}
                     </div>
-                    <div class="printBtn">
-                        <button type="button" class="btn btn-outline-info fw-normal " id="printBtn"><i
-                                class="fas fa-sign-out me-2"></i>
-                            Print & Exit
-                        </button>
-                        <button type="submit" class="btn btn-info "><i class="fal fa-print me-2"></i> Access</button>
+{{--                    <div class="printBtn">--}}
+{{--                        <button type="button" class="btn btn-outline-info fw-normal " id="printBtn"><i--}}
+{{--                                class="fas fa-sign-out me-2"></i>--}}
+{{--                            Print & Exit--}}
+{{--                        </button>--}}
+{{--                        <button type="submit" class="btn btn-info "><i class="fal fa-print me-2"></i> Access</button>--}}
 
-                    </div>
+{{--                    </div>--}}
                 </div>
             </div>
         </form>
