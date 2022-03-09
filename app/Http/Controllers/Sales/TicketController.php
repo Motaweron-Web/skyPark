@@ -307,12 +307,12 @@ class TicketController extends Controller
                 $starts[] = ((int)$start_time);
                 $ends[]   = (((int)$start_time + (int)$request->duration));
                 $time_format = ((int)$start_time + (int)$request->duration).':00';
-                $start_time  = ((int)$start_time + (int)$request->duration);
-                $i += (int)$request->duration;
+                $start_time  = ((int)$start_time + 1);
+                $i++;
             }else{
                 $time_format = ((int)$start_time + (int)$request->duration).':00';
-                $start_time  = ((int)$start_time + (int)$request->duration);
-                $i += (int)$request->duration;
+                $start_time  = ((int)$start_time + 1);
+                $i++;
             }
         }
         return response(['times' => $times,'starts'=> $starts,'ends'=>$ends,'shift_id' => $shift_id, 'status' => 200], 200);

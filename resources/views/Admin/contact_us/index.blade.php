@@ -16,16 +16,16 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         <!--begin::Table-->
-                        <table class="table table-striped table-bordered text-nowrap w-100" id="dataTable">
+                        <table class="table table-striped table-bordered w-100" id="dataTable">
                             <thead>
                             <tr class="fw-bolder text-muted bg-light">
                                 <th class="min-w-25px">#</th>
-                                <th class="min-w-50px">name</th>
-                                <th class="min-w-50px">phone</th>
+                                <th class="min-w-100px">name</th>
+                                <th class="min-w-70px">phone</th>
                                 <th class="min-w-50px">email</th>
-                                <th class="min-w-25px">message</th>
+                                <th class="max-w-50px">message</th>
                                 <th class="min-w-25px">status</th>
-                                <th class="min-w-25px">date</th>
+                                <th class="w-50">date</th>
                                 <th class="min-w-50px rounded-end">Actions</th>
                             </tr>
                             </thead>

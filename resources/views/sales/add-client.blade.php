@@ -182,7 +182,7 @@
                         $('#choices-governorate').val(data.client.gov_id).change();
                         $('#choices-city').val(data.client.city_id);
                     }else {
-                        toastr.warning('Welcome To SkyPark');
+                        // toastr.success('Welcome To SkyPark');
                         $("form#AddForm").show();
                         $("#addClient").show();
                         $('#SearchBtn').html('<i class="fas fa-search text-white"></i>');
