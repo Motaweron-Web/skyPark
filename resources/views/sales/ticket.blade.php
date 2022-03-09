@@ -539,12 +539,11 @@
                         ' ></span> <span style="margin-left: 4px;">working</span>').attr('disabled', true);
                 },
                 success: function(data){
-                    alert(1)
                     toastr.success("Ticket is saved successfully");
                     $('#confirmBtn').html('Confirm').attr('disabled', false);
-                    {{--window.setTimeout(function() {--}}
-                    {{--    window.location.href="{{route('client.create')}}";--}}
-                    {{--}, 300);--}}
+                    window.setTimeout(function() {
+                        window.location.href="{{route('client.create')}}";
+                    }, 300);
                 },
             });
 
