@@ -58,8 +58,11 @@
                                 </div>
                             </div>
                             <div class="button-row d-flex mt-4">
-                                <button class="btn bg-gradient-dark ms-auto mb-0 js-btn-next" data-title="visitors"
-                                        data-active="ReservationInfo" type="button"
+{{--                                <button class="btn bg-gradient-dark ms-auto mb-0 js-btn-next" data-title="visitors"--}}
+{{--                                        data-active="ReservationInfo" type="button"--}}
+{{--                                        id="firstNext">Next--}}
+{{--                                </button>--}}
+                                <button class="btn bg-gradient-dark ms-auto mb-0 js-btn-next" type="button"
                                         id="firstNext">Next
                                 </button>
                             </div>
