@@ -25,7 +25,7 @@
                                 <th class="min-w-50px">email</th>
                                 <th class="max-w-50px">message</th>
                                 <th class="min-w-25px">status</th>
-                                <th class="w-50">date</th>
+                                <th class="w-10">date</th>
                                 <th class="min-w-50px rounded-end">Actions</th>
                             </tr>
                             </thead>

@@ -3,10 +3,9 @@
     {{$setting->title}} | Group Access
 @endsection
 @section('content')
-    <div class="card p-3 py-4 w-100 w-sm-80 m-auto ">
-
     <h2 class="MainTiltle mb-5 ms-4"> Group Access </h2>
-        <label class="form-label fs-4"> <i class="fas fa-ticket-alt me-2"></i>Ticket OR phone</label>
+    <div class="card p-3 py-4 w-100 w-sm-80 m-auto ">
+    <label class="form-label fs-4"> <i class="fas fa-ticket-alt me-2"></i>Sale Number OR phone</label>
         <div class="d-flex">
             <input type="text" class="form-control" id="searchValue" placeholder="Type here...">
             <button type="button" id="searchButton" class="input-group-text ms-2 bg-gradient-primary px-4 text-body"><i

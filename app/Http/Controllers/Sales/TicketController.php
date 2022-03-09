@@ -165,7 +165,7 @@ class TicketController extends Controller
      */
     public function show($id)
     {
-        $id = Clients::findOrFail($id)->first()->id;
+        $id = Clients::findOrFail($id)->id;
         $shifts = Shifts::all();
         $first_shift_start = Carbon::parse(Shifts::orderBy('from', 'ASC')->first()->from)->format('H');
         $types = VisitorTypes::all();
