@@ -1,13 +1,13 @@
 <script>
     // Show Data Using YAJRA
-    async function showData(routeOfShow,columns) {
+    async function showData(routeOfShow,columns,order = 0) {
             $('#dataTable').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: routeOfShow,
                 columns: columns,
                 order: [
-                    [0, "desc"]
+                    [order, "desc"]
                 ],
                 "language": {
                     "sProcessing": "Loading ...",

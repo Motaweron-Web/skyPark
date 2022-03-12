@@ -18,11 +18,11 @@ class CreateShiftDetailsTable extends Migration
 
             $table->unsignedBigInteger('shift_id')->nullable();
             $table->foreign('shift_id')->references('id')
-                ->on('shifts')->onDelete('cascade');
+                ->on('shifts')->onDelete('set null');
 
             $table->unsignedBigInteger('visitor_type_id')->nullable();
             $table->foreign('visitor_type_id')->references('id')
-                ->on('visitor_types')->onDelete('cascade');
+                ->on('visitor_types')->onDelete('set null');
 
             $table->double('price')->default(0)->nullable();
 

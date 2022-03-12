@@ -39,6 +39,22 @@
         </li>
 
         <li class="slide">
+            <a class="side-menu__item" href="{{route('visitors.index')}}">
+                <i class="ti-face-smile side-menu__icon"></i>
+                <span class="side-menu__label">Visitors Models</span>
+            </a>
+        </li>
+
+        <li class="slide">
+            <a class="side-menu__item" href="{{route('timing.index')}}">
+                <i class="fe fe-watch side-menu__icon"></i>
+                <span class="side-menu__label">Working Times</span>
+            </a>
+        </li>
+
+
+
+        <li class="slide">
             <a class="side-menu__item" href="{{route('bracelet.index')}}">
                 <i class="fe fe-bold side-menu__icon"></i>
                 <span class="side-menu__label">Bracelets</span>

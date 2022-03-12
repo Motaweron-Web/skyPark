@@ -30,6 +30,14 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin','namespace'=>'Admin']
     Route::resource('reference','RefernceController');
     Route::POST('reference.delete','RefernceController@delete')->name('reference.delete');
 
+    #### Timing ####
+    Route::resource('timing','TimingController');
+    Route::POST('timing.delete','TimingController@delete')->name('timing.delete');
+
+    #### Timing ####
+    Route::resource('visitors','VisitorsController');
+    Route::POST('visitors.delete','VisitorsController@delete')->name('visitors.delete');
+
     #### Users ####
     Route::resource('users','UsersController');
     Route::POST('users.delete','UsersController@delete')->name('users.delete');

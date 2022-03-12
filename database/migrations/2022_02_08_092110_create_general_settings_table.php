@@ -19,7 +19,6 @@ class CreateGeneralSettingsTable extends Migration
             $table->bigInteger('capacity')->default(1250)->nullable();
             $table->string('logo',500)->nullable();
             $table->string('title',500)->nullable();
-
             $table->timestamps();
         });
     }
