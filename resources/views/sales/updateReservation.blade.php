@@ -1,73 +1,48 @@
 @extends('sales.layouts.master')
-@section('links')
-    Ticket
-@endsection
 @section('page_title')
-    {{$setting->title}} | Ticket
+    {{$setting->title}} | Edit Reservation
 @endsection
 @section('content')
-    <h2 class="MainTitle mb-5 ms-4">ticket</h2>
+    <h2 class="MainTiltle mb-5 ms-4"> Edit Reservation </h2>
+
     <div class="multisteps-form">
-        <form class="row">
-            <input type="hidden" value="{{$id}}" name="client_id">
+        <form action="{{route('reservations.update',$rev->id)}}" method="POST" enctype="multipart/form-data" class="row">
+            @csrf
+            @method('PUT')
+            <input type="hidden" id="visit_date" name="visit_date" value="{{$rev->day}}">
             <div class="col-lg-9 p-1 ">
                 <div class="multisteps-form__progress mb-5">
-                    <button type="button" class="multisteps-form__progress-btn js-active" title="ticket"> ticket
+                    <button type="button"
+                            class="multisteps-form__progress-btn ReservationInfo-multisteps-form__progress-btn js-active"
+                            title="ReservationInfo"> Reservation Info
                     </button>
-                    <button type="button" class="multisteps-form__progress-btn" title="visitors"> visitors</button>
-                    <button type="button" class="multisteps-form__progress-btn" title="products"> products</button>
-                    <button type="button" class="multisteps-form__progress-btn" title="payment"> payment</button>
+                    <button type="button" class="multisteps-form__progress-btn visitors-multisteps-form__progress-btn"
+                            title="visitors"> visitors
+                    </button>
+                    <button type="button" class="multisteps-form__progress-btn products-multisteps-form__progress-btn"
+                            title="products"> products
+                    </button>
+                    <button type="button" class="multisteps-form__progress-btn payment-multisteps-form__progress-btn"
+                            title="payment"> payment
+                    </button>
                 </div>
                 <div class="multisteps-form__form mb-2">
                     <!-- step 1 -->
-{{--                    <div class="card multisteps-form__panel p-3 border-radius-xl bg-white js-active" id="ticketTab"--}}
-{{--                         data-animation="FadeIn">--}}
-{{--                        <h5 class="font-weight-bolder">ticket</h5>--}}
-{{--                        <div class="multisteps-form__content">--}}
-{{--                            <div class="row mt-3">--}}
-{{--                                <div class="col-sm-6 p-2">--}}
-{{--                                    <label>Visit Date</label>--}}
-{{--                                    <input class="form-control" type="date" id="date" value="{{ date('Y-m-d') }}" name="visit_date"/>--}}
-{{--                                </div>--}}
-{{--                                <div class="col-sm-6 p-2">--}}
-{{--                                    <label style="text-transform: initial !important;">Reservation Duration (h) </label>--}}
-{{--                                    <input class="form-control" type="number" name="duration" id="duration" min="1" max="24"--}}
-{{--                                           onKeyUp="if(this.value>24){this.value='24';}else if(this.value<=0){this.value='1';}"/>--}}
-{{--                                    <label id="durationError" class="text-danger"></label>--}}
-{{--                                </div>--}}
-{{--                                <div class="col-12 p-2">--}}
-{{--                                    <label class="form-label"> shift </label>--}}
-{{--                                    <select class="form-control" id="choices-shift" name="shift_id">--}}
-{{--                                        @foreach($shifts as $shift)--}}
-{{--                                            <option value="{{$shift->id}}">{{date('h a', strtotime($shift->from))}}--}}
-{{--                                                : {{date('h a', strtotime($shift->to))}}</option>--}}
-{{--                                        @endforeach--}}
-{{--                                    </select>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <div class="button-row d-flex mt-4">--}}
-{{--                                <button class="btn bg-gradient-dark ms-auto mb-0 js-btn-next" type="button"--}}
-{{--                                        id="firstNext">Next--}}
-{{--                                </button>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-                    <div class="card multisteps-form__panel p-3 border-radius-xl bg-white js-active" id="ticketTab"
-                         data-animation="FadeIn">
-                        <h5 class="font-weight-bolder">ticket</h5>
+                    <div
+                        class="card multisteps-form__panel ReservationInfo-multisteps-form__panel p-3 border-radius-xl bg-white js-active"
+                        validate="true" id="ticketTab" data-animation="FadeIn">
+                        <h5 class="font-weight-bolder">Reservation Info</h5>
                         <div class="multisteps-form__content">
                             <div class="row mt-3">
                                 <div class="col-sm-6 p-2">
-                                    <label>Visit Date</label>
-                                    <input class="form-control" type="date" id="date" value="{{ date('Y-m-d') }}" name="visit_date" onchange="checkDay(event)"/>
-                                    <label id="dayError" class="text-danger"></label>
-                                </div>
-                                <div class="col-sm-6 p-2">
                                     <label style="text-transform: initial !important;">Reservation Duration (h) </label>
-                                    <input class="form-control" type="number" name="duration" onchange="checkTime()" id="duration" min="1" max="24"
+                                    <input class="form-control" type="number" value="{{$rev->hours_count}}" name="duration" onchange="checkTime()"
+                                           id="duration" min="1" max="24"
                                            onKeyUp="if(this.value>24){this.value='24';}else if(this.value<=0){this.value='1';}$('#durationError').text('')"/>
                                     <label id="durationError" class="text-danger"></label>
                                 </div>
+                                <input class="form-control" type="hidden" id="date" value="{{$rev->day}}"
+                                       name="visit_date"/>
                                 <input type="hidden" id="first_shift_start" value="{{$first_shift_start}}">
                                 <input type="hidden" id="start" value="">
                                 <div class="col-sm-6 p-2">
@@ -76,10 +51,15 @@
 
                                     </select>
                                 </div>
+                                <div class="col-sm-12 p-2">
+                                    <label class="form-label"> <i class="fas fa-feather-alt me-1"></i> Note </label>
+                                    <textarea name="notes" id="note" class="form-control" rows="6"
+                                              placeholder="Add Note...">{{$rev->note}}</textarea>
+                                </div>
                             </div>
-                            <div class="button-row d-flex mt-4 ">
+                            <div class="button-row d-flex mt-4">
                                 <button class="btn bg-gradient-dark ms-auto mb-0 js-btn-next" type="button"
-                                        id="firstNext">Next
+                                        id="firstNextEdit">Next
                                 </button>
                             </div>
                         </div>
@@ -91,19 +71,31 @@
                         <div class="multisteps-form__content">
                             <div class="row mt-3">
                                 <!-- visitor Type  -->
-                                <div class="col-12 p-2">
+                                <small class="form-text text-muted mb-1"><i class="fa fa-arrow-right text-warning"></i>
+                                    Enter a number to add many rows</small>
+                                <div class="col-10 p-2">
                                     @foreach($types as $type)
                                         <div class="visitorType visitorType{{$type->id}}">
                                             <div class="visitorTypeDiv">
-                                            <img src="{{get_file($type->photo)}}" alt="">
-                                            <span class="visitor"> {{$type->title}} </span>
-                                            <span class="count">0</span>
-                                            <input type="hidden" value="" name="price[]" id="price{{$type->id}}">
-                                            <input type="hidden" value="{{$type->id}}"
-                                                   id="visitor_type_id">
+                                                <img src="{{get_file($type->photo)}}" alt="{{$type->title}}"
+                                                     title="{{$type->title}}">
+                                                <span class="visitor">{{$type->title}}</span>
+                                                <span class="count">{{$models->where('rev_id',$rev->id)->where('visitor_type_id',$type->id)->count()}}</span>
+                                                <input type="hidden" value="" name="price[]" id="price{{$type->id}}">
+                                                <input type="hidden" value="{{$type->id}}"
+                                                       id="visitor_type_id">
+                                            </div>
+                                            <div class="countInput">
+                                                <input type="number" id="countInput" class="inputCount" min="0"
+                                                       value="{{$models->where('rev_id',$rev->id)->where('visitor_type_id',$type->id)->count()}}"/>
                                             </div>
                                         </div>
                                     @endforeach
+                                </div>
+                                <div class="col-2">
+                                    <button class="btn btn-danger" type="button" onclick="DeleteRows()"><i
+                                            class="fal fa-trash me-2"></i> Clear
+                                    </button>
                                 </div>
                                 <!-- table -->
                                 <div class="col-12 p-2 position-relative">
@@ -119,7 +111,36 @@
                                         </tr>
                                         </thead>
                                         <tbody id="visitorTable">
-
+                                        @foreach($models as $model)
+                                            <tr class="{{$model->type->title}}">
+                                                <td><span data-type_id="{{$model->id}}" id="visitor_type[]">{{$model->type->title}}</span></td>
+                                                <td><span data-price="{{$model->price}}" id="visitor_price[]">{{$model->price}}</span></td>
+                                                <td><input type="text" class="form-control" placeholder="Name" name="visitor_name[]" value="{{$model->name}}"></td>
+                                                <td><input type="date" class="form-control" name="visitor_birthday[]" id="visitor_birthday[]" value="{{$model->birthday}}"></td>
+                                                <td>
+                                                    <div class="choose">
+                                                        <div class="genderOption">
+                                                            <input type="radio" class="btn-check" name="gender{{$loop->iteration}}" id="option1{{$loop->iteration}}" value="male">
+                                                            <label class=" mb-0 btn btn-outline" for="option1{{$loop->iteration}}"><span><i class="fas fa-male"></i></span></label>
+                                                        </div>
+                                                        <div class="genderOption" style="display: none">
+                                                            <input type="radio" class="btn-check" name="gender{{$loop->iteration}}" id="option1{{$loop->iteration}}" value="male" {{($model->gender == 'male') ? 'checked' : ''}}>
+                                                            <label class=" mb-0 btn btn-outline" for="option1{{$loop->iteration}}"></label>
+                                                        </div>
+                                                        <div class="genderOption">
+                                                            <input type="radio" class="btn-check" name="gender{{$loop->iteration}}" id="option2{{$loop->iteration}}" value="female" {{($model->gender == 'female') ? 'checked' : ''}}>
+                                                            <label class=" mb-0 btn btn-outline" for="option2{{$loop->iteration}}"><span><i class="fas fa-female"></i> </span></label>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span class="controlIcons">
+                                                    <span class="icon Delete" data-bs-toggle="tooltip" title="Delete" data-model_id="{{$model->id}}"> <i
+                                                        class="far fa-trash-alt"></i> </span>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -135,7 +156,8 @@
                         </div>
                     </div>
                     <!-- step 3 -->
-                    <div class="card multisteps-form__panel p-3 border-radius-xl bg-white " id="productsTab" data-animation="FadeIn">
+                    <div class="card multisteps-form__panel p-3 border-radius-xl bg-white " id="productsTab"
+                         data-animation="FadeIn">
                         <h5 class="font-weight-bolder">products</h5>
                         <div class="multisteps-form__content">
                             <div class="row mt-3 align-items-end">
@@ -193,7 +215,7 @@
                                     <div class="screens row">
                                         <div class="screen col">
                                             <span>total</span>
-                                            <strong id="totalPrice">  </strong>
+                                            <strong id="totalPrice"> </strong>
                                         </div>
                                         <div class="screen col">
                                             <span>discount</span>
@@ -201,15 +223,15 @@
                                         </div>
                                         <div class="screen col">
                                             <span>revenue</span>
-                                            <strong id="revenue">  </strong>
+                                            <strong id="revenue"> </strong>
                                         </div>
                                         <div class="screen col">
                                             <span>paid</span>
-                                            <strong id="paid"> 0 </strong>
+                                            <strong id="paid"> 0</strong>
                                         </div>
                                         <div class="screen col">
                                             <span>change</span>
-                                            <strong id="change"> 0 </strong>
+                                            <strong id="change"> 0</strong>
                                         </div>
                                     </div>
                                 </div>
@@ -409,11 +431,12 @@
                                             <div class="row align-items-end">
                                                 <div class="col-8 col-md-9 p-2 ">
                                                     <label> Amount </label>
-                                                    <input class="form-control" type="number" id="amount" onchange="calculateChange()" onkeyup="calculateChange()"/>
+                                                    <input class="form-control" type="number" id="amount"
+                                                           onchange="calculateChange()" onkeyup="calculateChange()"/>
                                                 </div>
-{{--                                                <div class="col-4 col-md-3 p-2">--}}
-{{--                                                    <button type="button" class="btn w-100 btn-success"> Pay</button>--}}
-{{--                                                </div>--}}
+                                                {{--                                            <div class="col-4 col-md-3 p-2">--}}
+                                                {{--                                                <button type="button" class="btn w-100 btn-success"> Pay</button>--}}
+                                                {{--                                            </div>--}}
                                             </div>
                                         </div>
                                     </div>
@@ -425,7 +448,7 @@
                                 <button class="btn bg-gradient-secondary mb-0 js-btn-prev" type="button" id="lastPrev">
                                     Prev
                                 </button>
-                                <button class="btn bg-gradient-dark ms-auto mb-0" id="confirmBtn"> Confirm </button>
+                                <button class="btn bg-gradient-dark ms-auto mb-0" id="confirmBtn"> Confirm</button>
                             </div>
                         </div>
                     </div>
@@ -435,12 +458,16 @@
                 <div class=" bill" id="bill">
                     <h4 class="font-weight-bolder ps-2">Bill</h4>
                     <div class="info">
-                        <h6 class="billTitle"> ticket <span id="RandTicket">{{$random}}</span></h6>
+                        <h6 class="billTitle"> ticket <span id="RandTicket">{{$rev->custom_id}}</span></h6>
                         <ul>
                             <li><label> Cashier Name : </label> <strong>{{auth()->user()->name}}</strong></li>
-                            <li><label> Visit Date : </label> <strong id="dateOfTicket"> </strong></li>
-                            <li><label> Reservation Duration : </label> <strong id="hourOfTicket" style="text-transform: initial !important;"></strong></li>
-                            <li><label> Shift : </label> <strong id="shiftOfTicket"> </strong></li>
+                            <li><label> Visit Date : </label> <strong id="dateOfTicket">{{$rev->day}}</strong></li>
+                            <li><label> Reservation Duration : </label> <strong id="hourOfTicket"
+                                                                                style="text-transform: none !important;">{{$rev->hours_count}} h</strong>
+                            </li>
+                            <li><label> Shift : </label> <strong id="shiftOfTicket"
+                                                                 style="text-transform: none !important;"> </strong>
+                            </li>
                         </ul>
                     </div>
                     <div class="info firstInfo">
@@ -450,13 +477,13 @@
 
                     </div>
                     <div class="info thirdInfo">
-{{--                        <h6 class="billTitle"> Totals </h6>--}}
-{{--                        <ul>--}}
-{{--                            <li><label> total price : </label> <strong id="totalInfoPrice">  </strong></li>--}}
-{{--                            <li><label> Discount : </label> <strong id="totalInfoDiscount"></strong></li>--}}
-{{--                            <li><label> Revenue : </label> <strong id="totalInfoRevenue"></strong></li>--}}
-{{--                            <li><label> paid : </label> <strong> 1600 EGP </strong></li>--}}
-{{--                            <li><label> Change : </label> <strong> 150 EGP </strong></li>--}}
+                        {{--                        <h6 class="billTitle"> Totals </h6>--}}
+                        {{--                        <ul>--}}
+                        {{--                            <li><label> total price : </label> <strong id="totalInfoPrice">  </strong></li>--}}
+                        {{--                            <li><label> Discount : </label> <strong id="totalInfoDiscount"></strong></li>--}}
+                        {{--                            <li><label> Revenue : </label> <strong id="totalInfoRevenue"></strong></li>--}}
+                        {{--                            <li><label> paid : </label> <strong> 1600 EGP </strong></li>--}}
+                        {{--                            <li><label> Change : </label> <strong> 150 EGP </strong></li>--}}
                         </ul>
                     </div>
                     @php
@@ -465,17 +492,16 @@
                     <div class="myBarcode">
                         {!! $generator->getBarcode($random, $generator::TYPE_CODE_128) !!}
                     </div>
-{{--                    <div class="printBtn">--}}
-{{--                        <button type="button" class="btn btn-outline-info fw-normal " id="printBtn"><i--}}
-{{--                                class="fas fa-sign-out me-2"></i>--}}
-{{--                            Print & Exit--}}
-{{--                        </button>--}}
-{{--                        <button type="submit" class="btn btn-info "><i class="fal fa-print me-2"></i> Access</button>--}}
+                    {{--                    <div class="printBtn">--}}
+                    {{--                        <button type="button" class="btn btn-outline-info fw-normal " id="printBtn"><i--}}
+                    {{--                                class="fas fa-sign-out me-2"></i>--}}
+                    {{--                            Print & Exit--}}
+                    {{--                        </button>--}}
+                    {{--                        <button type="submit" class="btn btn-info "><i class="fal fa-print me-2"></i> Access</button>--}}
 
-{{--                    </div>--}}
+                    {{--                    </div>--}}
                 </div>
             </div>
-            @csrf
         </form>
     </div>
 @endsection
@@ -483,72 +509,155 @@
     <script type="text/javascript" src="{{asset('assets/sales')}}/js/plugins/multistep-form.js"></script>
     @include('sales.layouts.assets.adjustDataTable')
     <script>
-        $('form').on('submit', function(e) {
+        $('form').on('submit', function (e) {
             e.preventDefault();
-            var duration        = $('#duration').val(),
-                visit_date      = $('#date').val(),
-                shift_id        = $('#choices_times').val(),
-                shift_start     = $('#choices_times').find(':selected').attr('data-starts'),
-                shift_end       = $('#choices_times').find(':selected').attr('data-ends'),
-                visitor_type    = $("span[id='visitor_type[]']").map(function(){return $(this).attr('data-type_id');}).get(),
-                visitor_price   = $("span[id='visitor_price[]']").map(function(){return $(this).attr('data-price');}).get(),
-                visitor_birthday= $("input[id='visitor_birthday[]']").map(function(){return $(this).val();}).get(),
-                visitor_name    = $("input[name='visitor_name[]']").map(function(){return $(this).val();}).get(),
-                gender          = $(".choose input:checked").map(function(){return $(this).val();}).get(),
-                product_id      =  $("input[name='product_id[]']").map(function(){return $(this).val();}).get(),
-                product_qty     =  $("input[name='proQtyInput[]']").map(function(){return $(this).val();}).get(),
-                product_price   =  $("input[name='proTotalInput[]']").map(function(){return $(this).val();}).get(),
-                total_price     =  $("#totalPrice").text(),
-                discount_value  =  $("#discount").text().replace('%',''),
-                RandTicket      =  $("#RandTicket").text(),
-                revenue         =  $("#revenue").text(),
-                amount          =  parseFloat($('#paid').text())-parseFloat($('#change').text()),
-                discount_type   = $(".discType input:checked").map(function(){return $(this).val();}).get(),
-                rem             = parseFloat($("#revenue").text())-amount;
+            var duration = $('#duration').val(),
+                visit_date = $('#date').val(),
+                shift_id = $('#choices-shift').val(),
+                visitor_type = $("span[id='visitor_type[]']").map(function () {
+                    return $(this).attr('data-type_id');
+                }).get(),
+                visitor_price = $("span[id='visitor_price[]']").map(function () {
+                    return $(this).attr('data-price');
+                }).get(),
+                visitor_birthday = $("input[id='visitor_birthday[]']").map(function () {
+                    return $(this).val();
+                }).get(),
+                visitor_name = $("input[name='visitor_name[]']").map(function () {
+                    return $(this).val();
+                }).get(),
+                gender = $(".choose input:checked").map(function () {
+                    return $(this).val();
+                }).get(),
+                product_id = $("input[name='product_id[]']").map(function () {
+                    return $(this).val();
+                }).get(),
+                product_qty = $("input[name='proQtyInput[]']").map(function () {
+                    return $(this).val();
+                }).get(),
+                product_price = $("input[name='proTotalInput[]']").map(function () {
+                    return $(this).val();
+                }).get(),
+                total_price = $("#totalPrice").text(),
+                discount_value = $("#discount").text().replace('%', ''),
+                RandTicket = $("#RandTicket").text(),
+                revenue = $("#revenue").text(),
+                amount = parseFloat($('#paid').text()) - parseFloat($('#change').text()),
+                discount_type = $(".discType input:checked").map(function () {
+                    return $(this).val();
+                }).get(),
+                rem = parseFloat($("#revenue").text()) - amount;
 
             var data = {
-                "duration":duration,
-                "visit_date":visit_date,
-                "shift_id":shift_id,
-                "shift_start":shift_start,
-                "shift_end":shift_end,
-                "visitor_type":visitor_type,
-                "visitor_price":visitor_price,
-                "visitor_birthday":visitor_birthday,
-                "visitor_name":visitor_name,
-                "gender":gender,
-                "product_id":product_id,
-                "product_qty":product_qty,
-                "product_price":product_price,
-                "client_id":"{{$id}}",
-                "total_price":total_price,
-                "discount_type":discount_type,
-                "discount_value":discount_value,
-                "rand_ticket":RandTicket,
-                "amount":amount,
-                "revenue":revenue,
-                "rem":(Math.round(rem * 100) / 100).toFixed(2),
+                "duration": duration,
+                "visit_date": visit_date,
+                'shift_id':$('#choices_times').val(),
+                'shift_start':$('#choices_times').find(':selected').attr('data-starts'),
+                'shift_end':$('#choices_times').find(':selected').attr('data-ends'),
+                'note':$('#note').val(),
+                "visitor_type": visitor_type,
+                "visitor_price": visitor_price,
+                "visitor_birthday": visitor_birthday,
+                "visitor_name": visitor_name,
+                "gender": gender,
+                "product_id": product_id,
+                "product_qty": product_qty,
+                "product_price": product_price,
+                "total_price": total_price,
+                "discount_type": discount_type,
+                "discount_value": discount_value,
+                "rand_ticket": RandTicket,
+                "amount": amount,
+                "revenue": revenue,
+                "rev_id": "{{$rev->id}}",
+                "rem": (Math.round(rem * 100) / 100).toFixed(2),
             }
-            console.log(data)
             $.ajax({
                 type: "POST",
                 data: data,
-                url: '{{route('storeModels')}}',
-                beforeSend: function(){
+                url: '{{route('storeRevTicket')}}',
+                beforeSend: function () {
                     $('#confirmBtn').html('<span class="spinner-border spinner-border-sm mr-2" ' +
                         ' ></span> <span style="margin-left: 4px;">working</span>').attr('disabled', true);
                 },
-                success: function(data){
-                    toastr.success("Ticket is saved successfully");
+                success: function (data) {
+                    toastr.success("Reservation is saved successfully");
                     $('#confirmBtn').html('Confirm').attr('disabled', false);
-                    window.setTimeout(function() {
-                        window.location.href="{{route('client.create')}}";
+                    window.setTimeout(function () {
+                        window.location.href = "{{route('capacity.index')}}?month=" + data.day;
                     }, 300);
                 },
             });
 
             // Prevent form submission
-        } );
-
+        });
+    </script>
+    {{--================= custom js ==================--}}
+    <script>
+        $( document ).ready(function() {
+            checkTime()
+        });
+        // Check Capacity And Get Price Of Visitor Models
+        $(document).on('click', '#firstNextEdit', function () {
+            var myDate = $('#date').val(),
+                myDuration = $('#duration').val(),
+                shift = $('#choices_times').val();
+            if (myDuration.length > 0) {
+                $.ajax({
+                    type: 'GET',
+                    url: "{{route('calcCapacity')}}",
+                    data: {
+                        'visit_date': myDate,
+                        'hours_count': myDuration,
+                        'shift_id': shift,
+                    },
+                    success: function (data) {
+                        if (data.status === true) {
+                            $('#dateOfTicket').text(myDate);
+                            $('#hourOfTicket').text(myDuration + " h");
+                            $('#shiftOfTicket').text($('#choices_times option:selected').text());
+                            for (var i = 0; i < data.shift_prices.length; i++) {
+                                $('#price' + data.shift_prices[i].visitor_type_id).val(data.shift_prices[i].price)
+                            }
+                            localStorage.setItem('available', data.available)
+                            toastr.success(data.available + " places are still available");
+                        } else {
+                            toastr.error(data.day + " is fully booked");
+                            $("button[title='visitors']").removeClass('js-active');
+                            $("#visitorsTab").removeClass('js-active');
+                            $("button[title='ticket']").addClass('js-active');
+                            $("#ticketTab").addClass('js-active');
+                        }
+                    },
+                    error: function (data) {
+                        if (data.status === 500) {
+                            toastr.error('Sorry there is an error');
+                        } else if (data.status === 422) {
+                            $("button[title='ticket']").addClass('js-active');
+                            $("#ticketTab").addClass('js-active');
+                            $("button[title='visitors']").removeClass('js-active');
+                            $("#visitorsTab").removeClass('js-active');
+                            var errors = $.parseJSON(data.responseText);
+                            $.each(errors, function (key, value) {
+                                if ($.isPlainObject(value)) {
+                                    $.each(value, function (key, value) {
+                                        toastr.error(value, key);
+                                    });
+                                }
+                            });
+                        }
+                    },//end error method
+                });
+            } else {
+                $("button[title='visitors']").removeClass('js-active');
+                $("#visitorsTab").removeClass('js-active');
+                $("button[title='ticket']").addClass('js-active');
+                $("#ticketTab").addClass('js-active');
+                if (myDuration.length === 0)
+                    $('#durationError').text('Reservation Duration Is Required')
+            }
+        });
     </script>
 @endsection
+
+

@@ -24,6 +24,8 @@ class UpdateSetting extends FormRequest
     public function rules()
     {
         return [
+            'family_tax'  => 'required',
+            'rev_tax'     => 'required',
             'address'     => 'required',
             'title'       => 'required',
             'terms'       => 'required',
@@ -37,6 +39,8 @@ class UpdateSetting extends FormRequest
     }
     public function messages(){
         return[
+            'family_tax.required'  => 'Enter The Tax Of The Family Tickets',
+            'rev_tax.required'     => 'Enter The Tax Of The Reservations',
             'address.required'     => 'Enter The Address Of The Park',
             'logo.nullable'        => 'The Logo Is Required',
             'title.required'       => 'The Title Is Required',

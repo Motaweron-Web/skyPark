@@ -15,6 +15,7 @@ use App\Models\TicketRevModel;
 use App\Models\TicketRevProducts;
 use App\Models\VisitorTypes;
 use Carbon\Carbon;
+use Carbon\Traits\Date;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
@@ -43,27 +44,29 @@ class ReservationController extends Controller
         if ($request->has('choices_type') && $request->choices_type != 'all')
             $reservation->where('event_id',$request->choices_type);
 
-        if ($request->has('choices_shift'))
+        if ($request->has('choices_shift') && $request->choices_shift != 'all')
             $reservation->where('shift_id',$request->choices_shift);
 
         $reservation = $reservation->latest()->get();
         $html = [];
         foreach ($reservation as $rev) {
             $smallArray =[];
-            $smallArray[] = $rev->ticket_num;
+            $smallArray[] = '#'.$rev->ticket_num;
             $smallArray[] = $rev->day;
             $smallArray[] = $rev->event->title;
             $smallArray[] = $rev->client_name;
             $smallArray[] = $rev->phone;
-            $smallArray[] = date('h a', strtotime($rev->shift->from)).":".date('h a', strtotime($rev->shift->to));
+            $smallArray[] = Carbon::parse($rev->models[0]->shift_start)->format('h:s a');
+            $smallArray[] = Carbon::parse($rev->models[0]->shift_end)->format('h:s a');
+//            $smallArray[] = date('h a', strtotime($rev->shift->from)).":".date('h a', strtotime($rev->shift->to));
             $smallArray[] = $rev->models->count();
             $accessUrl = route('groupAccess.index').'?search='.$rev->ticket_num;
             $title = $rev->client_name." - ".$rev->ticket_num;
             $smallArray[] = '<span class="controlIcons">
-                  <span class="icon editSpan" data-bs-toggle="tooltip" title="edit" data-id="'.$rev->id.'"> <i class="far fa-edit me-2"></i> Edit </span>
-                  <span class="icon deleteSpan" data-bs-toggle="tooltip" title=" delete "  data-title="'.$title.'" data-id="'.$rev->id.'"> <i class="far fa-trash-alt me-2"></i> Delete </span>
-                  <span class="icon showSpan" data-bs-toggle="tooltip" title=" details " data-id="'.$rev->id.'"> <i class="fas fa-eye me-2"></i></i> Show </span>
-                  <span class="icon" data-bs-toggle="tooltip" title="Access"> <i class="fal fa-check me-2"></i><a href="'.$accessUrl.'">Access</a></span>
+                  <span class="icon editSpan" data-bs-toggle="tooltip" title="edit" data-id="'.$rev->id.'"> <i class="far fa-edit"></i>  </span>
+                  <span class="icon deleteSpan" data-bs-toggle="tooltip" title=" delete "  data-title="'.$title.'" data-id="'.$rev->id.'"> <i class="far fa-trash-alt"></i>  </span>
+                  <span class="icon showSpan" data-bs-toggle="tooltip" title=" details " data-id="'.$rev->id.'"> <i class="fas fa-eye"></i></i>  </span>
+                  <span class="icon" data-bs-toggle="tooltip" title="Access"> <a href="'.$accessUrl.'"><i class="fal fa-check "></i></a></span>
                 </span>';
             $html[] = $smallArray;
         }
@@ -77,8 +80,9 @@ class ReservationController extends Controller
     }
     public function detailsReservation($id){
         $rev    = Reservations::where('id',$id)->first();
+        $products = TicketRevProducts::where('rev_id',$rev->id)->get();
         $models = $rev->models->groupBy('visitor_type_id');
-        return view('sales.layouts.reservations.details',compact('rev','models'));
+        return view('sales.layouts.reservations.details',compact('rev','models','products'));
     }
 
     public function update_reservation(request $request){
@@ -140,7 +144,6 @@ class ReservationController extends Controller
      */
     public function store(Request $request)
     {
-
         $date = $request->validate([
             'day' => 'required|date_format:Y-m-d|after:yesterday',
             'client_name' => 'required|string|max:500',
@@ -242,7 +245,8 @@ class ReservationController extends Controller
             ->groupby('visitor_type_id')
             ->with('type')
             ->get();
-        return view('layouts.print.rev',compact('ticket','models'));
+        $date = Carbon::now();
+        return view('layouts.print.rev',compact('ticket','models','date'));
     }
 
     /**
@@ -271,16 +275,18 @@ class ReservationController extends Controller
         return view('sales.reservation-info',compact('id','first_shift_start','random','categories','types','reservation','customId','shifts','visitorTypes'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+
+
+    public function update($id)
     {
-        //
+        $rev    = Reservations::findOrFail($id);
+        $events = Event::all();
+        $first_shift_start = Carbon::parse(Shifts::orderBy('from', 'ASC')->first()->from)->format('H');
+        $types  = VisitorTypes::all();
+        $categories = Category::all();
+        $random = substr(Carbon::now()->format("l"),0,3).rand(0, 999).Carbon::now()->format('is');
+        $models = TicketRevModel::where('rev_id',$id)->get();
+        return view('sales.updateReservation',compact('rev','events','models','first_shift_start','types','random','categories'));
     }
 
     /**

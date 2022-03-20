@@ -46,6 +46,7 @@
                         <li><label> Reservation Duration : </label> <strong> {{$ticket->hours_count}} h </strong></li>
                         <li><label> Shift : </label> <strong> {{date('hA',strtotime($ticket->shift->from))}}
                                 : {{date('hA',strtotime($ticket->shift->to))}} </strong></li>
+                        <li><label> Print Time : </label> <strong> {{$date}} </strong></li>
                     </ul>
                 </div>
 

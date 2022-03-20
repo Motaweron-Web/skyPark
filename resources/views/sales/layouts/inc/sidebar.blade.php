@@ -40,12 +40,14 @@
                                 <span class="sidenav-normal"> Add Client </span>
                             </a>
                         </li>
-                        {{--                        <li class="nav-item">--}}
-                        {{--                            <a class="nav-link " href="{{route('ticket.create')}}">--}}
-                        {{--                                <span class="sidenav-mini-icon"> T </span>--}}
-                        {{--                                <span class="sidenav-normal"> Ticket </span>--}}
-                        {{--                            </a>--}}
-                        {{--                        </li>--}}
+
+                        <li class="nav-item tickets">
+                            <a class="nav-link tickets"  href="{{route('ticket.search')}}">
+                                <span class="sidenav-mini-icon"> T </span>
+                                <span class="sidenav-normal"> Edit Tickets </span>
+                            </a>
+                        </li>
+
                         <li class="nav-item familyAccess">
                             <a class="nav-link familyAccess" href="{{route('familyAccess.index')}}">
                                 <span class="sidenav-mini-icon"> F </span>

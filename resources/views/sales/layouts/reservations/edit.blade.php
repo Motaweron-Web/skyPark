@@ -1,31 +1,43 @@
 <form class="py-3" id="EditForm" action="{{route('update_reservation')}}" method="POST">
     @method('POST')
     @csrf
-    <div class="form-group">
-        <input type="hidden" name="id" value="{{$rev->id}}">
-        <label for="Customer Name " class="col-form-label">Customer Name </label>
-        <input type="text" class="form-control" id="Customer Name" value="{{$rev->client_name}}" name="client_name">
-    </div>
-    <div class="form-group">
-        <label for="email " class="col-form-label">Email </label>
-        <input type="text" class="form-control" id="email" value="{{$rev->email}}">
-    </div>
-    <div class="form-group ">
-        <label for="event" class="col-form-label">Event</label>
-        <select class="form-control" data-placeholder="Reservation Type" name="event_id">
-            @foreach($types as $type)
-                <option
-                    value='{{ $type->id }}' {{ ($rev->type_id == $type->id) ? 'selected' : '' }}>{{ $type->title }}</option>
-            @endforeach
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="phone" class="col-form-label">Contact Number </label>
-        <input type="text" class="form-control" id="phone" value="{{$rev->phone}}">
-    </div>
-    <div class="form-group">
-        <label for="day" class="col-form-label">Visit Date</label>
-        <input type="date" class="form-control" id="day" name="day" value="{{Carbon\Carbon::parse($rev->day)->format('Y-m-d')}}">
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <input type="hidden" name="id" value="{{$rev->id}}">
+                <label for="Customer Name " class="col-form-label">Customer Name </label>
+                <input type="text" class="form-control" id="Customer Name" value="{{$rev->client_name}}" name="client_name">
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="email " class="col-form-label">Email </label>
+                <input type="text" class="form-control" id="email" value="{{$rev->email}}">
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group ">
+                <label for="event" class="col-form-label">Event</label>
+                <select class="form-control" data-placeholder="Reservation Type" name="event_id">
+                    @foreach($types as $type)
+                        <option
+                            value='{{ $type->id }}' {{ ($rev->type_id == $type->id) ? 'selected' : '' }}>{{ $type->title }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="phone" class="col-form-label">Contact Number </label>
+                <input type="text" class="form-control" id="phone" value="{{$rev->phone}}">
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="day" class="col-form-label">Visit Date</label>
+                <input type="date" class="form-control" id="day" name="day" value="{{Carbon\Carbon::parse($rev->day)->format('Y-m-d')}}">
+            </div>
+        </div>
     </div>
     <button type="submit" class="btn bg-gradient-primary m-3 mb-0" id="confirmBtn"> Confirm </button>
 </form>

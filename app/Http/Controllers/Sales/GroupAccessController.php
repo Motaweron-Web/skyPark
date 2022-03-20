@@ -24,6 +24,8 @@ class GroupAccessController extends Controller
             $reservation = Reservations::where('status','append')
                 ->whereDate('day', date('Y-m-d'))
                 ->where('custom_id', $request->search)
+                ->orwhere('ticket_num', $request->search)
+                ->orwhere('client_name', 'like', '%' . $request->search . '%')
                 ->orWhere('phone', $request->search)->with('append_models.type');
 
 
@@ -64,7 +66,6 @@ class GroupAccessController extends Controller
 
                     $returnArray[] = $smallArray;
                 }
-
                 return response()->json(['status' => 200, 'backArray' => $returnArray]);
 
             }
@@ -128,7 +129,7 @@ class GroupAccessController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->validate([
-            'bracelet_number'=>['required',Rule::exists('bracelets','title')->where('status',true)],
+            'bracelet_number'=>['required',Rule::exists('bracelets','title')->where('status','1')],
             'id'=>['required',Rule::exists('ticket_rev_models','id')->where('status','append')],
             'birthday'=>'nullable',
             'name'=>'nullable|max:500',
@@ -149,7 +150,7 @@ class GroupAccessController extends Controller
             toastr()->info('not found');
             return response(1,500);
         }
-        $braceletData['status'] = false;
+        $braceletData['status'] = '0';
 
         Bracelets::where('title',$request->bracelet_number)->update($braceletData);
 
@@ -175,10 +176,10 @@ class GroupAccessController extends Controller
         $firstBracelet = $request->firstBracelet;
 
         $findFirst = Bracelets::where('title', $firstBracelet)
-            ->where('status', true)->firstOrFail();
+            ->where('status', '1')->firstOrFail();
 
 
-        $getFreeBracelets = Bracelets::where('status', true)->get();
+        $getFreeBracelets = Bracelets::where('status', '1')->get();
 
         $bracelets = array();
         $characters = array();

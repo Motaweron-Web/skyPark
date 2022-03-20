@@ -11,11 +11,16 @@ use Illuminate\Support\Facades\Route;
 //    Route::get('ticket-{id}', 'TicketController@print')->name('ticket.print');
     Route::get('calcCapacity', 'TicketController@calcCapacity')->name('calcCapacity');
     Route::get('getShifts', 'TicketController@getShifts')->name('getShifts');
+    Route::get('tickets', 'TicketController@search')->name('ticket.search');
+    Route::get('searchForTickets', 'TicketController@searchForTicket')->name('searchForTickets');
+    Route::get('detailsTicket/{id}', 'TicketController@details')->name('detailsTicket');
     Route::POST('storeModels', 'TicketController@storeModels')->name('storeModels');
+    Route::POST('delete_ticket', 'TicketController@delete_ticket')->name('delete_ticket');
     Route::POST('storeRevTicket', 'ReservationController@storeRevTicket')->name('storeRevTicket');
 
     // Reservation
     Route::get('searchForReservations', 'ReservationController@searchForReservations')->name('searchForReservations');
+    Route::get('update_reservation/{id}', 'ReservationController@update')->name('updateReservation');
     Route::POST('delete_reservation', 'ReservationController@delete_reservation')->name('delete_reservation');
     Route::POST('update_reservation', 'ReservationController@update_reservation')->name('update_reservation');
     Route::get('editReservation/{id}', 'ReservationController@editReservation')->name('editReservation');

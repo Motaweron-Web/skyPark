@@ -18,6 +18,11 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin','namespace'=>'Admin']
     Route::resource('category','CategoryController');
     Route::POST('category.delete','CategoryController@delete')->name('category.delete');
 
+    #### Reservation ####
+    Route::resource('coupons','CouponController');
+    Route::POST('coupon.delete','CouponController@delete')->name('coupon.delete');
+
+
     #### Products ####
     Route::resource('product','ProductController');
     Route::POST('product.delete','ProductController@delete')->name('product.delete');

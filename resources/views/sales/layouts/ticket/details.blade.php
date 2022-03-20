@@ -42,9 +42,9 @@
         <th>Reminder Amount</th>
     </tr>
     <tr>
-        <td>{{$rev->grand_total}} EGP</td>
-        <td>{{$rev->paid_amount}} EGP</td>
-        <td>{{$rev->rem_amount}} EGP</td>
+        <td>{{$ticket->grand_total}} EGP</td>
+        <td>{{$ticket->paid_amount}} EGP</td>
+        <td>{{$ticket->rem_amount}} EGP</td>
     </tr>
 </table>
 <div class="modal-footer">

@@ -11,4 +11,8 @@ class ShiftDetails extends Model
     public function visitors(){
         return $this->belongsTo(VisitorTypes::class,'visitor_type_id');
     }
+
+    public function shifts(){
+        return $this->belongsTo(Shifts::class,'shift_id');
+    }
 }

@@ -2,6 +2,7 @@
     var table;
     table = $('.firstTable').DataTable({
         responsive: true,
+        paging:false
     });
     var amountCash = $("#amount"),
         total = $('#totalPrice');
@@ -60,12 +61,16 @@
                     'duration': myDuration,
                     'time': time,
                     'visit_date': myDate,
+                    'id': 81,
                 },
                 success: function (data) {
                     if (data.status === 200) {
                         $('#choices_times').empty()
                         if (data.times.length !== 0) {
                             $.each(data.times, function (key, value) {
+                                if(data.starts[key] == data.selected_start && data.ends[key] == data.selected_end)
+                                    $("#choices_times").append(`<option selected data-starts = ${data.starts[key]} data-ends = ${data.ends[key]}  value= ${data.shift_id[key]}> ${value} </option>`);
+                                else
                                 $("#choices_times").append(`<option data-starts = ${data.starts[key]} data-ends = ${data.ends[key]}  value= ${data.shift_id[key]}> ${value} </option>`);
                             });
                         } else
@@ -99,7 +104,7 @@
                     if (data.status === true) {
                         $('#dateOfTicket').text(myDate);
                         $('#hourOfTicket').text(myDuration + " h");
-                        $('#shiftOfTicket').text($('#choices-shift').text());
+                        $('#shiftOfTicket').text($('#choices_times option:selected').text());
                         for (var i = 0; i < data.shift_prices.length; i++) {
                             $('#price' + data.shift_prices[i].visitor_type_id).val(data.shift_prices[i].price)
                         }
@@ -180,8 +185,8 @@
     }
 
     function getCount(className, type_id) {
-        $('.visitorType' + type_id).find('.count').text(table.rows('[class*=' + className + ']').count());
-        $('.visitorType' + type_id).find('.inputCount').val(table.rows('[class*=' + className + ']').count());
+        $('.visitorType' + type_id).find('.count').text(table.rows('[class$=' + className + ']').count());
+        $('.visitorType' + type_id).find('.inputCount').val(table.rows('[class$=' + className + ']').count());
     }
 
     $(document).on('click', '.visitorTypeDiv', function () {
@@ -375,19 +380,40 @@
                 }
             });
         }
-        total.text(totalBeforeDiscount);
+        if (window.location.href.indexOf("ticket") > -1) {
+            totalBeforeDiscount += {{$setting->family_tax}}*totalBeforeDiscount/100;
+            total.text(totalBeforeDiscount);
+        }else if(window.location.href.indexOf("reservations") > -1){
+            totalBeforeDiscount += {{$setting->rev_tax}}*totalBeforeDiscount/100;
+            total.text(totalBeforeDiscount);
+        }
         $('#totalInfoPrice').text(totalBeforeDiscount + " EGP")
         $('#totalInfoDiscount').text(0 + " EGP")
         $('#totalInfoRevenue').text(totalBeforeDiscount + " EGP")
         $('#revenue').text(totalBeforeDiscount)
         $('#calcDiscount').val('')
-        $('.thirdInfo').append(`
+        if (window.location.href.indexOf("ticket") > -1) {
+            $('.thirdInfo').append(`
                         <h6 class="billTitle"> Totals </h6>
                         <ul>
-                            <li><label> total price : </label> <strong id="totalInfoPrice">${totalBeforeDiscount} EGP</strong></li>
+                            <li><label> total before tax : </label> <strong id="beforeTax">${(totalBeforeDiscount - {{$setting->family_tax}}*totalBeforeDiscount/100).toFixed(2)} EGP</strong></li>
+                            <li><label> Tax : </label> <strong id="family_tax">` + {{$setting->family_tax}} + `%</strong></li>
+                            <li><label> total after tax : </label> <strong id="totalInfoPrice">${totalBeforeDiscount} EGP</strong></li>
                             <li><label> Discount : </label> <strong id="totalInfoDiscount">0 EGP</strong></li>
                             <li><label> Revenue : </label> <strong id="totalInfoRevenue">${totalBeforeDiscount} EGP</strong></li>
             `)
+        }
+        else if(window.location.href.indexOf("reservations") > -1){
+            $('.thirdInfo').append(`
+                        <h6 class="billTitle"> Totals </h6>
+                        <ul>
+                            <li><label> total before tax : </label> <strong id="beforeTax">${(totalBeforeDiscount - {{$setting->rev_tax}}*totalBeforeDiscount/100).toFixed(2)} EGP</strong></li>
+                            <li><label> Tax : </label> <strong id="rev_tax">` + {{$setting->rev_tax}} + `%</strong></li>
+                            <li><label> total after tax : </label> <strong id="totalInfoPrice">${totalBeforeDiscount} EGP</strong></li>
+                            <li><label> Discount : </label> <strong id="totalInfoDiscount">0 EGP</strong></li>
+                            <li><label> Revenue : </label> <strong id="totalInfoRevenue">${totalBeforeDiscount} EGP</strong></li>
+            `)
+        }
     });
     var totalPrice = parseInt(total.text());
     Percent.prop("checked", true);
@@ -464,19 +490,7 @@
             'X-CSRF-TOKEN': '{{csrf_token()}}'
         }
     });
-    $(document).on('click', '#printBtn', function () {
-        var mywindow = window.open('', 'PRINT', 'height=400,width=600');
-        mywindow.document.write('<html><head><title>' + document.title + '</title>');
-        mywindow.document.write('</head><body >');
-        mywindow.document.write('<h1>' + document.title + '</h1>');
-        mywindow.document.write(document.getElementById('bill').innerHTML);
-        mywindow.document.write('</body></html>');
-        mywindow.document.close(); // necessary for IE >= 10
-        mywindow.focus(); // necessary for IE >= 10*/
-        mywindow.print();
-        mywindow.close();
-        return true;
-    });
+
 
     function DeleteRows() {
         $('.firstTable').DataTable().clear().draw();

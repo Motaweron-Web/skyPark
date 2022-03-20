@@ -88,7 +88,7 @@
 
         firstBracelet = $('.braceletNumbers').first().val();
 
-        $('.spinner').show()
+        // $('.spinner').show()
 
 
         var method = {
@@ -126,7 +126,7 @@
         var id = $(this).data('id')
         var braceletNumber = $('#braceletNumber' + id).val()
 
-        $('.spinner').show()
+        // $('.spinner').show()
 
         if (!braceletNumber.length) {
             toastr.warning('you should fill bracelet number')

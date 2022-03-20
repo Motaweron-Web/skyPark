@@ -51,7 +51,7 @@ class VisitorsController extends Controller
     {
         $inputs = $request->validate([
             'photo'      => 'required|mimes:jpeg,jpg,png,gif',
-            'title'      => 'nullable|max:255',
+            'title'      => 'required|max:255',
         ]);
         if($request->has('photo')){
             $file_name = $this->saveImage($request->photo,'assets/uploads/visitors');
@@ -83,27 +83,39 @@ class VisitorsController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function edit($id)
     {
-        //
+        $visitor = VisitorTypes::findOrFail($id);
+        $details = ShiftDetails::where('visitor_type_id',$id)->get();
+        return view('Admin/visitors.parts.edit',compact('visitor','details'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+
+
+    public function update(Request $request)
     {
-        //
+        $inputs = $request->validate([
+            'id'         => 'required',
+            'photo'      => 'nullable|mimes:jpeg,jpg,png,gif',
+            'title'      => 'required|max:255',
+        ]);
+        if($request->has('photo') && $request->photo != null){
+            $file_name = $this->saveImage($request->photo,'assets/uploads/visitors');
+            $inputs['photo'] = 'assets/uploads/visitors/'.$file_name;
+        }
+        $visitor = VisitorTypes::findOrFail($request->id);
+        if($visitor->update($inputs)){
+            for($i = 0 ; $i < count($request->details_id); $i++){
+                $shift_details = ShiftDetails::findOrFail($request->details_id[$i]);
+                $shift_details->price = $request->price[$i];
+                $shift_details->save();
+            }
+            return response()->json(['status'=>200]);
+        }
+        else
+            return response()->json(['status'=>405]);
     }
 
     /**

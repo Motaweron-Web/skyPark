@@ -69,6 +69,13 @@
         </li>
 
         <li class="slide">
+            <a class="side-menu__item" href="{{route('coupons.index')}}">
+                <i class="fe fe-paperclip side-menu__icon"></i>
+                <span class="side-menu__label">Coupons</span>
+            </a>
+        </li>
+
+        <li class="slide">
             <a class="side-menu__item" href="{{route('users.index')}}">
                 <i class="fe fe-user-plus side-menu__icon"></i>
                 <span class="side-menu__label">Employees</span>

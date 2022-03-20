@@ -1,6 +1,6 @@
 @extends('sales.layouts.master')
 @section('page_title')
-    {{$setting->title}} | Exit
+    Sky Park | Exit
 @endsection
 @section('css')
     @include('layouts.loader.formLoader.loaderCss')
@@ -9,21 +9,12 @@
     <h2 class="MainTiltle mb-5 ms-4"> Exit </h2>
     <div class="card py-4 w-100 w-sm-80 m-auto ">
         <form method="get" action="{{route('exit.index')}}" class="card-body ">
-<<<<<<< HEAD
-          <label class="form-label fs-4"> <i class="fas fa-ticket-alt me-2"></i>phone , bracelet number or Sale Number</label>
-          <div class="d-flex">
-            <input type="text" class="form-control" name="search" value="{{count($models)?$_GET['search']:''}}" id="searchValue" placeholder="Type here...">
-            <button type="submit" id="searchBtn" class="input-group-text ms-2 bg-gradient-primary px-4 text-body"><i
-                class="fas fa-search text-white"></i></button>
-          </div>
-=======
             <label class="form-label fs-4"> <i class="fas fa-ticket-alt me-2"></i>phone , bracelet number or ticket number</label>
             <div class="d-flex">
                 <input type="text" class="form-control" name="search" value="{{count($models)?$_GET['search']:''}}" id="searchValue" placeholder="Type here...">
                 <button type="submit" id="searchBtn" class="input-group-text ms-2 bg-gradient-primary px-4 text-body"><i
                         class="fas fa-search text-white"></i></button>
             </div>
->>>>>>> b85dc53b841b574093b448e031f57b3a539fe674
         </form>
     </div>
     @if(count($models))
@@ -87,44 +78,6 @@
                 </div>
             </div>
 
-<<<<<<< HEAD
-        <!-- table -->
-        <table class=" customDataTable table table-bordered nowrap">
-          <thead>
-            <tr>
-              <th>Group ID</th>
-              <th>Sale Number</th>
-              <th>Bracelet Number </th>
-              <th>Type</th>
-              <th>Name</th>
-              <th>age</th>
-              <th>start</th>
-              <th>end</th>
-              <th>TopUp</th>
-              <th>admin Name</th>
-              <th>contact number</th>
-              <th>actions</th>
-            </tr>
-          </thead>
-          <tbody>
-          @foreach ($models as $model)
-              @php
-                 $age = date_diff(date_create($model->birthday??date('Y-m-d')), date_create(date('Y-m-d')))
-              @endphp
-              <tr>
-                  <td>{{'#' . $ticket->id ?? ''}}</td>
-                  <td>{{'#' .$customId}}</td>
-                  <td>{{'#' .$model->bracelet_number ?? ''}}</td>
-                  <td>{{'#' .$model->type->title ?? ''}}</td>
-                  <td>{{$model->name ?? ''}}</td>
-                  <td>{{$age->format("%y") ?? ''}}</td>
-                  <td>{{date('hA',strtotime($model->start_at))}}</td>
-                  <td>{{date('hA',strtotime($model->end_at))}}</td>
-                  <td><i class="fas fa-alarm-plus me-1 fa-1x color1"></i> {{$model->top_up_hours}}</td>
-                  <td>{{$ticket->first()->client->name ?? $ticket->first()->client_name??''}}</td>
-                  <td>{{$ticket->first()->client->phone ?? $ticket->first()->phone??''}}</td>
-                  <td><span class="controlIcons" id="exitActions{{$model->id}}">{!! $returnArray[$model->id] !!}</span></td>
-=======
             <!-- table -->
             <table class=" customDataTable table table-bordered nowrap">
                 <thead>
@@ -155,13 +108,12 @@
                         <td>{{'#' .$model->type->title ?? ''}}</td>
                         <td>{{$model->name ?? ''}}</td>
                         <td>{{$age->format("%y") ?? ''}}</td>
-                        <td>{{date('hA',strtotime($model->start_at))}}</td>
-                        <td>{{date('hA',strtotime($model->end_at))}}</td>
+                        <td>{{date('hA',strtotime($model->shift_start))}}</td>
+                        <td>{{date('hA',strtotime($model->shift_end))}}</td>
                         <td><i class="fas fa-alarm-plus me-1 fa-1x color1"></i> {{$model->top_up_hours}}</td>
                         <td>{{$name}}</td>
                         <td>{{$phone}}</td>
                         <td><span class="controlIcons" id="exitActions{{$model->id}}">{!! $returnArray[$model->id] !!}</span></td>
->>>>>>> b85dc53b841b574093b448e031f57b3a539fe674
 
                     </tr>
                 @endforeach

@@ -61,10 +61,9 @@ class CreateReservationsTable extends Migration
             $table->double('rem_amount')->comment('المتبقى')->default(0)->nullable();
 
 
-
             $table->enum('status',['append','in','out'])->default('append')->nullable();
 
-
+            $table->enum('is_coupon',['0','1'])->comment('1 means it is coupon')->default(0)->nullable();
 
             $table->timestamps();
         });

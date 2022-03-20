@@ -7,16 +7,13 @@ use App\Models\Reservations;
 use App\Models\Shifts;
 use App\Models\Ticket;
 use App\Models\TicketRevModel;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\View\View;
 
 class ExitController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $returnArray = [];
@@ -28,6 +25,9 @@ class ExitController extends Controller
         $t1 = 0;
         $hours = 0;
         $type = '';
+        $customId = '';
+        $phone = '';
+        $name = '';
 
         if ($request->has('search')) {
 

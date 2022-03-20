@@ -26,6 +26,11 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label class="form-label">Family Tax</label>
+                                    <input type="number" class="form-control" name="family_tax" required
+                                           placeholder="%" value="{{$setting->family_tax}}" min="0" max="100">
+                                </div>
+                                <div class="form-group">
                                     <label class="form-label">Phone</label>
                                     <input type="text" class="form-control" name="phone"
                                            placeholder="Enter A Phone Number" value="{{$setting->phone}}">
@@ -53,6 +58,11 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Reservation Tax</label>
+                                    <input type="number" class="form-control" name="rev_tax" required
+                                           placeholder="%" value="{{$setting->rev_tax}}" min="0" max="100">
+                                </div>
                                 <div class="form-group">
                                     <label class="form-label">Park Capacity</label>
                                     <input type="number" min="0" class="form-control" name="capacity"

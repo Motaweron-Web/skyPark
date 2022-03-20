@@ -16,6 +16,7 @@ use App\Models\TicketRevModel;
 use App\Models\TicketRevProducts;
 use App\Models\VisitorTypes;
 use Carbon\Carbon;
+use Carbon\Traits\Date;
 use DateTime;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -241,7 +242,47 @@ class TicketController extends Controller
             ->groupby('visitor_type_id')
             ->with('type')
             ->get();
-        return view('layouts.print.ticket', compact('ticket', 'models'));
+        $date = Carbon::now();
+        return view('layouts.print.ticket', compact('ticket', 'models','date'));
+    }
+
+    public function search(){
+        $shifts = Shifts::all();
+        return view('sales/editTickets',compact('shifts'));
+    }
+
+    public function searchForTicket(request $request){
+        $tickets = Ticket::query();
+        if ($request->searchText != null)
+            $tickets->where('ticket_num',$request->searchText);
+
+
+        if ($request->has('choices_shift') && $request->choices_shift != 'all')
+            $tickets->where('shift_id',$request->choices_shift);
+
+        $tickets = $tickets->latest()->get();
+        $html = [];
+        foreach ($tickets as $ticket) {
+            $smallArray =[];
+            $smallArray[] = '#'.$ticket->ticket_num;
+            $smallArray[] = $ticket->visit_date;
+            $smallArray[] = $ticket->client->name;
+            $smallArray[] = $ticket->client->phone;
+            $smallArray[] = Carbon::parse($ticket->models[0]->shift_start)->format('h:s a');
+            $smallArray[] = Carbon::parse($ticket->models[0]->shift_end)->format('h:s a');
+//            $smallArray[] = date('h a', strtotime($ticket->shift->from)).":".date('h a', strtotime($ticket->shift->to));
+            $smallArray[] = $ticket->models->count();
+            $accessUrl = route('familyAccess.index').'?search='.$ticket->ticket_num;
+            $title = $ticket->client->name." - ".$ticket->ticket_num;
+            $smallArray[] = '<span class="controlIcons">
+                  <span class="icon editSpan" data-bs-toggle="tooltip" title="edit" data-id="'.$ticket->id.'"> <i class="far fa-edit"></i>  </span>
+                  <span class="icon deleteSpan" data-bs-toggle="tooltip" title=" delete "  data-title="'.$title.'" data-id="'.$ticket->id.'"> <i class="far fa-trash-alt"></i>  </span>
+                  <span class="icon showSpan" data-bs-toggle="tooltip" title=" details " data-id="'.$ticket->id.'"> <i class="fas fa-eye"></i></i>  </span>
+                  <span class="icon" data-bs-toggle="tooltip" title="Access"><a href="'.$accessUrl.'"><i class="fal fa-check "></i></a></span>
+                </span>';
+            $html[] = $smallArray;
+        }
+        return response()->json(['html' => $html,'status' => 200]);
     }
 
     /**
@@ -267,8 +308,35 @@ class TicketController extends Controller
         //
     }
 
+    public function details($id){
+        $ticket   = Ticket::findOrFail($id);
+        $products = TicketRevProducts::where('ticket_id',$ticket->id)->get();
+        $models  = $ticket->models->groupBy('visitor_type_id');
+        return view('sales.layouts.ticket.details',compact('ticket','models','products'));
+    }
+
+    public function delete_ticket(request $request){
+        $ticket = Ticket::where('id', $request->id)->first();
+        if($ticket->status == 'append') {
+            foreach ($ticket->models as $model){
+                $model->delete();
+            }
+            $ticket->delete();
+            return response(['message' => 'Data Deleted Successfully', 'status' => 200], 200);
+        }
+        else
+            return response(['message' => "You Can't Delete This Ticket !", 'status' => 405], 200);
+    }
+
     public function getShifts(request $request)
     {
+        $selected_start = null;
+        $selected_end   = null;
+        $rev = Reservations::where('id',$request->id)->first();
+        if($rev){
+            $selected_start = Carbon::parse($rev->models[0]->shift_start)->format('H');
+            $selected_end   = Carbon::parse($rev->models[0]->shift_end)->format('H');
+        }
         $visit_date = $request->visit_date;
         $times = [];
         $shift_id = [];
@@ -315,6 +383,6 @@ class TicketController extends Controller
                 $i++;
             }
         }
-        return response(['times' => $times,'starts'=> $starts,'ends'=>$ends,'shift_id' => $shift_id, 'status' => 200], 200);
+        return response(['times' => $times,'selected_start' => $selected_start,'selected_end' => $selected_end,'starts'=> $starts,'ends'=>$ends,'shift_id' => $shift_id, 'status' => 200], 200);
     }
 }

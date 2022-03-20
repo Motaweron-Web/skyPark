@@ -34,7 +34,7 @@
                 url: url,
                 beforeSend: function () {
                     window.history.pushState({path: url}, '', url);
-                    $('.spinner').show()
+                    // $('.spinner').show()
                     table.clear().draw();
                 },
                 complete: function (data) {
