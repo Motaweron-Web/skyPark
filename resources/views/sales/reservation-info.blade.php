@@ -523,6 +523,9 @@
                 }).get(),
                 rem = parseFloat($("#revenue").text()) - amount;
 
+            console.log(gender)
+            return true;
+
             var data = {
                 "duration": duration,
                 "visit_date": visit_date,

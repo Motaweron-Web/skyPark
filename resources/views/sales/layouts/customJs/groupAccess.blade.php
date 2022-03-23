@@ -83,99 +83,69 @@
 
     $(document).on('click', '#checkAll', function (e) {
         e.stopImmediatePropagation();
-
-        var array = [], firstBracelet, count = $('.braceletNumbers').length
-
-        firstBracelet = $('.braceletNumbers').first().val();
-
-        // $('.spinner').show()
-
-
-        var method = {
-            count: count,
-            firstBracelet: firstBracelet
+        var type = $(this).data('type')
+        if(type == 'getBracelet')
+        {
+            getBracelets()
+        }else if(type == 'accessAll'){
+            accessAll()
         }
-
-
-        $.post("{{route('capacity.getBracelets')}}", method, function (data) {
-            if (data.length > 0) {
-                $('.braceletNumbers').each(function (key, value) {
-                    $(this).val(data[key])
-                    var id = $(this).data('id')
-                    setTimeout(submitRow(id), 100);
-                })
-            } else {
-                toastr.warning('there is no bracelet free')
-            }
-
-        }).fail(function (data) {
-            if (data.status == 404) {
-                toastr.info('there is no bracelet found')
-            }
-        }).then(function (data) {
-            if (data.length > 0)
-                accessWhenLoad()
-        })
-        setTimeout(function () {
-            $('.spinner').hide()
-        }, 500)
-    })
-
-
-    $(document).on('click','.check',function () {
-        var id = $(this).data('id')
-        var braceletNumber = $('#braceletNumber' + id).val()
-
-        // $('.spinner').show()
-
-        if (!braceletNumber.length) {
-            toastr.warning('you should fill bracelet number')
-        }else {
-            submitRow(id)
-            // if (submitRow(id)){
-            // }
-        }
-
-
-        setTimeout(function () {
-            $('.spinner').hide()
-
-        }, 500)
-
 
     })
 
-    function submitRow(id) {
+    function accessAll()
+    {
 
+        var ids=[],birthday=[],gender=[],name=[],bracelet_number=[]
 
-        var braceletNumber = $('#braceletNumber' + id).val()
-        var birthDay = $('#birthDay' + id).val()
-        var name = $('#name' + id).val()
-        var gender = $('input[name=gender' + id + ']:checked').val();
-        if (!braceletNumber.length) {
-            return false;
-        }
+        $('.spinner').show()
+
+        $('.braceletNumbers').each(function() {
+            if(!$(this).prop('disabled'))
+            bracelet_number.push($(this).val());
+        });
+        $('.braceletNumbers').each(function() {
+            if(!$(this).prop('disabled'))
+                ids.push($(this).data('id'));
+        });
+        $('.birthDays').each(function() {
+            if(!$(this).prop('disabled'))
+            birthday.push($(this).val());
+        });
+        $('.names').each(function() {
+            if(!$(this).prop('disabled'))
+                name.push($(this).val());
+        });
+        $('.choose').each(function(){
+            if(!$(this).find('input').prop('disabled'))
+            {
+                if($(this).find('input:checked').length > 0)
+                {
+                    gender.push($(this).find('input:checked').val());
+                }
+                else
+                {
+                    gender.push('');
+                }
+            }
+        });
 
         var method = {
-            bracelet_number: braceletNumber,
-            birthday: birthDay,
+            bracelet_number: bracelet_number,
+            birthday: birthday,
             gender: gender,
             name: name,
-            id: id,
+            id: ids,
             _method: "PUT",
         }
-
         var url = "{{route('groupAccess.update',":id")}}"
 
-        url = url.replace(':id', id)
         $.post(url, method, function (data) {
-            if (data) {
-                setTimeout(function () {
-                    accessWhenLoad()
-
-                }, 400)
-            }
+            $('.spinner').hide()
+            accessWhenLoad()
         }).fail(function (data) {
+            $('.spinner').hide()
+
             if (data.status === 500) {
                 toastr.error('there is an error');
             } else if (data.status === 422) {
@@ -192,7 +162,154 @@
             } else {
                 toastr.error('there in an error');
             }
-            return true;
+        });
+
+    }
+
+    function getBracelets()
+    {
+
+        var  firstBracelet, count = $('.braceletNumbers').length
+
+        firstBracelet = $('.braceletNumbers').first().val();
+
+        if (firstBracelet.length <= 2)
+        {
+            toastr.warning('write right bracelet')
+            return true
+        }
+
+        $('.spinner').show()
+
+
+        var method = {
+            count: count,
+            firstBracelet: firstBracelet
+        }
+
+
+        $.post("{{route('capacity.getBracelets')}}", method, function (data) {
+            if (data.length > 0) {
+                $('.braceletNumbers').each(function (key, value) {
+                    $(this).val(data[key])
+                })
+                $('#checkAll').data('type','accessAll')
+                $('#checkAll').attr('data-type','accessAll')
+            } else {
+                toastr.warning('there is no bracelet free')
+            }
+
+        }).fail(function (data) {
+            if (data.status == 404) {
+                toastr.info('there is no bracelet found')
+            }
         })
+        setTimeout(function () {
+            $('.spinner').hide()
+        }, 500)
+    }
+
+    function checkIfBracketFree(title)
+    {
+        var _method = {
+            title:title
+        }
+         $.get("{{route('groupAccess.checkIfBraceletFree')}}?title="+title,function(data)
+         {
+            return ''
+         })
+    }
+
+
+    $(document).on('click','.check',function () {
+        var id = $(this).data('id')
+        var braceletNumber = $('#braceletNumber' + id).val()
+        var result;
+
+
+
+        if (!braceletNumber.length) {
+            toastr.warning('you should fill bracelet number')
+        }else {
+            $('.spinner').show()
+            $.get("{{route('groupAccess.checkIfBraceletFree')}}?title="+braceletNumber,function (data) {
+                if (data == 0){
+                    submitRow(id)
+                }else {
+                    toastr.warning('the bracelet is busy')
+                    $('.spinner').hide()
+                }
+            })
+        }
+
+
+
+    })
+
+    function submitRow(id) {
+
+
+        var braceletNumber = $('#braceletNumber' + id).val()
+        var birthDay = $('#birthDay' + id).val()
+        var name = $('#name' + id).val()
+        var gender = [];
+
+            if($('#mainGenderDiv'+id).find('input:checked').length > 0)
+            {
+                gender.push($('#mainGenderDiv'+id).find('input:checked').val());
+            }
+            else
+            {
+                gender.push('');
+            }
+
+        if (!braceletNumber.length) {
+            return false;
+        }
+
+        var method = {
+            bracelet_number: [braceletNumber],
+            birthday: [birthDay],
+            gender: gender,
+            name: [name],
+            id: [id],
+            _method: "PUT",
+        }
+
+        var url = "{{route('groupAccess.update',":id")}}"
+
+        $.post(url, method, function (data) {
+            if (data) {
+                $('#check'+id).addClass('checked');
+                $('#check'+id).removeClass('check');
+                $('#birthDay'+id).attr('disabled', true);
+                $('#braceletNumber'+id).attr('disabled', true);
+                $('#option1'+id).attr('disabled', true);
+                $('#option2'+id).attr('disabled', true);
+                $('#name'+id).attr('disabled', true);
+            }
+            $('.spinner').hide()
+
+        }).fail(function (data) {
+            $('.spinner').hide()
+
+            if (data.status === 500) {
+                toastr.error('there is an error');
+            } else if (data.status === 422) {
+                var errors = $.parseJSON(data.responseText);
+                $.each(errors, function (key, value) {
+                    if ($.isPlainObject(value)) {
+                        $.each(value, function (key, value) {
+                            toastr.error(value, key);
+                        });
+
+                    } else {
+                    }
+                });
+            } else {
+                toastr.error('there in an error');
+            }
+        })
+
     }
 </script>
