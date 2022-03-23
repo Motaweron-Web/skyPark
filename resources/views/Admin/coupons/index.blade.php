@@ -70,7 +70,7 @@
         <!-- MODAL CLOSED -->
 
         <!-- Edit MODAL -->
-        <div class="modal fade bd-example-modal-lg" id="editOrCreate" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal fade bd-example-modal-lg" data-backdrop="static" id="editOrCreate" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content" id="modalContent">
 

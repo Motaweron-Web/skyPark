@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
     Route::resource('ticket', 'TicketController');
 //    Route::get('ticket-{id}', 'TicketController@print')->name('ticket.print');
     Route::get('calcCapacity', 'TicketController@calcCapacity')->name('calcCapacity');
+    Route::get('checkChange', 'TicketController@checkChange')->name('checkChange');
     Route::get('getShifts', 'TicketController@getShifts')->name('getShifts');
     Route::get('tickets', 'TicketController@search')->name('ticket.search');
     Route::get('searchForTickets', 'TicketController@searchForTicket')->name('searchForTickets');

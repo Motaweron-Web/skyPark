@@ -77,9 +77,9 @@ class TicketController extends Controller
     public function calcCapacity(Request $request)
     {
         $request->validate([
-            'visit_date' => 'required|after:yesterday',
+            'visit_date'  => 'required|after:yesterday',
             'hours_count' => 'required',
-            'shift_id' => 'required',
+            'shift_id'    => 'required',
         ]);
         $capacity = (CapacityDays::where('day', $request->visit_date)->first()->count) ?? GeneralSetting::first()->capacity;
         $booked_count = TicketRevModel::where('day', $request->visit_date)->count();
