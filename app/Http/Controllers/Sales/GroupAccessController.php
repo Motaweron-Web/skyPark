@@ -23,10 +23,14 @@ class GroupAccessController extends Controller
 
             $reservation = Reservations::where('status','append')
                 ->whereDate('day', date('Y-m-d'))
-                ->where('custom_id', $request->search)
-                ->orwhere('ticket_num', $request->search)
-                ->orwhere('client_name', 'like', '%' . $request->search . '%')
-                ->orWhere('phone', $request->search)->with('append_models.type');
+                ->where(function ($query_all)use($request){
+                    $query_all->where('custom_id', $request->search)
+                        ->orwhere('ticket_num', $request->search)
+                        ->orwhere('client_name', 'like', '%' . $request->search . '%')
+                        ->orWhere('phone', $request->search);
+                })
+                ->with('append_models.type');
+
 
 
             $bracelet_numbers = [];
@@ -128,34 +132,42 @@ class GroupAccessController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->validate([
-            'bracelet_number'=>['required',Rule::exists('bracelets','title')->where('status','1')],
-            'id'=>['required',Rule::exists('ticket_rev_models','id')->where('status','append')],
-            'birthday'=>'nullable',
-            'name'=>'nullable|max:500',
-            'gender'=>'nullable|in:male,female',
+        $request->validate([
+            'bracelet_number'=>['required'],
+            'id'=>['required','array'],
+            'id.*.'=>['array',Rule::exists('ticket_rev_models','id')->where('status','append')],
+            'birthday'=>'nullable|array',
+            'name'=>'nullable|max:500|array',
+            'gender'=>'nullable|array',
+            'gender.*.'=>'in:male,female',
         ]);
-        $model = TicketRevModel::findOrFail($request->id);
 
-        $data['status'] = 'in';
-        $status['status'] = 'in';
+        foreach($request->id as $key=>$bracelet)
+        {
+            $model = TicketRevModel::findOrFail($request->id[$key]);
 
-        if ($model->rev_id != '') {
-            $ticket = Reservations::findOrFail($model->rev_id);
+            $data['bracelet_number'] = $request->bracelet_number[$key];
+            $data['birthday'] = $request->birthday[$key];
+            $data['name'] = $request->name[$key];
+            $data['gender'] = $request->gender[$key];
+            $data['status'] = 'in';
+            $status['status'] = 'in';
+
+            if ($model->rev_id != '') {
+                $ticket = Reservations::findOrFail($model->rev_id);
+            }
+            elseif($model->ticket_id != ''){
+                $ticket = Ticket::findOrFail($model->ticket_id);
+
+            }else{
+                toastr()->info('not found');
+                return response(1,500);
+            }
+
+            $model->update($data);
+            $ticket->update($status);
         }
-        elseif($model->ticket_id != ''){
-            $ticket = Ticket::findOrFail($model->ticket_id);
 
-        }else{
-            toastr()->info('not found');
-            return response(1,500);
-        }
-        $braceletData['status'] = '0';
-
-        Bracelets::where('title',$request->bracelet_number)->update($braceletData);
-
-        $model->update($data);
-        $ticket->update($status);
         return response(1);
     }
 
@@ -170,7 +182,50 @@ class GroupAccessController extends Controller
         //
     }//end fun
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+
     public function getBracelets(Request $request)
+    {
+        $count = $request->count;
+        $firstBracelet = $request->firstBracelet;
+        $firstCharacter = substr($firstBracelet, 0, 1);
+
+        $array = [];
+        $number = substr($firstBracelet, 1);
+
+
+
+        while (count($array) < $count)
+        {
+            if (!TicketRevModel::whereFree($firstBracelet)->count()){
+                $array[] = $firstBracelet;
+                $number++;
+
+                if($number < 10)
+                    $number = "0{$number}";
+
+                $firstBracelet = $firstCharacter.$number;
+            }else{
+                $number++;
+
+                if($number < 10)
+                    $number = "0{$number}";
+
+                $firstBracelet = $firstCharacter.$number;
+            }
+        }
+
+        return $array;
+
+    }//end fun
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getBracelets_Old(Request $request)
     {
         $count = $request->count;
         $firstBracelet = $request->firstBracelet;
@@ -282,6 +337,10 @@ class GroupAccessController extends Controller
 
 
     }//end fun
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getBraceletsTwo(Request $request)
     {
 
@@ -291,6 +350,11 @@ class GroupAccessController extends Controller
         return response()->json($getBracelets);
 
 
+    }//end fun
+
+    public function checkIfBraceletFree(Request $request)
+    {
+       return TicketRevModel::whereFree($request->title)->count();
     }//end fun
 
 

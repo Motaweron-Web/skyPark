@@ -16,6 +16,14 @@ class TicketRevModel extends Model
     public function type()
     {
         return $this->belongsTo(VisitorTypes::class,'visitor_type_id');
-    }
+    }//end fun
+
+    public function scopeWhereFree($query,$title)
+    {
+        return $query->where([
+            ['status', 'in'],
+            ['bracelet_number',$title]
+        ]);
+    }//end fun
 
 }//end class

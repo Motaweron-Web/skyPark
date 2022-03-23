@@ -132,11 +132,13 @@ class FamilyAccessController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->validate([
-            'bracelet_number' => ['required', Rule::exists('bracelets', 'title')->where('status', true)],
+            'bracelet_number' => ['required', Rule::unique('ticket_rev_models', 'bracelet_number')->where('status', 'in')],
             'id' => ['required', Rule::exists('ticket_rev_models', 'id')->where('status', 'append')],
             'birthday' => 'nullable',
             'name' => 'nullable|max:500',
             'gender' => 'nullable|in:male,female',
+        ],[
+            'bracelet_number.unique'=>'هذا السوار مأخوذ مسبقاً'
         ]);
         $model = TicketRevModel::findOrFail($request->id);
 

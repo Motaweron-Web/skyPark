@@ -15,13 +15,7 @@ class Bracelets extends Model
     }//end fun
 
     public static function checkIsFree($title){
-        $find = Bracelets::BraceletFree()->where('title',$title)->count();
-        if ($find){
-            return true;
-        }else{
-            return  Bracelets::BraceletFree()->where('title','LIKE','%'.$title.'%')->count();
-        }
-        return false;
+        $find = TicketRevModel::where('bracelet_number',$title)->count();
     }
 
     public static function checkIfCharIsFree($title){

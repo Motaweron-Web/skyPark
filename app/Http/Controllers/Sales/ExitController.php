@@ -193,9 +193,11 @@ class ExitController extends Controller
                 $ticket = Ticket::findOrFail($model->ticket_id);
 
 
-            $shift_id = Shifts::where('id', '>', $ticket->shift_id)->max('id');
-
-            if (!$shift_id) {
+            $shift = Shifts::where(function ($query) use ($model) {
+                $query->where('from', '<=', $model->shift_end);
+                $query->where('to', '>=', $model->shift_end);
+            });
+            if (!$shift->count()) {
                 toastr()->warning('we can`t find the next shift');
                 return back();
             }
@@ -203,13 +205,13 @@ class ExitController extends Controller
             $method = [];
             $method['visit_date'] = date('Y-m-d');
             $method['hours_count'] = $data['top_up_hours'];
-            $method['shift_id'] = $shift_id;
+            $method['shift_id'] = $shift->first()->id;
 
             $response = Http::get(route('visitorTypesPrices'), $method);
 
             $top_up_hours = $request->top_up_hours - $response['latestHours'];
             $data['top_up_hours'] = $top_up_hours + $model->top_up_hours;
-            $price = $response['array'][$model->visitor_type_id] * $top_up_hours;
+            $price = $response['array'][$model->visitor_type_id];
             $data['top_up_price'] = $price + $model->top_up_price;
 
 
@@ -226,7 +228,6 @@ class ExitController extends Controller
         return response()->json(['status' => 200]);
 
     }
-
     /**
      * Remove the specified resource from storage.
      *

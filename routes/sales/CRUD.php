@@ -36,8 +36,9 @@ use Illuminate\Support\Facades\Route;
     Route::resource('reservations', 'ReservationController');
     Route::resource('capacity', 'CapacityController');
     Route::resource('groupAccess', 'GroupAccessController');
+    Route::get('groupAccess-checkIfBraceletFree', 'GroupAccessController@checkIfBraceletFree')->name('groupAccess.checkIfBraceletFree');
     Route::get('capacity-anotherMonth', 'CapacityController@anotherMonth')->name('capacity.anotherMonth.index');
-    Route::POST('getBracelets', 'GroupAccessController@getBraceletsTwo')->name('capacity.getBracelets');
+    Route::POST('getBracelets', 'GroupAccessController@getBracelets')->name('capacity.getBracelets');
 
 
     #################################### Exit =======================================
