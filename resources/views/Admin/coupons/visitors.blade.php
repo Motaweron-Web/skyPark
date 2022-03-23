@@ -1,7 +1,7 @@
 @extends('Admin/layouts/master')
 
-@section('title') {{$setting->title}} | Coupons @endsection
-@section('page_name') Coupons @endsection
+@section('title') {{$setting->title}} | Coupons Visitors @endsection
+@section('page_name') Coupons Visitors @endsection
 @section('css')
     @include('layouts.loader.formLoader.loaderCss')
 @endsection
@@ -11,12 +11,12 @@
         <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">{{$setting->title}} Coupons</h3>
+                    <h3 class="card-title">{{$rev->client_name}} Coupons Visitors</h3>
                     <div class="">
-                        <button class="btn btn-secondary btn-icon text-white addBtn">
+                        <button class="btn btn-secondary btn-icon text-white addBtn" data-id="{{$rev->id}}">
 									<span>
 										<i class="fe fe-plus"></i>
-									</span> Add Coupon
+									</span> Add New
                         </button>
                     </div>
                 </div>
@@ -28,12 +28,7 @@
                             <tr class="fw-bolder text-muted bg-light">
                                 <th class="min-w-25px">#</th>
                                 <th class="min-w-50px">Sale Number</th>
-                                <th class="min-w-50px">Corporation Name</th>
-                                <th class="min-w-50px">phone</th>
-                                <th class="min-w-50px">note</th>
-                                <th class="min-w-50px">Coupon Start</th>
-                                <th class="min-w-50px">Coupon End</th>
-                                <th class="min-w-50px">Visitors</th>
+                                <th class="min-w-50px">Name</th>
                                 <th class="min-w-50px rounded-end">Actions</th>
                             </tr>
                             </thead>
@@ -79,9 +74,26 @@
         </div>
         <!-- Edit MODAL CLOSED -->
     </div>
+    <iframe style="display:none" src="" id="printIframe">
+
+    </iframe>
     @include('Admin/layouts/myAjaxHelper')
 @endsection
 @section('ajaxCalls')
+    <script>
+        $(document).on('click','#print',function () {
+            var url = $(this).data('url');
+
+            $('.spinner').show()
+            $('#printIframe').attr('src',url)
+            setTimeout(function () {
+                $('.spinner').hide()
+            },500)
+            setTimeout(function () {
+                $('#modal-print').modal('show')
+            },1000)
+        })
+    </script>
     <script>
         var loader = ` <div class="linear-background">
                             <div class="inter-crop"></div>
@@ -92,22 +104,17 @@
 
         var columns = [
             {data: 'id', name: 'id'},
-            {data: 'ticket_num', name: 'ticket_num'},
-            {data: 'client_name', name: 'client_name'},
-            {data: 'phone', name: 'phone'},
-            {data: 'note', name: 'note'},
-            {data: 'coupon_start', name: 'coupon_start'},
-            {data: 'coupon_end', name: 'coupon_end'},
-            {data: 'view', name: 'view'},
+            {data: 'coupon_num', name: 'coupon_num'},
+            {data: 'name', name: 'name'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
-        showData('{{route('coupons.index')}}', columns);
-        deleteScript('{{route('coupon.delete')}}');
+        showData('{{route('couponsVisitors',$rev->id)}}', columns);
+        deleteScript('{{route('couponsVisitors.delete')}}');
 
         // Get Edit View
         $(document).on('click', '.editBtn', function () {
             var id = $(this).data('id')
-            var url = "{{route('coupons.edit',':id')}}";
+            var url = "{{route('EditCouponsVisitor',':id')}}";
             url = url.replace(':id', id)
             $('#modalContent').html(loader)
             $('#editOrCreate').modal('show')
@@ -121,10 +128,14 @@
 
         // Get Add View
         $(document).on('click', '.addBtn', function () {
+            var id = $(this).data('id')
+            var url = "{{route('AddCouponsVisitor',':id')}}";
+            url = url.replace(':id', id)
             $('#modalContent').html(loader)
             $('#editOrCreate').modal('show')
+
             setTimeout(function () {
-                $('#modalContent').load('{{route('coupons.create')}}')
+                $('#modalContent').load(url)
             }, 250)
         });
 

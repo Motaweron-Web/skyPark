@@ -18,9 +18,18 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin','namespace'=>'Admin']
     Route::resource('category','CategoryController');
     Route::POST('category.delete','CategoryController@delete')->name('category.delete');
 
-    #### Reservation ####
+    #### Coupons ####
     Route::resource('coupons','CouponController');
     Route::POST('coupon.delete','CouponController@delete')->name('coupon.delete');
+
+    #### couponsVisitors ####
+    Route::GET('couponsVisitors/{id}','CouponController@show')->name('couponsVisitors');
+    Route::GET('AddCouponsVisitor/{id}','CouponController@AddCouponsVisitor')->name('AddCouponsVisitor');
+    Route::GET('EditCouponsVisitor/{id}','CouponController@EditCouponsVisitor')->name('EditCouponsVisitor');
+    Route::GET('printCoupon/{id}','CouponController@print')->name('printCoupon');
+    Route::POST('couponsVisitor.store','CouponController@storeCouponsVisitor')->name('couponsVisitor.store');
+    Route::POST('couponsVisitor.update','CouponController@updateCouponsVisitor')->name('couponsVisitor.update');
+    Route::POST('couponsVisitors.delete','CouponController@deleteVisitor')->name('couponsVisitors.delete');
 
 
     #### Products ####

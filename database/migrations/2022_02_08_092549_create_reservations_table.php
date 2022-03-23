@@ -64,6 +64,8 @@ class CreateReservationsTable extends Migration
             $table->enum('status',['append','in','out'])->default('append')->nullable();
 
             $table->enum('is_coupon',['0','1'])->comment('1 means it is coupon')->default(0)->nullable();
+            $table->date('coupon_start')->default(null);
+            $table->date('coupon_end')->default(null);
 
             $table->timestamps();
         });

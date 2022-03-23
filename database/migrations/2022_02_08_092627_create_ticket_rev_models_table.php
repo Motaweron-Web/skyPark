@@ -25,6 +25,9 @@ class CreateTicketRevModelsTable extends Migration
             $table->foreign('ticket_id')->references('id')
                 ->on('tickets')->onDelete('cascade');
 
+            $table->string('coupon_num')->comment('will be null if there is no coupon of this model')->nullable();
+
+
             $table->unsignedBigInteger('visitor_type_id')->nullable();
             $table->foreign('visitor_type_id')->references('id')
                 ->on('visitor_types')->onDelete('cascade');

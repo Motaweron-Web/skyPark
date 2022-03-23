@@ -38,6 +38,7 @@ class ReservationController extends Controller
 
     public function searchForReservations(request $request){
         $reservation = Reservations::query();
+        $reservation = $reservation->whereHas('models');
         if ($request->searchText != null)
             $reservation->where('ticket_num',$request->searchText);
 
