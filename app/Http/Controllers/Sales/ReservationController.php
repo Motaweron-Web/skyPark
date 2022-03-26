@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Sales;
 
 use App\Http\Controllers\Controller;
+use App\Models\CapacityDays;
 use App\Models\Category;
 use App\Models\Event;
+use App\Models\GeneralSetting;
 use App\Models\Governorate;
 use App\Models\Product;
 use App\Models\Reservations;
 use App\Models\ReservationsBirthDayInfo;
+use App\Models\ShiftDetails;
 use App\Models\Shifts;
 use App\Models\Ticket;
 use App\Models\TicketRevModel;
@@ -19,6 +22,9 @@ use Carbon\Traits\Date;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
@@ -62,9 +68,10 @@ class ReservationController extends Controller
 //            $smallArray[] = date('h a', strtotime($rev->shift->from)).":".date('h a', strtotime($rev->shift->to));
             $smallArray[] = $rev->models->count();
             $accessUrl = route('groupAccess.index').'?search='.$rev->ticket_num;
+            $editUrl = route('updateReservation',$rev->id);
             $title = $rev->client_name." - ".$rev->ticket_num;
             $smallArray[] = '<span class="controlIcons">
-                  <span class="icon editSpan" data-bs-toggle="tooltip" title="edit" data-id="'.$rev->id.'"> <i class="far fa-edit"></i>  </span>
+                  <span class="icon" data-bs-toggle="tooltip" title="edit" data-id="'.$rev->id.'"><a href="'.$editUrl.'"><i class="far fa-edit"></i></a>   </span>
                   <span class="icon deleteSpan" data-bs-toggle="tooltip" title=" delete "  data-title="'.$title.'" data-id="'.$rev->id.'"> <i class="far fa-trash-alt"></i>  </span>
                   <span class="icon showSpan" data-bs-toggle="tooltip" title=" details " data-id="'.$rev->id.'"> <i class="fas fa-eye"></i></i>  </span>
                   <span class="icon" data-bs-toggle="tooltip" title="Access"> <a href="'.$accessUrl.'"><i class="fal fa-check "></i></a></span>
@@ -277,17 +284,141 @@ class ReservationController extends Controller
     }
 
 
-
     public function update($id)
     {
         $rev    = Reservations::findOrFail($id);
         $events = Event::all();
         $first_shift_start = Carbon::parse(Shifts::orderBy('from', 'ASC')->first()->from)->format('H');
         $types  = VisitorTypes::all();
-        $categories = Category::all();
         $random = substr(Carbon::now()->format("l"),0,3).rand(0, 999).Carbon::now()->format('is');
         $models = TicketRevModel::where('rev_id',$id)->get();
-        return view('sales.updateReservation',compact('rev','events','models','first_shift_start','types','random','categories'));
+        $categories = Category::with(['products'=>function($query){
+            $query->where('status','1');
+        }])->whereHas('products',function ($q){
+                $q->where('status','1');
+        })->get();
+        $products = TicketRevProducts::where('rev_id',$id)->get();
+        $prices = $this->calcCapacity($rev->hours_count,$rev->shift_id);
+        return view('sales.updateReservation',compact('rev','prices','products','events','models','first_shift_start','types','random','categories'));
+    }
+
+    public function calcCapacity($hours_count,$shift_id)
+    {
+            $shift = Shifts::where('id', $shift_id)->first();
+            $hours = $hours_count;
+            $shift_duration = strtotime($shift->to) - (strtotime($shift->from));
+            $shift_prices = ShiftDetails::where('shift_id', $shift_id)->select('visitor_type_id', 'price')->get();
+            // now check if wanted hours is less than shift time then do direct calculations
+            if ($hours <= $shift_duration / 3600) {
+                foreach ($shift_prices as $price) {
+                    $price->price *= $hours;
+                }
+                return $shift_prices;
+            } else {
+                // do function
+                $visitorTypes = VisitorTypes::latest()->get();
+                $hoursCount = $hours_count;
+                $newHoursCount = $hours_count;
+                $minHorse = 0;
+
+                $shift = Shifts::findOrFail($shift_id);
+                $shifts = [];
+                $prices = [];
+                $pricesArray = [];
+                $searchHourArray = [];
+                foreach ($visitorTypes as $visitorType) {
+                    $pricesArray[$visitorType->id] = 0;
+                }
+
+                while ($newHoursCount > 0) {
+
+                    $from = strtotime(date('H', strtotime($shift->from)) . ":00");
+                    $to = strtotime(date('H', strtotime($shift->to)) . ":00");
+                    $difference = round(abs($to - $from) / 3600, 2);
+                    if ($hoursCount > $difference) {
+                        $searchHour = $difference;
+                    } else {
+                        $searchHour = $hoursCount;
+                    }
+
+                    if ($newHoursCount < $difference) {
+                        $searchHour = $newHoursCount;
+                    }
+
+
+                    foreach ($visitorTypes as $visitorType) {
+                        $findShiftDetails = ShiftDetails::where('shift_id', $shift->id)->where('visitor_type_id', $visitorType->id)->firstOrFail();
+                        $shifts[] = $findShiftDetails;
+                        $pricesArray[$visitorType->id] += $searchHour * $findShiftDetails->price;
+                    }
+                    $nextId = Shifts::whereTime('from', '>=', $shift->to)->max('id');
+                    $latestShift = $shift;
+                    $shift = Shifts::find($nextId);
+                    $newHoursCount = $newHoursCount - $searchHour;
+
+                    if (!$shift) {
+                        break;
+                    }
+                }
+                $shift_prices = [];
+                foreach ($pricesArray as $key => $item) {
+                    $smallArray = [];
+                    $smallArray['visitor_type_id'] = $key;
+                    $smallArray['price'] = $item;
+                    $shift_prices[] = $smallArray;
+                }
+                return $shift_prices;
+            }
+        }
+
+
+    public function postUpdateReservation(request $request){
+        $rev = Reservations::where('id',$request->rev_id)->first();
+        foreach ($rev->models as $model){
+            $model->delete();
+        }
+        $rev->update([
+            'client_name'    => $request->client_name,
+            'phone'          => $request->phone,
+            'email'          => $request->email,
+            'total_price'    => $request->total_price,
+            'discount_type'  => $request->discount_type[0],
+            'discount_value' => $request->discount_value,
+            'paid_amount'    => $request->amount,
+            'grand_total'    => $request->revenue,
+            'rem_amount'     => $request->rem,
+            'note'           => $request->note,
+
+        ]);
+        for ($i = 0 ; $i < count($request->visitor_type); $i++) {
+            TicketRevModel::create([
+                'rev_id'          => $rev->id,
+                'shift_start'     => $request->shift_start,
+                'shift_end'       => $request->shift_end,
+                'visitor_type_id' => $request->visitor_type[$i],
+                'price'           => $request->visitor_price[$i],
+                'name'            => $request->visitor_name[$i],
+                'birthday'        => $request->visitor_birthday[$i],
+                'gender'          => ($request->gender[$i]) ?? null,
+            ]);
+        }
+        foreach ($rev->products as $product){
+            $product->delete();
+        }
+        if($request->has('product_id')) {
+            for ($i = 0; $i < count($request->product_id); $i++) {
+                TicketRevProducts::create([
+                    'rev_id'      => $rev->id,
+                    'product_id'  => $request->product_id[$i],
+                    'category_id' => Product::where('id', $request->product_id[$i])->first()->category_id,
+                    'qty'         => $request->product_qty[$i],
+                    'price'       => $request->product_price[$i] / $request->product_qty[$i],
+                    'total_price' => $request->product_price[$i],
+                ]);
+            }
+        }
+        $day = Carbon::parse(Reservations::where('id',$request->rev_id)->first()->day)->format('Y-m');
+        return response()->json(['day'=>$day,'status' => true]);
     }
 
     /**

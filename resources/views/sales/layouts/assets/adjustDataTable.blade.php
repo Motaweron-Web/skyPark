@@ -185,8 +185,8 @@
     }
 
     function getCount(className, type_id) {
-        $('.visitorType' + type_id).find('.count').text(table.rows('[class$=' + className + ']').count());
-        $('.visitorType' + type_id).find('.inputCount').val(table.rows('[class$=' + className + ']').count());
+        $('.visitorType' + type_id).find('.count').text(table.rows('[class*=' + className + ']').count());
+        $('.visitorType' + type_id).find('.inputCount').val(table.rows('[class*=' + className + ']').count());
     }
 
     $(document).on('click', '.visitorTypeDiv', function () {
@@ -346,6 +346,7 @@
     $(document).on('click', '#thirdPrev', function () {
         $('.insertRows').remove();
         $('.firstInfo').html('');
+        totalBeforeDiscount = 0;
     });
     var Percent = $('#offerType1'),
         Amount = $('#offerType2');
@@ -379,6 +380,7 @@
                     totalBeforeDiscount += total;
                 }
             });
+            localStorage.setItem('price',totalBeforeDiscount)
         }
         if (window.location.href.indexOf("ticket") > -1) {
             totalBeforeDiscount += {{$setting->family_tax}}*totalBeforeDiscount/100;
@@ -483,6 +485,8 @@
         $('.productInsertRows').remove();
         $('.secondInfo').html('');
         $('.thirdInfo').html('')
+        console.log(localStorage.getItem('price'))
+        totalBeforeDiscount = parseInt(localStorage.getItem('price'));
     });
 
     $.ajaxSetup({

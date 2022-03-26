@@ -23,13 +23,20 @@ use Illuminate\Support\Facades\Route;
     Route::get('searchForReservations', 'ReservationController@searchForReservations')->name('searchForReservations');
     Route::get('update_reservation/{id}', 'ReservationController@update')->name('updateReservation');
     Route::POST('delete_reservation', 'ReservationController@delete_reservation')->name('delete_reservation');
+    Route::POST('postUpdateReservation', 'ReservationController@postUpdateReservation')->name('postUpdateReservation');
     Route::POST('update_reservation', 'ReservationController@update_reservation')->name('update_reservation');
     Route::get('editReservation/{id}', 'ReservationController@editReservation')->name('editReservation');
     Route::get('detailsReservation/{id}', 'ReservationController@detailsReservation')->name('detailsReservation');
 
+//    Route::get('coupons', function (){
+//        return view('sales.coupon');
+//    })->name('coupons');
+    #### Coupons ####
+    Route::resource('coupons','CouponController');
+    Route::POST('coupon.delete','CouponController@delete')->name('coupon.delete');
 
 
-    //==================================== Group ================================
+//==================================== Group ================================
     Route::resource('familyAccess', 'FamilyAccessController');
 
 

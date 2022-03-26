@@ -212,7 +212,6 @@
     myTable = myNewTable.DataTable({
         responsive: true,
     });
-    myTable.clear();
     $('#addBtn').click(function () {
         var product_select = $('#choices-product'),
             product = product_select.find(":selected").text(),
@@ -234,7 +233,7 @@
                     `<span class="productTotalPrice" id="productTotalPrice${product_id}">${price}</span>`,
                     `
                               <span class="controlIcons">
-                                <span class="icon Delete" data-bs-toggle="tooltip" title="Delete"> <i
+                                <span class="icon Delete"> <i
                                     class="far fa-trash-alt"></i> </span>
                               </span>
                 `
@@ -270,6 +269,7 @@
     var totalBeforeDiscount = 0;
     $(document).on('click', '#secondNext', function () {
         if (table.rows().count() != 0) {
+            $('.firstInfo').empty();
             $('.firstInfo').append(`
                         <h6 class="billTitle"> visitors</h6>
                         <div class="items">
@@ -296,6 +296,7 @@
                     totalBeforeDiscount += price;
                 }
             });
+            localStorage.setItem('price',totalBeforeDiscount)
         } else {
             toastr.error("at least one model should be exists");
             $("button[title='products']").removeClass('js-active');
@@ -307,11 +308,13 @@
     $(document).on('click', '#thirdPrev', function () {
         $('.insertRows').remove();
         $('.firstInfo').html('');
+        totalBeforeDiscount = 0;
     });
     var Percent = $('#offerType1'),
         Amount = $('#offerType2');
     $(document).on('click', '#thirdNext', function () {
         if (myTable.rows().count() != 0) {
+            $('.secondInfo').empty();
             $('.secondInfo').append(`
                 <h6 class="billTitle"> products</h6>
                 <div class="items">
@@ -344,7 +347,7 @@
         if (window.location.href.indexOf("ticket") > -1) {
             totalBeforeDiscount += {{$setting->family_tax}} * totalBeforeDiscount / 100;
             total.text(totalBeforeDiscount);
-        } else if (window.location.href.indexOf("reservations") > -1) {
+        } else if (window.location.href.indexOf("update_reservation") > -1) {
             totalBeforeDiscount += {{$setting->rev_tax}} * totalBeforeDiscount / 100;
             total.text(totalBeforeDiscount);
         }
@@ -352,6 +355,7 @@
         $('#totalInfoDiscount').text(0 + " EGP")
         $('#totalInfoRevenue').text(totalBeforeDiscount + " EGP")
         $('#revenue').text(totalBeforeDiscount)
+        calculateChange();
         $('#calcDiscount').val('')
         if (window.location.href.indexOf("ticket") > -1) {
             $('.thirdInfo').append(`
@@ -443,6 +447,8 @@
         $('.productInsertRows').remove();
         $('.secondInfo').html('');
         $('.thirdInfo').html('')
+        console.log(localStorage.getItem('price'))
+        totalBeforeDiscount = parseInt(localStorage.getItem('price'));
     });
 
     $.ajaxSetup({
@@ -472,7 +478,7 @@
         } else if ($(this).val() < parseInt($(this).parent().parent().find('.count').text())) {
             // means the user enter a number less than count so he want to delete not insert
             for (var j = 0; j < number; j++) {
-                table.row('tr.' + type.toLowerCase()).remove().draw();
+                table.row('tr.' + type).remove().draw();
             }
             $(this).parent().parent().find('.count').text($(this).val())
         }
