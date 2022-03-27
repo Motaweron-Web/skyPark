@@ -2,6 +2,9 @@
 @section('page_title')
     {{$setting->title}} | Coupons
 @endsection
+@section('css')
+    @include('layouts.loader.formLoader.loaderCss')
+@endsection
 @section('content')
     <h2 class="MainTiltle mb-5 ms-4"> Coupons </h2>
     <form class="card p-2 py-4 mt-3 ">
@@ -21,13 +24,41 @@
                 <th>Corporation Name</th>
                 <th>Phone</th>
                 <th>Note</th>
-                <th>Coupon Date</th>
+                <th>Coupon Start</th>
+                <th>Coupon End</th>
                 <th>Visitors</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody>
-
+            @foreach($reservations as $rev)
+                <tr>
+                    <td>{{$rev->id}}</td>
+                    <td>{{$rev->ticket_num}}</td>
+                    <td>{{$rev->client_name}}</td>
+                    <td>{{$rev->phone}}</td>
+                    <td>{{$rev->note}}</td>
+                    <td>{{$rev->coupon_start}}</td>
+                    <td>{{$rev->coupon_end}}</td>
+                    <td>
+                        @if(count($rev->models) == 0)
+                            <a href="{{route('sales.couponsVisitors',$rev->id)}}" class="btn btn-rounded shadow-none btn-outline-info "> <i
+                                    class="far fa-plus me-1"></i> add visitor </a>
+                        @else
+                            <a href="{{route('sales.couponsVisitors',$rev->id)}}" class="btn btn-rounded shadow-none btn-outline-info "> <i
+                                    class="far fa-plus me-1"></i> show visitor </a>
+                        @endif
+                    </td>
+                    <td>
+                        <span class="controlIcons">
+                            <span class="icon editBtn" data-id="{{$rev->id}}"> <i class="far fa-edit"></i> </span>
+                        <span class="icon deleteSpan" data-id="{{$rev->id}}" data-title="{{$rev->client_name}}">
+                      <i class="far fa-trash-alt"></i>
+                        </span>
+                </span>
+                    </td>
+                </tr>
+            @endforeach
             </tbody>
         </table>
 
@@ -43,72 +74,134 @@
                         <i class="fal fa-times text-dark fs-4"></i>
                     </button>
                 </div>
-                <form action="#!">
+                <form action="{{route('sales.store.coupon')}}" id="createForm">
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-sm-4 p-2">
                                 <label class="form-label"> <i class="fas fa-building me-1"></i> Corporation Name
                                 </label>
                                 <div class="input-group">
-                                    <input class="form-control" type="text" placeholder="Type here...">
+                                    <input class="form-control" type="text" placeholder="Type here..." name="client_name">
                                 </div>
                             </div>
                             <div class="col-sm-4 p-2">
                                 <label class="form-label"> <i class="fas fa-phone-alt me-1"></i> Phone Number </label>
                                 <div class="input-group">
-                                    <input class="form-control" type="number" placeholder="Phone">
+                                    <input class="form-control" type="number" placeholder="Phone" name="phone">
                                 </div>
                             </div>
                             <div class="col-sm-4 p-2">
                                 <label class="form-label"> <i class="fas fa-envelope me-1"></i> Email</label>
                                 <div class="input-group">
-                                    <input class="form-control" type="email" placeholder="Email">
+                                    <input class="form-control" type="email" placeholder="Email" name="email">
                                 </div>
                             </div>
-                            <div class="col-sm-6 p-2">
+                            <div class="col-sm-4 p-2">
                                 <label class="form-label"> <i class="fas fa-money-bill-wave me-1"></i> Paid Amount
                                 </label>
                                 <div class="input-group">
-                                    <input class="form-control" type="number" placeholder="Amount">
+                                    <input class="form-control" type="number" placeholder="Amount" name="paid_amount">
                                 </div>
                             </div>
-                            <div class="col-sm-6 p-2">
+                            <div class="col-sm-4 p-2">
                                 <label class="form-label"> <i class="fas fa-users me-1"></i> Visitors Count </label>
                                 <div class="input-group">
-                                    <input class="form-control" type="number" placeholder="Count">
+                                    <input class="form-control" type="number" min="1" placeholder="Count" name="visitor_count">
+                                </div>
+                            </div>
+                            <div class="col-sm-4 p-2">
+                                <label class="form-label"> <i class="fas fa-users me-1"></i> Hours Count </label>
+                                <div class="input-group">
+                                    <input class="form-control" type="number" min="1" max="24" placeholder="Count" name="hours_count">
                                 </div>
                             </div>
                             <div class="col-sm-6 p-2">
                                 <label class="form-label"> <i class="fas fa-calendar-alt me-1"></i> Coupon Start Date
                                 </label>
                                 <div class="input-group">
-                                    <input class="form-control" type="date">
+                                    <input class="form-control" type="date" name="coupon_start" value="{{date('Y-m-d')}}">
                                 </div>
                             </div>
                             <div class="col-sm-6 p-2">
                                 <label class="form-label"> <i class="fas fa-calendar-alt me-1"></i> Coupon End Date
                                 </label>
                                 <div class="input-group">
-                                    <input class="form-control" type="date">
+                                    <input class="form-control" type="date" name="coupon_end" value="{{date('Y-m-d')}}">
                                 </div>
                             </div>
                             <div class="col-12 p-2">
                                 <label class="form-label"><i class="fas fa-feather-alt me-1"></i> Note</label>
-                                <textarea name="" id="" class="form-control" rows="5"
+                                <textarea name="note" id="" class="form-control" rows="5"
                                           placeholder="Add Note..."></textarea>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-dark ml-auto me-2" data-bs-dismiss="modal"> Close</button>
-                        <button type="submit" class="btn btn-success"> Create</button>
+                        <button type="submit" class="btn btn-success" id="addButton"> Create</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
+
+
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true"
+         data-bs-backdrop="static">
+        <div class="modal-dialog modal-danger modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="modal-title-print">Edit Coupon</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fal fa-times text-dark fs-4"></i>
+                    </button>
+                </div>
+                <div id="modalContent">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Delete MODAL -->
+    <div class="modal fade" id="delete_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Data</h5>
+                    <button type="button" class="close btn" data-dismiss="modal" aria-label="Close"
+                            onclick="dismiss()">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input class="delete_id" name="id" type="hidden">
+                    <p>Are You Sure Of Deleting This Reservation <span id="title" class="text-danger"></span>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="dismiss_delete_modal"
+                            onclick="dismiss()">
+                        Back
+                    </button>
+                    <button type="button" class="btn btn-danger" id="delete_btn">Delete !</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- MODAL CLOSED -->
 @endsection
 @section('js')
+    <script>
+        $(document).ready(function () {
+            var table = $('.customDataTable').DataTable({
+                responsive: true,
+                "order": [ 0, 'desc' ]
+            });
+            new $.fn.dataTable.FixedHeader(table);
+        });
+    </script>
     <script>
         var loader = ` <div class="linear-background">
                             <div class="inter-crop"></div>
@@ -116,48 +209,28 @@
                             <div class="inter-right--bottom"></div>
                         </div>
         `;
-
-        var columns = [
-            {data: 'id', name: 'id'},
-            {data: 'ticket_num', name: 'ticket_num'},
-            {data: 'client_name', name: 'client_name'},
-            {data: 'phone', name: 'phone'},
-            {data: 'note', name: 'note'},
-            {data: 'coupon_start', name: 'coupon_start'},
-            {data: 'coupon_end', name: 'coupon_end'},
-            {data: 'view', name: 'view'},
-            {data: 'action', name: 'action', orderable: false, searchable: false},
-        ]
+        function dismiss() {
+            $('#delete_modal').modal('hide');
+        }
 
         // Get Edit View
         $(document).on('click', '.editBtn', function () {
             var id = $(this).data('id')
-            var url = "{{route('coupons.edit',':id')}}";
+            var url = "{{route('sales.coupons.edit',':id')}}";
             url = url.replace(':id', id)
             $('#modalContent').html(loader)
-            $('#editOrCreate').modal('show')
+            $('#editModal').modal('show')
 
             setTimeout(function () {
                 $('#modalContent').load(url)
             }, 250)
-            setTimeout(function () {
-            }, 500)
         })
 
-        // Get Add View
-        $(document).on('click', '.addBtn', function () {
-            $('#modalContent').html(loader)
-            $('#editOrCreate').modal('show')
-            setTimeout(function () {
-                $('#modalContent').load('{{route('coupons.create')}}')
-            }, 250)
-        });
-
         // Add By Ajax
-        $(document).on('submit','Form#addForm',function(e) {
+        $(document).on('submit', 'Form#createForm', function (e) {
             e.preventDefault();
             var formData = new FormData(this);
-            var url = $('#addForm').attr('action');
+            var url = $('#createForm').attr('action');
             $.ajax({
                 url: url,
                 type: 'POST',
@@ -168,10 +241,9 @@
                 },
                 success: function (data) {
                     if (data.status == 200) {
-                        $('#dataTable').DataTable().ajax.reload();
                         toastr.success('Coupon added successfully');
-                    }
-                    else
+                        location.reload();
+                    } else
                         toastr.error('There is an error');
                     $('#addButton').html(`Create`).attr('disabled', false);
                     $('#editOrCreate').modal('hide')
@@ -183,7 +255,7 @@
                         var errors = $.parseJSON(data.responseText);
                         $.each(errors, function (key, value) {
                             if ($.isPlainObject(value)) {
-                                $.each(value, function (key, value){
+                                $.each(value, function (key, value) {
                                     toastr.error(value, key);
                                 });
                             }
@@ -200,7 +272,7 @@
         });
 
         // Update By Ajax
-        $(document).on('submit','Form#updateForm',function(e) {
+        $(document).on('submit', 'Form#updateForm', function (e) {
             e.preventDefault();
             var formData = new FormData(this);
             var url = $('#updateForm').attr('action');
@@ -214,14 +286,13 @@
                 },
                 success: function (data) {
                     $('#updateButton').html(`Update`).attr('disabled', false);
-                    if (data.status == 200){
-                        $('#dataTable').DataTable().ajax.reload();
+                    if (data.status == 200) {
                         toastr.success('Coupon updated successfully');
-                    }
-                    else
+                        location.reload();
+                    } else
                         toastr.error('There is an error');
 
-                    $('#editOrCreate').modal('hide')
+                    $('#editModal').modal('hide')
                 },
                 error: function (data) {
                     if (data.status === 500) {
@@ -230,7 +301,7 @@
                         var errors = $.parseJSON(data.responseText);
                         $.each(errors, function (key, value) {
                             if ($.isPlainObject(value)) {
-                                $.each(value, function (key, value){
+                                $.each(value, function (key, value) {
                                     toastr.error(value, key);
                                 });
                             }
@@ -246,8 +317,36 @@
             });
         });
 
-    </script>
-    <script>
+        $(document).on('click', '.deleteSpan', function (event) {
+            var delete_id = $(this).attr('data-id');
+            var title = $(this).attr('data-title');
+            $('#delete_modal').modal('show')
+            $('.delete_id').val(delete_id)
+            $('#title').text(title)
+        });
+        $(document).on('click', '#delete_btn', function (event) {
+            var id = $('.delete_id').val();
+            $('#delete_btn').html('<span class="spinner-border spinner-border-sm mr-2" ' +
+                ' ></span> <span style="margin-left: 4px;">working</span>').attr('disabled', true);
+            $.ajax({
+                type: 'POST',
+                url: "{{route('sales.delete_coupon')}}",
+                data: {
+                    '_token': "{{csrf_token()}}",
+                    'id': id,
+                },
+                success: function (data) {
+                    if (data.status === 200) {
+                        toastr.success(data.message)
+                        location.reload();
+                    } else {
+                        toastr.error(data.message)
+                    }
+                    $('#delete_btn').html(`Delete !`).attr('disabled', false);
+                    $("#delete_modal").modal('hide');
+                }
+            });
+        });
         $('#coupon').addClass('active')
     </script>
 @endsection

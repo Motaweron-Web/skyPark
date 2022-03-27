@@ -28,13 +28,20 @@ use Illuminate\Support\Facades\Route;
     Route::get('editReservation/{id}', 'ReservationController@editReservation')->name('editReservation');
     Route::get('detailsReservation/{id}', 'ReservationController@detailsReservation')->name('detailsReservation');
 
-//    Route::get('coupons', function (){
-//        return view('sales.coupon');
-//    })->name('coupons');
     #### Coupons ####
-    Route::resource('coupons','CouponController');
-    Route::POST('coupon.delete','CouponController@delete')->name('coupon.delete');
-
+    Route::get('sales/coupons','CouponController@index')->name('sales.coupons');
+    Route::post('sales.coupons.store','CouponController@store')->name('sales.store.coupon');
+    Route::get('sales.coupons.edit/{id}','CouponController@edit')->name('sales.coupons.edit');
+    Route::post('sales.coupons.update','CouponController@update')->name('sales.coupons.update');
+    Route::POST('sales.coupon.delete','CouponController@delete')->name('sales.delete_coupon');
+    #### couponsVisitors ####
+    Route::GET('sales/couponsVisitors/{id}','CouponController@show')->name('sales.couponsVisitors');
+    Route::GET('sales.AddCouponsVisitor/{id}','CouponController@AddCouponsVisitor')->name('sales.AddCouponsVisitor');
+    Route::GET('sales.EditCouponsVisitor/{id}','CouponController@EditCouponsVisitor')->name('sales.EditCouponsVisitor');
+    Route::GET('sales.printCoupon/{id}','CouponController@print')->name('printCoupon');
+    Route::POST('sales.couponsVisitor.store','CouponController@storeCouponsVisitor')->name('sales.couponsVisitor.store');
+    Route::POST('sales.couponsVisitor.update','CouponController@updateCouponsVisitor')->name('sales.couponsVisitor.update');
+    Route::POST('sales.couponsVisitors.delete','CouponController@deleteVisitor')->name('sales.couponsVisitors.delete');
 
 //==================================== Group ================================
     Route::resource('familyAccess', 'FamilyAccessController');
