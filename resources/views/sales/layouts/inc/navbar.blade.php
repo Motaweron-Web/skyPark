@@ -1,6 +1,6 @@
 <!-- ================================ NavBar ================== -->
 <nav id="navbarBlur"
-     class="navbar navbar-main navbar-expand-lg position-sticky mt-4 top-1 p-2 px-3 mx-4 shadow-none border-radius-xl z-index-sticky"
+     class="navbar navbar-main navbar-expand-lg position-sticky mt-2 top-1 p-2 px-3 mx-4 bg-white shadow-blur  border-radius-xl z-index-sticky"
      data-scroll="true"> <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-2">
             <li class="breadcrumb-item text-sm">

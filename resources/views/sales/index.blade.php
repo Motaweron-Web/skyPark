@@ -40,7 +40,7 @@
                       <div class="numbers">
                         <p class="text-sm mb-0 text-capitalize font-weight-bold">New Clients</p>
                         <h5 class="font-weight-bolder mb-0">
-                          +3,462
+                          +{{$new_clients}}
                         </h5>
                       </div>
                     </div>
@@ -61,7 +61,7 @@
                       <div class="numbers">
                         <p class="text-sm mb-0 text-capitalize font-weight-bold">Clients</p>
                         <h5 class="font-weight-bolder mb-0">
-                          20,300
+                          {{$clients_count}}
                         </h5>
                       </div>
                     </div>
@@ -83,8 +83,8 @@
             <div class="card-header pb-0">
               <h6>Clients overview</h6>
               <p class="text-sm">
-                <i class="fa fa-arrow-up text-success"></i>
-                <span class="font-weight-bold">4% more</span> in 2021
+{{--                <i class="fa fa-arrow-up text-success"></i>--}}
+{{--                <span class="font-weight-bold">4% more</span> in 2021--}}
               </p>
             </div>
             <div class="card-body p-2">
@@ -124,21 +124,10 @@
         new Chart(ctx2, {
             type: "line",
             data: {
-                labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                datasets: [{
-                    label: "New Clients",
-                    tension: 0.4,
-                    borderWidth: 0,
-                    pointRadius: 0,
-                    borderColor: "#cb0c9f",
-                    borderWidth: 3,
-                    backgroundColor: gradientStroke1,
-                    fill: true,
-                    data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-                    maxBarThickness: 6
-                },
+                labels: [@foreach($clients as $client) "{{$client['month']}}", @endforeach],
+                datasets: [
                     {
-                        label: "Current Clients",
+                        label: "Clients",
                         tension: 0.4,
                         borderWidth: 0,
                         pointRadius: 0,
@@ -146,7 +135,7 @@
                         borderWidth: 3,
                         backgroundColor: gradientStroke2,
                         fill: true,
-                        data: [30, 90, 40, 140, 290, 290, 340, 230, 400],
+                        data: [@foreach($clients as $client) "{{$client['count']}}", @endforeach],
                         maxBarThickness: 6
                     },
                 ],

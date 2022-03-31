@@ -7,8 +7,10 @@ use App\Models\Bracelets;
 use App\Models\Reservations;
 use App\Models\Ticket;
 use App\Models\TicketRevModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use phpDocumentor\Reflection\Types\Object_;
 
 class GroupAccessController extends Controller
 {
@@ -20,60 +22,74 @@ class GroupAccessController extends Controller
     public function index(Request $request){
 
         if ($request->ajax()) {
-
             $reservation = Reservations::where('status','append')
-                ->whereDate('day', date('Y-m-d'))
                 ->where(function ($query_all)use($request){
                     $query_all->where('custom_id', $request->search)
                         ->orwhere('ticket_num', $request->search)
-                        ->orwhere('client_name', 'like', '%' . $request->search . '%')
                         ->orWhere('phone', $request->search);
                 })
                 ->with('append_models.type');
 
-
+            $model = TicketRevModel::where('coupon_num',$request->search)->first();
+            if($model){
+                $reservation = Reservations::where('id',$model->rev_id)->get();
+            }
 
             $bracelet_numbers = [];
             $birthDays = [];
             $names = [];
             $returnArray = [];
-
             if ($reservation->count() > 0) {
-                foreach ($reservation->first()->append_models as $key => $model) {
-                    $smallArray = [];
-                    $smallArray[] = '#' . $reservation->first()->custom_id ?? '';
-                    $smallArray[] = '#' . $model->type->title ?? '';
-                    $custom_ids[] = $reservation->first()->custom_id ?? '';
+//                if($reservation->first()->is_coupon == '0'){
+//                    $reservation = $reservation->first()->where('day', date('Y-m-d'));
+//                }
+//                else{
+//                    $reservation = $reservation->first()->where('coupon_end','>=', Carbon::today());
+//                }
+//                return $reservation->first();
+                if($reservation->count() > 0){
+                    foreach ($reservation->first()->append_models as $key => $model) {
+                        $smallArray = [];
+                        $smallArray[] = '#' . $reservation->first()->ticket_num ?? '';
+                        if($model->type)
+                            $smallArray[] = '#' . $model->type->title;
+                        else
+                            $smallArray[] = 'Not Selected';
 
-                    ///////////////////////////// bracelet /////////////////
-                    $bracelet = view('sales.layouts.groupAccess.bracelet', compact('model'));
-                    $smallArray[] = "$bracelet";
-                    $bracelet_numbers[] = "$bracelet";
+                        $custom_ids[] = $reservation->first()->ticket_num ?? '';
 
-                    ///////////////////////////// name /////////////////
-                    $name = view('sales.layouts.groupAccess.name', compact('model'));
-                    $smallArray[] = "$name";
-                    $names[] = "$name";
-                    ///////////////////////////// birthDays /////////////////
-                    $birthDay = view('sales.layouts.groupAccess.birthDay', compact('model'));
-                    $smallArray[] = "$birthDay";
-                    $birthDays[] = "$birthDay";
-                    ///////////////////////////// gender /////////////////
-                    $gender = view('sales.layouts.groupAccess.gender', compact('model'));
-                    $smallArray[] = "$gender";
-                    ///////////////////////////// actions /////////////////
-                    $actions = view('sales.layouts.groupAccess.actions', compact('model', 'key'));
-                    $smallArray[] = "$actions";
+                        ///////////////////////////// bracelet /////////////////
+                        $bracelet = view('sales.layouts.groupAccess.bracelet', compact('model'));
+                        $smallArray[] = "$bracelet";
+                        $bracelet_numbers[] = "$bracelet";
+
+                        ///////////////////////////// name /////////////////
+                        $name = view('sales.layouts.groupAccess.name', compact('model'));
+                        $smallArray[] = "$name";
+                        $names[] = "$name";
+                        ///////////////////////////// birthDays /////////////////
+                        $birthDay = view('sales.layouts.groupAccess.birthDay', compact('model'));
+                        $smallArray[] = "$birthDay";
+                        $birthDays[] = "$birthDay";
+                        ///////////////////////////// gender /////////////////
+                        $gender = view('sales.layouts.groupAccess.gender', compact('model'));
+                        $smallArray[] = "$gender";
+                        ///////////////////////////// actions /////////////////
+                        $actions = view('sales.layouts.groupAccess.actions', compact('model', 'key'));
+                        $smallArray[] = "$actions";
 
 
-                    $smallArray[] = "$gender";
+                        $smallArray[] = "$gender";
 
-                    $returnArray[] = $smallArray;
+                        $returnArray[] = $smallArray;
+                    }
+                    return response()->json(['status' => 200, 'backArray' => $returnArray]);
                 }
-                return response()->json(['status' => 200, 'backArray' => $returnArray]);
-
+//                else{
+//                    // لو الحجر تاريخه انتهي
+//                    return response()->json(['status' => 405]);
+//                }
             }
-
             return response()->json(['status' => 300,]);
         }
 

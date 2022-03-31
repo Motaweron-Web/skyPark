@@ -484,6 +484,9 @@ table.dataTable > tbody > tr.child span.dtr-title::after {
     background-color: #a6c64c;
     color: #ffffff;
 }
+.controlIcons .icon:hover  a{
+    color: #ffffff;
+}
 
 .controlIcons .icon:last-child {
     margin: 0;
@@ -1079,17 +1082,22 @@ table.dataTable > tbody > tr.child span.dtr-title::after {
 /*# sourceMappingURL=style.css.map */
 .myBarcode {
     position: relative;
-    padding: 15px;
+    padding: 15px 15px 0;
+    transform: scale(.9);
+    transform-origin: left top;
+}
+.myBarcode div {
+    height: 60px !important;
 }
 
-[style="font-size:0;position:relative;width:246px;height:30px;"] {
-    height: 50px !important;
-    width: 100% !important;
-}
+/*[style="font-size:0;position:relative;width:246px;height:30px;"] {*/
+/*    height: 50px !important;*/
+/*    width: 100% !important;*/
+/*}*/
 
-[style="font-size:0;position:relative;width:246px;height:30px;"] div {
-    height: 50px !important;
-}
+/*[style="font-size:0;position:relative;width:246px;height:30px;"] div {*/
+/*    height: 50px !important;*/
+/*}*/
 ::-webkit-input-placeholder {
     text-transform: capitalize !important;
 }

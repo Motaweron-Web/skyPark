@@ -71,7 +71,7 @@
         <li class="slide">
             <a class="side-menu__item" href="{{route('coupons.index')}}">
                 <i class="fe fe-paperclip side-menu__icon"></i>
-                <span class="side-menu__label">Coupons</span>
+                <span class="side-menu__label">Corporations</span>
             </a>
         </li>
 

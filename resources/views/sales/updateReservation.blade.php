@@ -349,7 +349,7 @@
                                     <div class="row align-items-end">
                                         <div class="col-md-6 p-2">
                                             <label class="form-label"> Discount Value </label>
-                                            <input type="number" class="form-control" id="calcDiscount">
+                                            <input type="number" class="form-control" id="calcDiscount" step="any">
                                         </div>
                                         <div class="col-md-6 p-2 discType">
                                             <label class="form-label d-block"> Discount Type </label>

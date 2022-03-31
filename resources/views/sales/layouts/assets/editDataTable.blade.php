@@ -268,6 +268,7 @@
     });
     var totalBeforeDiscount = 0;
     $(document).on('click', '#secondNext', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         if (table.rows().count() != 0) {
             $('.firstInfo').empty();
             $('.firstInfo').append(`
@@ -296,7 +297,7 @@
                     totalBeforeDiscount += price;
                 }
             });
-            localStorage.setItem('price',totalBeforeDiscount)
+            localStorage.setItem('priceOfVisitor',totalBeforeDiscount)
         } else {
             toastr.error("at least one model should be exists");
             $("button[title='products']").removeClass('js-active');
@@ -313,6 +314,7 @@
     var Percent = $('#offerType1'),
         Amount = $('#offerType2');
     $(document).on('click', '#thirdNext', function () {
+        totalBeforeDiscount = parseInt(localStorage.getItem('priceOfVisitor'));
         if (myTable.rows().count() != 0) {
             $('.secondInfo').empty();
             $('.secondInfo').append(`
@@ -344,11 +346,14 @@
                 }
             });
         }
+        localStorage.setItem('price',totalBeforeDiscount)
         if (window.location.href.indexOf("ticket") > -1) {
-            totalBeforeDiscount += {{$setting->family_tax}} * totalBeforeDiscount / 100;
+            totalBeforeDiscount += {{$setting->family_tax}}*totalBeforeDiscount/100;
+            totalBeforeDiscount = parseFloat(totalBeforeDiscount).toFixed(2);
             total.text(totalBeforeDiscount);
-        } else if (window.location.href.indexOf("update_reservation") > -1) {
-            totalBeforeDiscount += {{$setting->rev_tax}} * totalBeforeDiscount / 100;
+        }else if(window.location.href.indexOf("update_reservation") > -1){
+            totalBeforeDiscount += {{$setting->rev_tax}}*totalBeforeDiscount/100;
+            totalBeforeDiscount = parseFloat(totalBeforeDiscount).toFixed(2);
             total.text(totalBeforeDiscount);
         }
         $('#totalInfoPrice').text(totalBeforeDiscount + " EGP")
@@ -367,11 +372,11 @@
                             <li><label> Discount : </label> <strong id="totalInfoDiscount">0 EGP</strong></li>
                             <li><label> Revenue : </label> <strong id="totalInfoRevenue">${totalBeforeDiscount} EGP</strong></li>
             `)
-        } else if (window.location.href.indexOf("reservations") > -1) {
+        } else if (window.location.href.indexOf("update_reservation") > -1) {
             $('.thirdInfo').append(`
                         <h6 class="billTitle"> Totals </h6>
                         <ul>
-                            <li><label> total before tax : </label> <strong id="beforeTax">${(totalBeforeDiscount - {{$setting->rev_tax}} * totalBeforeDiscount / 100).toFixed(2)} EGP</strong></li>
+                            <li><label> total before tax : </label> <strong id="beforeTax">${localStorage.getItem('price')} EGP</strong></li>
                             <li><label> Tax : </label> <strong id="rev_tax">` + {{$setting->rev_tax}} + `%</strong></li>
                             <li><label> total after tax : </label> <strong id="totalInfoPrice">${totalBeforeDiscount} EGP</strong></li>
                             <li><label> Discount : </label> <strong id="totalInfoDiscount">0 EGP</strong></li>
@@ -398,10 +403,10 @@
             $('#calcDiscount').val('');
             $('#totalInfoDiscount').text(0 + " EGP")
             $('#discount').text('0');
-            $('#revenue').text(total.text());
+            $('#revenue').text(parseFloat(total.text()).toFixed(2));
         } else {
             $('#discount').text($('#calcDiscount').val() + "%")
-            var after = (parseInt(total.text()) - $('#calcDiscount').val() * parseInt(total.text()) / 100).toFixed(2);
+            var after = (parseFloat(total.text()) - $('#calcDiscount').val() * parseFloat(total.text()) / 100).toFixed(2);
             $('#revenue').text(after)
             $('#totalInfoPrice').text(total.text() + " EGP")
             $('#totalInfoRevenue').text(after + " EGP")
@@ -411,15 +416,15 @@
     }
 
     function checkAmount() {
-        if ($('#calcDiscount').val() > parseInt(total.text() || $('#calcDiscount').val() < 0)) {
+        if ($('#calcDiscount').val() > parseFloat(total.text() || $('#calcDiscount').val() < 0)) {
             toastr.error("discount amount more than total !");
             $('#totalInfoDiscount').text(0 + " EGP")
             $('#calcDiscount').val('');
             $('#discount').text('0');
-            $('#revenue').text(total.text());
+            $('#revenue').text(parseFloat(total.text()).toFixed(2));
         } else {
             $('#discount').text($('#calcDiscount').val() || 0)
-            var after = (parseInt(total.text()) - $('#calcDiscount').val());
+            var after = (parseFloat(total.text()) - $('#calcDiscount').val()).toFixed(2);
             $('#revenue').text(after)
             $('#totalInfoPrice').text(total.text() + " EGP")
             $('#totalInfoRevenue').text(after + " EGP")
@@ -447,8 +452,8 @@
         $('.productInsertRows').remove();
         $('.secondInfo').html('');
         $('.thirdInfo').html('')
-        console.log(localStorage.getItem('price'))
-        totalBeforeDiscount = parseInt(localStorage.getItem('price'));
+        $('#discount').text('0')
+        totalBeforeDiscount = parseFloat(localStorage.getItem('priceOfVisitor')).toFixed(2);
     });
 
     $.ajaxSetup({

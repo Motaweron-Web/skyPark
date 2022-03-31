@@ -2,8 +2,10 @@
 <script type="text/javascript" src="{{asset('assets/sales')}}/js/popper.min.js"></script>
 <script type="text/javascript" src="{{asset('assets/sales')}}/js/bootstrap.min.js"></script>
 <!-- plugins -->
-<script type="text/javascript" src="{{asset('assets/sales')}}/js/plugins/perfect-scrollbar.min.js"></script>
-<script type="text/javascript" src="{{asset('assets/sales')}}/js/plugins/smooth-scrollbar.min.js"></script>
+{{--<script type="text/javascript" src="{{asset('assets/sales')}}/js/plugins/perfect-scrollbar.min.js"></script>--}}
+{{--<script type="text/javascript" src="{{asset('assets/sales')}}/js/plugins/smooth-scrollbar.min.js"></script>--}}
+
+
 <script type="text/javascript" src="{{asset('assets/sales')}}/js/app.min.js"></script>
 <!-- custom Js -->
 <script src="{{asset('assets/sales')}}/js/plugins/datatables.min.js"></script>

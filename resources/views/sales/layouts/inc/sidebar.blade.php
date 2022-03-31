@@ -100,7 +100,7 @@
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
                         <i class="fas fa-ticket-alt"></i>
                     </div>
-                    <span class="nav-link-text ms-1">Coupon</span>
+                    <span class="nav-link-text ms-1">Corporations</span>
                 </a>
             </li>
             <!-- nav-item  -->

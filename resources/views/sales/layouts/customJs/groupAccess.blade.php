@@ -61,6 +61,9 @@
                 } else if (data.status === 300) {
                     toastr.info('there is no data')
                 }
+                else if(data.status === 405){
+                    toastr.warning('Reservation Date is Expired')
+                }
 
             },
 

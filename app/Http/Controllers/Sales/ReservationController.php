@@ -44,9 +44,12 @@ class ReservationController extends Controller
 
     public function searchForReservations(request $request){
         $reservation = Reservations::query();
-        $reservation = $reservation->whereHas('models');
-        if ($request->searchText != null)
-            $reservation->where('ticket_num',$request->searchText);
+        $reservation = $reservation->whereHas('models')->where('is_coupon','0');
+        if ($request->searchText != null){
+            $reservation->where('ticket_num',$request->searchText)
+                ->orWhere('phone',$request->searchText)
+                ->orWhere('client_name','like','%'.$request->searchText.'%');
+        }
 
         if ($request->has('choices_type') && $request->choices_type != 'all')
             $reservation->where('event_id',$request->choices_type);
