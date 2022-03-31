@@ -1,7 +1,7 @@
 @extends('Admin/layouts/master')
 
-@section('title') {{$setting->title}} | Coupons @endsection
-@section('page_name') Coupons @endsection
+@section('title') {{$setting->title}} | Corporations @endsection
+@section('page_name') Corporations @endsection
 @section('css')
     @include('layouts.loader.formLoader.loaderCss')
 @endsection
@@ -11,12 +11,12 @@
         <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">{{$setting->title}} Coupons</h3>
+                    <h3 class="card-title">Corporations Reservation</h3>
                     <div class="">
                         <button class="btn btn-secondary btn-icon text-white addBtn">
 									<span>
 										<i class="fe fe-plus"></i>
-									</span> Add Coupon
+									</span> Add New
                         </button>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Delete Coupon</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Delete Data</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>

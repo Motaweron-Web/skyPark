@@ -1,18 +1,18 @@
 @extends('sales.layouts.master')
 @section('page_title')
-    {{$setting->title}} | Coupons
+    {{$setting->title}} | Corporations
 @endsection
 @section('css')
     @include('layouts.loader.formLoader.loaderCss')
 @endsection
 @section('content')
-      <h2 class="MainTiltle mb-5 ms-4"> Coupons </h2>
+      <h2 class="MainTiltle mb-5 ms-4"> Corporations </h2>
       <form class="card p-2 py-4 mt-3 ">
 
         <div class="d-flex justify-content-between align-items-center flex-wrap px-3 pb-3 border-bottom mb-3">
-          <h6> {{$rev->client_name}} Coupons Visitors </h6>
+          <h6> {{$rev->client_name}} Corporation Visitors </h6>
           <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCoupon">
-            <i class="far fa-plus me-1"></i> Add New Visitor
+            <i class="far fa-plus me-1"></i> New Visitor
           </button>
         </div>
         <!-- table -->
@@ -81,7 +81,7 @@
         <div class="modal-dialog modal-danger modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h6 class="modal-title" id="modal-title-print">Add Coupon</h6>
+              <h6 class="modal-title" id="modal-title-print">Add New</h6>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                 <i class="fal fa-times text-dark fs-4"></i>
               </button>
