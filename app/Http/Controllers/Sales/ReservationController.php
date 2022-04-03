@@ -30,11 +30,15 @@ use Illuminate\View\View;
 
 class ReservationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Application|Factory|View
-     */
+
+
+    function __construct()
+    {
+
+        $this->middleware('permission:Reservation');
+
+    }
+
     public function index()
     {
         $events = Event::latest()->get();

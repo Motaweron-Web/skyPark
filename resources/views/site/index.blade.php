@@ -33,7 +33,7 @@
               </p>
               <div class="icons row">
                 <div class="col p-1 animate__animated animate__fadeInUp wow">
-                  <a href="safety.html" class="icon">
+                  <a href="{{route('safety')}}" class="icon">
                     <i class="fas fa-user-hard-hat"></i>
                     <span>SAFE</span>
                   </a>

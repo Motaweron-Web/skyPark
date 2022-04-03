@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Traits\PhotoTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
 
 class UsersController extends Controller
@@ -27,6 +29,13 @@ class UsersController extends Controller
                                     <i class="fas fa-trash"></i>
                             </button>
                        ';
+                })
+                ->addColumn('role', function ($users) {
+                    $value = [];
+                    foreach ($users->roles as $role){
+                        $value[] .= "<span class='badge badge-success'>$role->name</span>";
+                    }
+                    return $value;
                 })
                 ->editColumn('created_at', function ($users) {
                     return $users->created_at->diffForHumans();
@@ -56,7 +65,8 @@ class UsersController extends Controller
 
     public function create()
     {
-        return view('Admin/users.parts.create');
+        $roles = Role::all();
+        return view('Admin/users.parts.create',compact('roles'));
     }
 
     public function store(request $request): \Illuminate\Http\JsonResponse
@@ -65,6 +75,7 @@ class UsersController extends Controller
             'user_name' => 'required|unique:users',
             'name'      => 'required',
             'password'  => 'required|min:6',
+            'roles'     => 'required',
             'photo'     => 'nullable',
         ]);
         if ($request->has('photo')) {
@@ -72,7 +83,9 @@ class UsersController extends Controller
             $inputs['photo'] = 'assets/uploads/users/' . $file_name;
         }
         $inputs['password'] = Hash::make($request->password);
-        if (User::create($inputs))
+        unset($inputs['roles']);
+        $user = User::create($inputs);
+        if ($user->assignRole($request->roles))
             return response()->json(['status' => 200]);
         else
             return response()->json(['status' => 405]);
@@ -80,7 +93,11 @@ class UsersController extends Controller
 
     public function edit(User $user)
     {
-        return view('Admin/users.parts.edit', compact('user'));
+        $roles = Role::all();
+        $rolePermissions = DB::table("model_has_roles")->where("model_id",$user->id)
+            ->pluck('model_has_roles.role_id')
+            ->all();
+        return view('Admin/users.parts.edit', compact('user','roles','rolePermissions'));
     }
 
     public function update(request $request)
@@ -91,6 +108,7 @@ class UsersController extends Controller
             'name'      => 'required',
             'photo'     => 'nullable',
             'password'  => 'nullable|min:6',
+            'roles'     => 'required',
         ]);
         if ($request->has('photo')) {
             $file_name = $this->saveImage($request->photo, 'assets/uploads/users');
@@ -100,7 +118,10 @@ class UsersController extends Controller
             $inputs['password'] = Hash::make($request->password);
         else
             unset($inputs['password']);
+            unset($inputs['roles']);
         $user = User::findOrFail($request->id);
+        DB::table('model_has_roles')->where('model_id',$user->id)->delete();
+        $user->assignRole($request->roles);
         if ($user->update($inputs))
             return response()->json(['status' => 200]);
         else

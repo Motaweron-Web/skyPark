@@ -11,11 +11,14 @@ use Illuminate\Http\Request;
 
 class CapacityController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    function __construct()
+    {
+
+        $this->middleware('permission:Capacity');
+
+    }
+
+
     public function index(Request $request)
     {
         ///////////////////////// فتح الكاليندر //////////////////////

@@ -56,6 +56,10 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin','namespace'=>'Admin']
     Route::resource('users','UsersController');
     Route::POST('users.delete','UsersController@delete')->name('users.delete');
 
+    #### Roles ####
+    Route::resource('roles','RoleController');
+    Route::POST('role.delete','RoleController@delete')->name('roles.delete');
+
     #### Capacity ####
     Route::resource('capacities','CapacityController');
     Route::POST('capacities.delete','CapacityController@delete')->name('capacities.delete');

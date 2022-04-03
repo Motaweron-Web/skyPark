@@ -30,7 +30,8 @@
                                 <th class="min-w-50px">Photo</th>
                                 <th class="min-w-50px">Name</th>
                                 <th class="min-w-125px">User Name</th>
-                                <th class="min-w-125px">Register</th>
+                                <th class="min-w-50px">Roles</th>
+                                <th class="min-w-50px">created at</th>
                                 <th class="min-w-50px rounded-end">Actions</th>
                             </tr>
                             </thead>
@@ -92,6 +93,7 @@
             {data: 'photo', name: 'photo'},
             {data: 'name', name: 'name'},
             {data: 'user_name', name: 'user_name'},
+            {data: 'role', name: 'role'},
             {data: 'created_at', name: 'created_at'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]

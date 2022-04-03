@@ -14,11 +14,14 @@ use phpDocumentor\Reflection\Types\Object_;
 
 class GroupAccessController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    function __construct()
+    {
+
+        $this->middleware('permission:Group Access');
+
+    }
+
     public function index(Request $request){
 
         if ($request->ajax()) {

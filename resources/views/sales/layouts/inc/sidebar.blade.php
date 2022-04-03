@@ -6,7 +6,7 @@
            aria-hidden="true" id="iconSidenav"></i>
         <a class="navbar-brand m-0" href="/">
             <img src="{{asset($setting->logo)}}" class="navbar-brand-img h-100" alt="main_logo">
-            <!-- <span class="ms-1 font-weight-bold">{{$setting->title}}</span> -->
+        <!-- <span class="ms-1 font-weight-bold">{{$setting->title}}</span> -->
         </a>
     </div>
     <hr class="horizontal dark mt-0">
@@ -24,7 +24,8 @@
             </li>
             <!-- nav-item  -->
             <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#familySale" class="nav-link " id="main-family" aria-controls="familySale" role="button"
+                <a data-bs-toggle="collapse" href="#familySale" class="nav-link " id="main-family"
+                   aria-controls="familySale" role="button"
                    aria-expanded="false">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
@@ -34,32 +35,39 @@
                 </a>
                 <div class="collapse  " id="familySale">
                     <ul class="nav ms-4 ps-3">
-                        <li class="nav-item createClient">
-                            <a class="nav-link createClient"  href="{{route('client.create')}}">
-                                <span class="sidenav-mini-icon"> A </span>
-                                <span class="sidenav-normal"> Add Client </span>
-                            </a>
-                        </li>
+                        @can('Add Client')
+                            <li class="nav-item createClient">
+                                <a class="nav-link createClient" href="{{route('client.create')}}">
+                                    <span class="sidenav-mini-icon"> A </span>
+                                    <span class="sidenav-normal"> Add Client </span>
+                                </a>
+                            </li>
+                        @endcan
 
-                        <li class="nav-item tickets">
-                            <a class="nav-link tickets"  href="{{route('ticket.search')}}">
-                                <span class="sidenav-mini-icon"> T </span>
-                                <span class="sidenav-normal"> Edit Tickets </span>
-                            </a>
-                        </li>
+                        @can('Edit Ticket')
+                            <li class="nav-item tickets">
+                                <a class="nav-link tickets" href="{{route('ticket.search')}}">
+                                    <span class="sidenav-mini-icon"> T </span>
+                                    <span class="sidenav-normal"> Edit Tickets </span>
+                                </a>
+                            </li>
+                        @endcan
 
-                        <li class="nav-item familyAccess">
-                            <a class="nav-link familyAccess" href="{{route('familyAccess.index')}}">
-                                <span class="sidenav-mini-icon"> F </span>
-                                <span class="sidenav-normal"> Family Access </span>
-                            </a>
-                        </li>
+                        @can('Family Access')
+                            <li class="nav-item familyAccess">
+                                <a class="nav-link familyAccess" href="{{route('familyAccess.index')}}">
+                                    <span class="sidenav-mini-icon"> F </span>
+                                    <span class="sidenav-normal"> Family Access </span>
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
                 </div>
             </li>
             <!-- nav-item  -->
             <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#groupSale" class="nav-link " id="main-group" aria-controls="groupSale" role="button"
+                <a data-bs-toggle="collapse" href="#groupSale" class="nav-link " id="main-group"
+                   aria-controls="groupSale" role="button"
                    aria-expanded="false">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
@@ -69,41 +77,51 @@
                 </a>
                 <div class="collapse" id="groupSale">
                     <ul class="nav ms-4 ps-3">
+                        @can('Reservation')
+                            <li class="nav-item createReservation">
+                                <a class="nav-link createReservation" href="{{route('reservations.index')}}">
+                                    <span class="sidenav-mini-icon"> R </span>
+                                    <span class="sidenav-normal"> Reservations </span>
+                                </a>
+                            </li>
+                        @endcan
 
-                        <li class="nav-item createReservation">
-                            <a class="nav-link createReservation" href="{{route('reservations.index')}}">
-                                <span class="sidenav-mini-icon"> R </span>
-                                <span class="sidenav-normal"> Reservations </span>
-                            </a>
-                        </li>
+                        @can('Capacity')
+                            <li class="nav-item capacity">
+                                <a class="nav-link capacity" href="{{route('capacity.index')}}?month={{date('Y-m')}}">
+                                    <span class="sidenav-mini-icon"> C </span>
+                                    <span class="sidenav-normal"> Capacity </span>
+                                </a>
+                            </li>
+                        @endcan
 
-                        <li class="nav-item capacity">
-                            <a class="nav-link capacity" href="{{route('capacity.index')}}?month={{date('Y-m')}}">
-                                <span class="sidenav-mini-icon"> C </span>
-                                <span class="sidenav-normal"> Capacity </span>
-                            </a>
-                        </li>
-
-                        <li class="nav-item groupAccess">
-                            <a class="nav-link groupAccess" href="{{route('groupAccess.index')}}">
-                                <span class="sidenav-mini-icon"> G </span>
-                                <span class="sidenav-normal"> Group Access </span>
-                            </a>
-                        </li>
+                        @can('Group Access')
+                            <li class="nav-item groupAccess">
+                                <a class="nav-link groupAccess" href="{{route('groupAccess.index')}}">
+                                    <span class="sidenav-mini-icon"> G </span>
+                                    <span class="sidenav-normal"> Group Access </span>
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
                 </div>
             </li>
+
+        @can('Corporations')
             <!-- nav-item  -->
-            <li class="nav-item">
-                <a href="{{route('sales.coupons')}}" class="nav-link" id="coupon">
-                    <div
-                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
-                        <i class="fas fa-ticket-alt"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Corporations</span>
-                </a>
-            </li>
-            <!-- nav-item  -->
+                <li class="nav-item">
+                    <a href="{{route('sales.coupons')}}" class="nav-link" id="coupon">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
+                            <i class="fas fa-ticket-alt"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Corporations</span>
+                    </a>
+                </li>
+                <!-- nav-item  -->
+            @endcan
+
+            @can('Exit')
             <li class="nav-item">
                 <a href="{{route('exit.index')}}" class="nav-link" id="main-exit">
                     <div
@@ -113,6 +131,7 @@
                     <span class="nav-link-text ms-1">Exit</span>
                 </a>
             </li>
+            @endcan
         </ul>
     </div>
 </aside>

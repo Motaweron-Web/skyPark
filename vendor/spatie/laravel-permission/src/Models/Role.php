@@ -19,6 +19,7 @@ class Role extends Model implements RoleContract
     use RefreshesPermissionCache;
 
     protected $guarded = [];
+    public $guard_name = 'web';
 
     public function __construct(array $attributes = [])
     {

@@ -12,6 +12,13 @@ use Illuminate\Validation\Rule;
 
 class FamilyAccessController extends Controller
 {
+
+    function __construct()
+    {
+
+        $this->middleware('permission:Family Access');
+
+    }
     /**
      * Display a listing of the resource.
      *

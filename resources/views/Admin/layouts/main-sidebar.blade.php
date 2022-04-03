@@ -76,11 +76,16 @@
         </li>
 
         <li class="slide">
-            <a class="side-menu__item" href="{{route('users.index')}}">
+            <a class="side-menu__item" data-toggle="slide" href="#">
                 <i class="fe fe-user-plus side-menu__icon"></i>
-                <span class="side-menu__label">Employees</span>
+                <span class="side-menu__label">Employees</span><i class="angle fa fa-angle-right"></i>
             </a>
+            <ul class="slide-menu">
+                <li><a href="{{route('users.index')}}" class="slide-item" style="font-size: 14px">Employees List</a></li>
+                <li><a href="{{route('roles.index')}}" class="slide-item" style="font-size: 14px">Roles</a></li>
+            </ul>
         </li>
+
 
         <li class="slide">
             <a class="side-menu__item" href="{{route('capacities.index')}}">

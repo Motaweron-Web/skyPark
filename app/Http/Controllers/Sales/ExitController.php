@@ -14,6 +14,14 @@ use Illuminate\View\View;
 
 class ExitController extends Controller
 {
+
+    function __construct()
+    {
+
+        $this->middleware('permission:Exit');
+
+    }
+
     public function index(Request $request)
     {
         $returnArray = [];

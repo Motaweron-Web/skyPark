@@ -59,4 +59,10 @@ class HomeController extends Controller
             return redirect()->back()->withErrors($e->getMessage());
         }
     }
+    public function safety(){
+        return view('site.safety');
+    }
+//    public function offerDetails($id){
+//
+//    }
 }

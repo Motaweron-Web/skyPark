@@ -44,6 +44,8 @@
     40 => 'App\\Providers\\EventServiceProvider',
     41 => 'App\\Providers\\RouteServiceProvider',
     42 => 'Yoeunes\\Toastr\\ToastrServiceProvider',
+    43 => 'Spatie\\Permission\\PermissionServiceProvider',
+    44 => 'Collective\\Html\\HtmlServiceProvider',
   ),
   'eager' => 
   array (
@@ -76,6 +78,7 @@
     26 => 'App\\Providers\\EventServiceProvider',
     27 => 'App\\Providers\\RouteServiceProvider',
     28 => 'Yoeunes\\Toastr\\ToastrServiceProvider',
+    29 => 'Spatie\\Permission\\PermissionServiceProvider',
   ),
   'deferred' => 
   array (

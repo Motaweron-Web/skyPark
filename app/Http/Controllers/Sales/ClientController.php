@@ -11,6 +11,12 @@ use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
+    function __construct()
+    {
+
+        $this->middleware('permission:Add Client');
+
+    }
     /**
      * Display a listing of the resource.
      *

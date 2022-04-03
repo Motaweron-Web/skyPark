@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'Site\HomeController@index')->name('/');
 Route::get('offer_details/{id}', 'Site\HomeController@offerDetails')->name('offer_details');
 
+// safety
+Route::get('safety', 'Site\HomeController@safety')->name('safety');
+
 ## About
 Route::get('about_us', 'Site\HomeController@about')->name('about_us');
 

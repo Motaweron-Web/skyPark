@@ -1,37 +1,5 @@
-<!doctype html>
-<html>
-
-<head>
-  <!-- Required meta tags -->
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> {{$setting->title}} </title>
-  <!-- icon -->
-  <link rel="icon" type="image/x-icon" href="img/logo.svg">
-  <!-- Bootstrap -->
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="css/font.awesome.css">
-  <!-- swiper -->
-  <link rel="stylesheet" href="css/swiper-bundle.min.css">
-  <!-- animate -->
-  <link rel="stylesheet" href="css/animate.min.css">
-  <!-- atropos -->
-  <link rel="stylesheet" href="css/atropos.css">
-  <!-- fancyBox -->
-  <link type="text/css" rel="stylesheet" href="css/fancybox.css">
-  <!-- Custom style  -->
-  <link rel="stylesheet" href="css/style.css">
-</head>
-
-<body>
-  <!-- ================ Header ================= -->
-  <div id="Header"></div>
-  <!-- ================ /Header ================= -->
-  <!--(((((((((((((((((((((((()))))))))))))))))))))))-->
-  <!--((((((((((((((((((( content )))))))))))))))))))-->
-  <!--(((((((((((((((((((((((()))))))))))))))))))))))-->
+@extends('site.layouts.master')
+@section('content')
   <content>
 
     <!-- Main Banner  -->
@@ -41,7 +9,7 @@
       </button>
       <ul>
         <li>
-          <a href="index.html"> home </a>
+          <a href="{{route('/')}}"> home </a>
         </li>
         <li>
           <a href="#!" class="active"> SAFE </a>
@@ -71,7 +39,7 @@
                 <h3 class="sidebar-title">Recent Posts</h3>
                 <div class="d-flex position-relative mb-4 recent-posts-box">
                   <a href="blog-details.html">
-                    <img src="img/post1.jpg" class="flex-shrink-0 me-3" alt="...">
+                    <img src="{{asset('assets/site')}}/img/post1.jpg" class="flex-shrink-0 me-3" alt="...">
                   </a>
                   <div class="align-self-center">
                     <h5>
@@ -85,7 +53,7 @@
 
                 <div class="d-flex position-relative recent-posts-box">
                   <a href="blog-details.html">
-                    <img src="img/post2.jpg" class="flex-shrink-0 me-3" alt="...">
+                    <img src="{{asset('assets/site')}}/img/post2.jpg" class="flex-shrink-0 me-3" alt="...">
                   </a>
                   <div class="align-self-center">
                     <h5>
@@ -132,7 +100,7 @@
 
 
               <div class="img-div w-100">
-                <img src="img/safety.jpg" alt="">
+                <img src="{{asset('assets/site')}}/img/safety.jpg" alt="">
               </div>
 
               <p class="mt-5">Adventure is more than just a fun activity to spend your time
@@ -161,33 +129,4 @@
     </section>
 
   </content>
-  <!--(((((((((((((((((((((((()))))))))))))))))))))))-->
-  <!--((((((((((((((((( / content )))))))))))))))))))-->
-  <!--(((((((((((((((((((((((()))))))))))))))))))))))-->
-  <!-- ================ Footer ================= -->
-  <div id="Footer"></div>
-  <!-- ================ /Footer ================= -->
-  <!--////////////////////////////////////////////////////////////////////////////////-->
-  <!--////////////////////////////////////////////////////////////////////////////////-->
-  <!--////////////////////////////////////////////////////////////////////////////////-->
-  <!--/////////////////////////////JavaScript/////////////////////////////////////////-->
-  <!--////////////////////////////////////////////////////////////////////////////////-->
-  <!--////////////////////////////////////////////////////////////////////////////////-->
-  <!--////////////////////////////////////////////////////////////////////////////////-->
-  <script src="js/jquery.min.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/swiper-bundle.min.js"></script>
-  <script src="js/fancybox.js"></script>
-  <script src="js/atropos.min.js"></script>
-  <script src="js/fancybox.umd.js"></script>
-  <script src="js/WOW.js"></script>
-  </script>
-  <script src="js/Custom.js"></script>
-  <script>
-    $('#Header').load("Header.html");
-    $('#Footer').load("Footer.html");
-  </script>
-</body>
-
-</html>
+@endsection
