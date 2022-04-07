@@ -14,7 +14,7 @@
                     <div class="col-sm-12 p-1">
                         <label class="form-label fs-4"> <i class="fas fa-ticket-alt me-2"></i> Search </label>
                         <div class="d-flex">
-                            <input type="text" class="form-control" placeholder="Search with sale number ..." id="searchText">
+                            <input type="text" class="form-control" placeholder="type here ..." id="searchText">
                             <button type="button" id="SearchBtn"
                                     class="input-group-text ms-2 bg-gradient-primary px-4 text-body"
                                     onclick="doSearch()"><i

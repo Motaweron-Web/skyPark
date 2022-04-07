@@ -3,6 +3,7 @@
 <head>
 
     <meta charset="utf-8">
+    <title>{{$setting->title}} | {{$model->coupon_num}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link id="pagestyle" href="{{asset('assets/sales')}}/css/app.min.css" rel="stylesheet"/>
     <link rel="icon" type="image/png" href="{{asset('assets/sales')}}/img/favicon.png">
@@ -12,6 +13,7 @@
 
 
         body {
+            direction: ltr;
             margin: 0;
             padding: 0;
         }

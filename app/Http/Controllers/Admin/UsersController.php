@@ -114,11 +114,12 @@ class UsersController extends Controller
             $file_name = $this->saveImage($request->photo, 'assets/uploads/users');
             $inputs['photo'] = 'assets/uploads/users/' . $file_name;
         }
-        if ($request->has('password'))
+        if ($request->has('password') && $request->password != null)
             $inputs['password'] = Hash::make($request->password);
         else
             unset($inputs['password']);
-            unset($inputs['roles']);
+
+        unset($inputs['roles']);
         $user = User::findOrFail($request->id);
         DB::table('model_has_roles')->where('model_id',$user->id)->delete();
         $user->assignRole($request->roles);

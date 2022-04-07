@@ -25,14 +25,12 @@
     }
 
     $(document).on('click', '#searchButton', function () {
-        var searchValue = $('#searchValue').val();
+        var searchValue = $('#searchValue').val(), url;
         if (searchValue.length == 0) {
-            toastr.info('Please fill this input')
-            return true;
+             url = "{{route('groupAccess.index')}}?search=all"
+        }else{
+             url = "{{route('groupAccess.index')}}?search=" + searchValue
         }
-
-        var url = "{{route('groupAccess.index')}}?search=" + searchValue
-
         getSearchValue(url)
 
     })
@@ -62,7 +60,7 @@
                     toastr.info('there is no data')
                 }
                 else if(data.status === 405){
-                    toastr.warning('Reservation Date is Expired')
+                    toastr.warning('Reservation Date is Invalid')
                 }
 
             },
@@ -178,7 +176,7 @@
 
         if (firstBracelet.length <= 2)
         {
-            toastr.warning('write right bracelet')
+            toastr.warning('Please write a correct bracelet')
             return true
         }
 
@@ -283,13 +281,20 @@
 
         $.post(url, method, function (data) {
             if (data) {
-                $('#check'+id).addClass('checked');
-                $('#check'+id).removeClass('check');
-                $('#birthDay'+id).attr('disabled', true);
-                $('#braceletNumber'+id).attr('disabled', true);
-                $('#option1'+id).attr('disabled', true);
-                $('#option2'+id).attr('disabled', true);
-                $('#name'+id).attr('disabled', true);
+                if(data.status == 405){
+                    toastr.error('An Amount Of '+data.rem_amount+' EGP Is Unpaid');
+                    $('#payBtn').removeClass('d-none');
+                    $('#payBtn').attr('data-ticket_id',data.rev_id);
+                    $('#idOfTicket').val(data.rev_id);
+                }else {
+                    $('#check' + id).addClass('checked');
+                    $('#check' + id).removeClass('check');
+                    $('#birthDay' + id).attr('disabled', true);
+                    $('#braceletNumber' + id).attr('disabled', true);
+                    $('#option1' + id).attr('disabled', true);
+                    $('#option2' + id).attr('disabled', true);
+                    $('#name' + id).attr('disabled', true);
+                }
             }
             $('.spinner').hide()
 
@@ -313,6 +318,29 @@
                 toastr.error('there in an error');
             }
         })
-
     }
+    // Pay Amount
+    $(document).on('click', '#confirmBtn', function (event) {
+        var id = $('#idOfTicket').val();
+        $('#confirmBtn').html('<span class="spinner-border spinner-border-sm mr-2" ' +
+            ' ></span> <span style="margin-left: 4px;">working</span>').attr('disabled', true);
+        $.ajax({
+            type: 'POST',
+            url: "{{route('updateRevAmount')}}",
+            data: {
+                '_token': "{{csrf_token()}}",
+                'id': id,
+            },
+            success: function (data) {
+                if (data.status === 200) {
+                    $('#payBtn').addClass('d-none');
+                    toastr.success(data.message)
+                } else {
+                    toastr.error(data.message)
+                }
+                $('#confirmBtn').html(`Confirm`).attr('disabled', false);
+                $("#payAmount").modal('hide');
+            }
+        });
+    });
 </script>

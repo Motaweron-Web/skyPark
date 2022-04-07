@@ -39,6 +39,7 @@ class CouponController extends Controller
             'coupon_end.after' => 'Coupon End Date Should Be After Start Date'
         ]);
         $rev = Reservations::create([
+            'add_by'         => auth()->user()->id,
             'client_name' => $request->client_name,
             'phone' => $request->phone,
             'email' => $request->email,

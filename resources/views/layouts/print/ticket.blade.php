@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="rtl">
+<title>{{$setting->title}} | #{{$ticket->ticket_num}}</title>
 <head>
 
     <meta charset="utf-8">
@@ -9,6 +10,7 @@
     <link href="{{asset('assets/sales')}}/css/style.css" rel="stylesheet"/>
     <style>
         body {
+            direction: ltr;
             margin: 0;
             padding: 0;
         }
@@ -41,11 +43,10 @@
                 <div class="info">
                     <h6 class="billTitle"> ticket <span dir="rtl"> {{$ticket->ticket_num}}#</span></h6>
                     <ul>
+                        <li><label> Cashier Name : </label> <strong> {{auth()->user()->name}} </strong></li>
                         <li><label> Visit Date : </label>
-                            <strong> {{date('d  / m / Y',strtotime($ticket->day))}} </strong></li>
+                            <strong> {{date('d  / m / Y',strtotime($ticket->visit_date))}} </strong></li>
                         <li><label> Reservation Duration : </label> <strong> {{$ticket->hours_count}} h </strong></li>
-                        <li><label> Shift : </label> <strong> {{date('hA',strtotime($ticket->shift->from))}}
-                                : {{date('hA',strtotime($ticket->shift->to))}} </strong></li>
                         <li><label> Print Time : </label> <strong> {{$date}} </strong></li>
                     </ul>
                 </div>
@@ -62,8 +63,8 @@
                             @foreach($models as $model)
                                 <div class="item row">
                                     <span class="col">{{$model->type->title}}</span>
-                                    <span class="col"> x{{$model->count_all}} </span>
-                                    <span class="col">EGP {{$model->sum_all}}  </span>
+                                    <span class="col"> {{$model->count_all}} </span>
+                                    <span class="col"> {{$model->sum_all}} EGP </span>
                                 </div>
                             @endforeach
                         </div>
@@ -82,8 +83,8 @@
                             @foreach($ticket->products as $product)
                                 <div class="item row">
                                     <span class="col">{{$product->product->title}}</span>
-                                    <span class="col"> x{{$product->qty}} </span>
-                                    <span class="col">EGP {{$product->total_price}}  </span>
+                                    <span class="col"> {{$product->qty}} </span>
+                                    <span class="col"> {{$product->total_price}} EGP </span>
                                 </div>
                             @endforeach
                         </div>
@@ -92,16 +93,17 @@
                 <div class="info">
                     <h6 class="billTitle"> Totals </h6>
                     <ul>
-                        <li><label> total price : </label> <strong>  EGP {{$ticket->grand_total}} </strong></li>
-                        <li><label> Discount : </label> <strong> EGP {{$ticket->discount_value}} </strong></li>
-                        <li><label> Remaining : </label> <strong> EGP {{$ticket->rem_amount}}</strong></li>
-                        <li><label> paid : </label> <strong> EGP {{$ticket->paid_amount}}</strong></li>
-                        <li><label> Change : </label> <strong> EGP {{$ticket->rem_amount - $ticket->paid_amount}}</strong></li>
+                        <li><label> total price : </label> <strong>   {{$ticket->grand_total}} EGP</strong></li>
+                        @if($ticket->discount_value != 0)
+                        <li><label> Discount : </label> <strong> {{$ticket->discount_value}} {{($ticket->discount_type == 'per') ? 'EGP' : '%'}}</strong></li>
+                        @endif
+                        <li><label> paid : </label> <strong>  {{$ticket->paid_amount}} EGP</strong></li>
+                        <li><label> Remaining : </label> <strong>  {{$ticket->rem_amount}} EGP</strong></li>
                     </ul>
                 </div>
 
-{{--                <img src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode($ticket->ticket_num, $generatorPNG::TYPE_CODE_128)) }}"--}}
-{{--                     class="barcode">--}}
+                <img src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode($ticket->ticket_num, $generatorPNG::TYPE_CODE_128)) }}"
+                     class="barcode">
             </div>
         </div>
     </div>

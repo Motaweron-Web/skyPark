@@ -25,17 +25,32 @@ class GroupAccessController extends Controller
     public function index(Request $request){
 
         if ($request->ajax()) {
-            $reservation = Reservations::where('status','append')
-                ->where(function ($query_all)use($request){
-                    $query_all->where('custom_id', $request->search)
-                        ->orwhere('ticket_num', $request->search)
-                        ->orWhere('phone', $request->search);
-                })
-                ->with('append_models.type');
+            if($request->search != 'all'){
+                $reservation = Reservations::where('status','append')
+                    ->where(function ($query_all)use($request){
+                        $query_all->where('custom_id', $request->search)
+                            ->orwhere('ticket_num', $request->search)
+                            ->orWhere('phone', $request->search);
+                    })
+                    ->with('append_models.type');
+            }
+            else{
+                $reservation = Reservations::where('status','append')->with('append_models.type');
+            }
 
-            $model = TicketRevModel::where('coupon_num',$request->search)->first();
-            if($model){
-                $reservation = Reservations::where('id',$model->rev_id)->get();
+            if($request->search != 'all'){
+                $model = TicketRevModel::where('coupon_num',$request->search)->first();
+                if($model){
+                    $reservation = Reservations::where('id',$model->rev_id)
+                        ->where([['coupon_end','>=', Carbon::today()],['coupon_start','<=', Carbon::today()]])
+                        ->get();
+                    if($reservation->count() == 0){
+                        return response()->json(['status' => 405]);
+                    }else{
+                        $reservation->first()->append_models = TicketRevModel::where('coupon_num',$request->search)->where('status','append')->get();
+                        $reservation->first()->ticket_num = $model->coupon_num;
+                    }
+                }
             }
 
             $bracelet_numbers = [];
@@ -43,23 +58,33 @@ class GroupAccessController extends Controller
             $names = [];
             $returnArray = [];
             if ($reservation->count() > 0) {
-//                if($reservation->first()->is_coupon == '0'){
-//                    $reservation = $reservation->first()->where('day', date('Y-m-d'));
-//                }
-//                else{
-//                    $reservation = $reservation->first()->where('coupon_end','>=', Carbon::today());
-//                }
-//                return $reservation->first();
+                    if($reservation->first()->is_coupon == '0'){
+                        $reservation = $reservation->where('day', date('Y-m-d'));
+                        if($reservation->count() == 0){
+                            return response()->json(['status' => 405]);
+                        }
+                }
                 if($reservation->count() > 0){
-                    foreach ($reservation->first()->append_models as $key => $model) {
+                    if ($request->search == 'all')
+                        $models =  TicketRevModel::where([['status','append'],['day', Carbon::today()],['rev_id','!=',null]])->get();
+                    else
+                        $models = $reservation->first()->append_models;
+                    foreach ($models as $key => $model) {
                         $smallArray = [];
-                        $smallArray[] = '#' . $reservation->first()->ticket_num ?? '';
+
+                        ///////////////////////////// sale number /////////////////
+                        if($model->reservation)
+                            $smallArray[] = '#' . $model->reservation->ticket_num;
+                        else
+                            $smallArray[] = '#' . $model->ticket->ticket_num;
+
+
+                        ///////////////////////////// type /////////////////
                         if($model->type)
                             $smallArray[] = '#' . $model->type->title;
                         else
                             $smallArray[] = 'Not Selected';
 
-                        $custom_ids[] = $reservation->first()->ticket_num ?? '';
 
                         ///////////////////////////// bracelet /////////////////
                         $bracelet = view('sales.layouts.groupAccess.bracelet', compact('model'));
@@ -88,10 +113,6 @@ class GroupAccessController extends Controller
                     }
                     return response()->json(['status' => 200, 'backArray' => $returnArray]);
                 }
-//                else{
-//                    // لو الحجر تاريخه انتهي
-//                    return response()->json(['status' => 405]);
-//                }
             }
             return response()->json(['status' => 300,]);
         }
@@ -142,13 +163,8 @@ class GroupAccessController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -165,6 +181,9 @@ class GroupAccessController extends Controller
         {
             $model = TicketRevModel::findOrFail($request->id[$key]);
 
+            if($model->reservation->rem_amount > 0){
+                return response()->json(['status'=>405,'rem_amount'=>$model->reservation->rem_amount,'rev_id'=>$model->reservation->id]);
+            }
             $data['bracelet_number'] = $request->bracelet_number[$key];
             $data['birthday'] = $request->birthday[$key];
             $data['name'] = $request->name[$key];
@@ -177,14 +196,20 @@ class GroupAccessController extends Controller
             }
             elseif($model->ticket_id != ''){
                 $ticket = Ticket::findOrFail($model->ticket_id);
-
             }else{
                 toastr()->info('not found');
                 return response(1,500);
             }
-
             $model->update($data);
-            $ticket->update($status);
+            if ($model->rev_id != '') {
+                $count = TicketRevModel::where([['rev_id', $model->rev_id], ['status', 'append']])->count();
+            }
+            elseif($model->ticket_id != '') {
+                $count = TicketRevModel::where([['ticket_id', $model->ticket_id], ['status', 'append']])->count();
+            }
+            if($count == 0){
+                $ticket->update($status);
+            }
         }
 
         return response(1);
@@ -375,6 +400,15 @@ class GroupAccessController extends Controller
     {
        return TicketRevModel::whereFree($request->title)->count();
     }//end fun
+
+    public function updateRevAmount(request $request){
+        $rev = Reservations::findOrFail($request->id);
+        $rev->update([
+            'paid_amount' => $rev->grand_total,
+            'rem_amount' => 0
+        ]);
+        return response(['message' => 'The remaining value is updated', 'status' => 200], 200);
+    }
 
 
 }//end class

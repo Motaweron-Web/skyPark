@@ -8,6 +8,7 @@ use App\Models\Activity;
 use App\Models\ContactUs;
 use App\Models\GeneralSetting;
 use App\Models\Offer;
+use App\Models\OfferItem;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 
@@ -62,7 +63,10 @@ class HomeController extends Controller
     public function safety(){
         return view('site.safety');
     }
-//    public function offerDetails($id){
-//
-//    }
+    public function offerDetails($id){
+        $offer  = OfferItem::findOrFail($id);
+        $tags   = Offer::select('title')->get();
+        $offers = OfferItem::orderBy('id','DESC')->where('id','<>',$id)->take(2)->get();
+        return view('site.offerDetails',compact('offer','tags','offers'));
+    }
 }

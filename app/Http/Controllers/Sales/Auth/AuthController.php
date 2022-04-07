@@ -16,7 +16,7 @@ class AuthController extends Controller
 
     public function view(){
         if (auth()->check()){
-            return redirect('/');
+            return redirect('/sales');
         }
         return view('sales.auth.login');
     }//end fun

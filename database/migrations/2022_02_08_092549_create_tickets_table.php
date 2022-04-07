@@ -15,6 +15,10 @@ class CreateTicketsTable extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
+            //////////// Cashier ////////////////////
+            $table->integer('add_by');
+
+
             $table->date('visit_date')->nullable();
 
             $table->unsignedBigInteger('shift_id')->nullable();

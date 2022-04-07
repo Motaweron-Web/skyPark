@@ -61,7 +61,7 @@ class ReservationController extends Controller
         if ($request->has('choices_shift') && $request->choices_shift != 'all')
             $reservation->where('shift_id',$request->choices_shift);
 
-        $reservation = $reservation->latest()->get();
+        $reservation = $reservation->whereDate('day', Carbon::today())->get();
         $html = [];
         foreach ($reservation as $rev) {
             $smallArray =[];
@@ -74,14 +74,28 @@ class ReservationController extends Controller
             $smallArray[] = Carbon::parse($rev->models[0]->shift_end)->format('h:s a');
 //            $smallArray[] = date('h a', strtotime($rev->shift->from)).":".date('h a', strtotime($rev->shift->to));
             $smallArray[] = $rev->models->count();
-            $accessUrl = route('groupAccess.index').'?search='.$rev->ticket_num;
-            $editUrl = route('updateReservation',$rev->id);
-            $title = $rev->client_name." - ".$rev->ticket_num;
+            $accessUrl    = route('groupAccess.index').'?search='.$rev->ticket_num;
+            $editUrl      = route('updateReservation',$rev->id);
+            $printUrl     = route('reservations.show',$rev->id);
+            $title        = $rev->client_name." - ".$rev->ticket_num;
+            $editSpan     = null;
+            $deleteSpan   = null;
+            $accessSpan   = null;
+            if($rev->status == 'append')
+                $editSpan = '<span class="icon" data-bs-toggle="tooltip" title="edit" data-id="'.$rev->id.'"><a href="'.$editUrl.'"><i class="far fa-edit"></i></a></span>';
+
+            if($rev->status != 'in')
+                $deleteSpan = '<span class="icon deleteSpan" data-bs-toggle="tooltip" title=" delete " data-title="'.$title.'" data-id="'.$rev->id.'"> <i class="far fa-trash-alt"></i></span>';
+
+            if($rev->status == 'append')
+                $accessSpan = '<span class="icon" data-bs-toggle="tooltip" title="Access"><a href="'.$accessUrl.'"><i class="fal fa-check "></i></a></span>';
+
             $smallArray[] = '<span class="controlIcons">
-                  <span class="icon" data-bs-toggle="tooltip" title="edit" data-id="'.$rev->id.'"><a href="'.$editUrl.'"><i class="far fa-edit"></i></a>   </span>
-                  <span class="icon deleteSpan" data-bs-toggle="tooltip" title=" delete "  data-title="'.$title.'" data-id="'.$rev->id.'"> <i class="far fa-trash-alt"></i>  </span>
+                  <span class="icon" data-bs-toggle="tooltip" title="print"><a target="_blank" href="'.$printUrl.'"><i class="far fa-print"></i> </a> </span>
+                  '.$editSpan.'
+                  '.$deleteSpan.'
                   <span class="icon showSpan" data-bs-toggle="tooltip" title=" details " data-id="'.$rev->id.'"> <i class="fas fa-eye"></i></i>  </span>
-                  <span class="icon" data-bs-toggle="tooltip" title="Access"> <a href="'.$accessUrl.'"><i class="fal fa-check "></i></a></span>
+                  '.$accessSpan.'
                 </span>';
             $html[] = $smallArray;
         }
@@ -203,6 +217,7 @@ class ReservationController extends Controller
 
     public function storeRevTicket(request $request){
         Reservations::where('id',$request->rev_id)->first()->update([
+            'add_by'         => auth()->user()->id,
             'shift_id'       => $request->shift_id,
             'hours_count'    => $request->duration,
             'total_price'    => $request->total_price,
@@ -293,7 +308,9 @@ class ReservationController extends Controller
 
     public function update($id)
     {
-        $rev    = Reservations::findOrFail($id);
+        $rev    = Reservations::where([['id',$id],['status','append']])->first();
+        if(!$rev)
+            abort(404);
         $events = Event::all();
         $first_shift_start = Carbon::parse(Shifts::orderBy('from', 'ASC')->first()->from)->format('H');
         $types  = VisitorTypes::all();

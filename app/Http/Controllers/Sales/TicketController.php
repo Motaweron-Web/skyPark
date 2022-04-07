@@ -85,7 +85,7 @@ class TicketController extends Controller
             'shift_id'    => 'required',
         ]);
         $capacity = (CapacityDays::where('day', $request->visit_date)->first()->count) ?? GeneralSetting::first()->capacity;
-        $booked_count = TicketRevModel::where('day', $request->visit_date)->count();
+        $booked_count = TicketRevModel::where('day', $request->visit_date)->where('status','<>','out')->count();
 
         // if booked = or > from the day wanted then the day is full
         if ($booked_count >= $capacity)
@@ -189,17 +189,18 @@ class TicketController extends Controller
     public function storeModels(request $request)
     {
         $ticket = Ticket::create([
-            'visit_date' => $request->visit_date,
-            'shift_id' => $request->shift_id,
-            'client_id' => $request->client_id,
-            'hours_count' => $request->duration,
-            'total_price' => $request->total_price,
-            'discount_type' => $request->discount_type[0],
+            'add_by'         => auth()->user()->id,
+            'visit_date'     => $request->visit_date,
+            'shift_id'       => $request->shift_id,
+            'client_id'      => $request->client_id,
+            'hours_count'    => $request->duration,
+            'total_price'    => $request->total_price,
+            'discount_type'  => $request->discount_type[0],
             'discount_value' => $request->discount_value,
-            'ticket_num' => $request->rand_ticket,
-            'paid_amount' => $request->amount,
-            'grand_total' => $request->revenue,
-            'rem_amount' => $request->rem,
+            'ticket_num'     => $request->rand_ticket,
+            'paid_amount'    => $request->amount,
+            'grand_total'    => $request->revenue,
+            'rem_amount'     => $request->rem,
         ]);
         for ($i = 0; $i < count($request->visitor_type); $i++) {
             TicketRevModel::create([
@@ -256,32 +257,53 @@ class TicketController extends Controller
 
     public function searchForTicket(request $request){
         $tickets = Ticket::query();
-        if ($request->searchText != null)
-            $tickets->where('ticket_num',$request->searchText);
-
+        if ($request->searchText != null){
+            $tickets->where(function ($q)use($request){
+                $q->where('ticket_num',$request->searchText)->orWhereHas('client',function ($q)use($request)
+                {
+                    $q->where('phone',$request->searchText)->orWhere('name','like','%'.$request->searchText.'%');
+                });
+            });
+        }
 
         if ($request->has('choices_shift') && $request->choices_shift != 'all')
             $tickets->where('shift_id',$request->choices_shift);
 
-        $tickets = $tickets->latest()->get();
+        $tickets = $tickets->whereDate('visit_date', Carbon::today())->get();
         $html = [];
+
         foreach ($tickets as $ticket) {
             $smallArray =[];
             $smallArray[] = '#'.$ticket->ticket_num;
             $smallArray[] = $ticket->visit_date;
             $smallArray[] = $ticket->client->name;
             $smallArray[] = $ticket->client->phone;
-            $smallArray[] = Carbon::parse($ticket->models[0]->shift_start)->format('h:s a');
-            $smallArray[] = Carbon::parse($ticket->models[0]->shift_end)->format('h:s a');
+            $smallArray[] = (Carbon::parse($ticket->models[0]->shift_start)->format('h:s a')) ?? '';
+            $smallArray[] = (Carbon::parse($ticket->models[0]->shift_end)->format('h:s a')) ?? '';
 //            $smallArray[] = date('h a', strtotime($ticket->shift->from)).":".date('h a', strtotime($ticket->shift->to));
             $smallArray[] = $ticket->models->count();
-            $accessUrl = route('familyAccess.index').'?search='.$ticket->ticket_num;
-            $title = $ticket->client->name." - ".$ticket->ticket_num;
+            $accessUrl    = route('familyAccess.index').'?search='.$ticket->ticket_num;
+            $printUrl     = route('ticket.edit',$ticket->id);
+            $editUrl      = 'a';
+            $title        = $ticket->client->name." - ".$ticket->ticket_num;
+            $editSpan     = null;
+            $deleteSpan   = null;
+            $accessSpan   = null;
+            if($ticket->status == 'append')
+                $editSpan = '<span class="icon" data-bs-toggle="tooltip" title="edit" data-id="'.$ticket->id.'"><a href="'.$editUrl.'"><i class="far fa-edit"></i></a></span>';
+
+            if($ticket->status != 'in')
+                $deleteSpan = '<span class="icon deleteSpan" data-bs-toggle="tooltip" title=" delete "  data-title="'.$title.'" data-id="'.$ticket->id.'"> <i class="far fa-trash-alt"></i>  </span>';
+
+            if($ticket->status == 'append')
+                $accessSpan = '<span class="icon" data-bs-toggle="tooltip" title="Access"><a href="'.$accessUrl.'"><i class="fal fa-check "></i></a></span>';
+
             $smallArray[] = '<span class="controlIcons">
-                  <span class="icon editSpan" data-bs-toggle="tooltip" title="edit" data-id="'.$ticket->id.'"> <i class="far fa-edit"></i>  </span>
-                  <span class="icon deleteSpan" data-bs-toggle="tooltip" title=" delete "  data-title="'.$title.'" data-id="'.$ticket->id.'"> <i class="far fa-trash-alt"></i>  </span>
+                  <span class="icon" data-bs-toggle="tooltip" title="print"><a target="_blank" href="'.$printUrl.'"><i class="far fa-print"></i> </a> </span>
+                  '.$editSpan.'
+                  '.$deleteSpan.'
                   <span class="icon showSpan" data-bs-toggle="tooltip" title=" details " data-id="'.$ticket->id.'"> <i class="fas fa-eye"></i></i>  </span>
-                  <span class="icon" data-bs-toggle="tooltip" title="Access"><a href="'.$accessUrl.'"><i class="fal fa-check "></i></a></span>
+                  '.$accessSpan.'
                 </span>';
             $html[] = $smallArray;
         }

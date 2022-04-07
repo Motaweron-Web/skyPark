@@ -12,7 +12,7 @@
     @foreach($models as $model)
     <tr>
         <td>{{$model[0]->type->title}}</td>
-        <td>x{{$model->count()}}</td>
+        <td>{{$model->count()}}</td>
         <td>{{$model->sum('price')}}</td>
     </tr>
     @endforeach
@@ -28,7 +28,7 @@
         @foreach($products as $product)
             <tr>
                 <td>{{$product->product->title}}</td>
-                <td>x{{$product->qty}}</td>
+                <td>{{$product->qty}}</td>
                 <td>{{$product->price}}</td>
             </tr>
         @endforeach
@@ -39,7 +39,7 @@
     <tr style="background-color: #a6c64c;color: white">
         <th>Total Price</th>
         <th>Paid Amount</th>
-        <th>Reminder Amount</th>
+        <th>Remaining Amount</th>
     </tr>
     <tr>
         <td>{{$ticket->grand_total}} EGP</td>

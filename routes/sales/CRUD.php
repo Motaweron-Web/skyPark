@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
     Route::POST('delete_ticket', 'TicketController@delete_ticket')->name('delete_ticket');
     Route::POST('storeRevTicket', 'ReservationController@storeRevTicket')->name('storeRevTicket');
 
-    // Reservation
+#### Reservation ####
     Route::get('searchForReservations', 'ReservationController@searchForReservations')->name('searchForReservations');
     Route::get('update_reservation/{id}', 'ReservationController@update')->name('updateReservation');
     Route::POST('delete_reservation', 'ReservationController@delete_reservation')->name('delete_reservation');
@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Route;
     Route::get('editReservation/{id}', 'ReservationController@editReservation')->name('editReservation');
     Route::get('detailsReservation/{id}', 'ReservationController@detailsReservation')->name('detailsReservation');
 
-    #### Coupons ####
+#### Coupons ####
     Route::get('sales/coupons','CouponController@index')->name('sales.coupons');
     Route::post('sales.coupons.store','CouponController@store')->name('sales.store.coupon');
     Route::get('sales.coupons.edit/{id}','CouponController@edit')->name('sales.coupons.edit');
@@ -45,18 +45,20 @@ use Illuminate\Support\Facades\Route;
 
 //==================================== Group ================================
     Route::resource('familyAccess', 'FamilyAccessController');
+    Route::POST('updateAmount', 'FamilyAccessController@updateAmount')->name('ticket.updateAmount');
 
 
-    //==================================== Group ================================
+//==================================== Group ================================
     Route::resource('reservations', 'ReservationController');
     Route::resource('capacity', 'CapacityController');
     Route::resource('groupAccess', 'GroupAccessController');
     Route::get('groupAccess-checkIfBraceletFree', 'GroupAccessController@checkIfBraceletFree')->name('groupAccess.checkIfBraceletFree');
     Route::get('capacity-anotherMonth', 'CapacityController@anotherMonth')->name('capacity.anotherMonth.index');
     Route::POST('getBracelets', 'GroupAccessController@getBracelets')->name('capacity.getBracelets');
+    Route::POST('updateRevAmount', 'GroupAccessController@updateRevAmount')->name('updateRevAmount');
 
 
-    #################################### Exit =======================================
+#################################### Exit =======================================
     Route::resource('exit', 'ExitController');
     Route::get('exit-{search}', 'ExitController@all')->name('exit-all');
 

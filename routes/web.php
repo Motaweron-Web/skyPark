@@ -37,6 +37,12 @@ Route::get('contact_us', 'Site\HomeController@contact')->name('contact_us');
 Route::post('storeContact', 'Site\HomeController@storeContact')->name('storeContact');
 
 
+Route::get('/clear/route', function (){
+    \Artisan::call('optimize:clear');
+    return 'done';
+});
+
+
 
 
 

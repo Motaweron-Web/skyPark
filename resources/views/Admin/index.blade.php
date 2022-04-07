@@ -1,6 +1,10 @@
 @extends('Admin/layouts/master')
-@section('title'){{$setting->title}} | Dashboard @endsection
-@section('page_name') Home @endsection
+@section('title')
+    {{$setting->title}} | Dashboard
+@endsection
+@section('page_name')
+    Home
+@endsection
 @section('content')
 {{--    //ahmed--}}
 

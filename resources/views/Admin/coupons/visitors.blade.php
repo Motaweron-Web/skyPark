@@ -1,7 +1,11 @@
 @extends('Admin/layouts/master')
 
-@section('title') {{$setting->title}} | Corporation Visitors @endsection
-@section('page_name') Corporation Visitors @endsection
+@section('title')
+    {{$setting->title}} | Corporation Visitors
+@endsection
+@section('page_name')
+    Corporation Visitors
+@endsection
 @section('css')
     @include('layouts.loader.formLoader.loaderCss')
 @endsection

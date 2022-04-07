@@ -291,7 +291,7 @@
                     $('.visitorItemRows').after(
                         `<div class="item row insertRows">
                         <span class="col"> ${visitor}</span>
-                        <span class="col"> x${count}</span>
+                        <span class="col"> ${count}</span>
                         <span class="col"> ${price} EGP</span>
                         </div>`)
                     totalBeforeDiscount += price;
@@ -339,7 +339,7 @@
                             <input type="hidden" name="proQtyInput[]" value="${qty}">
                             <input type="hidden" name="proTotalInput[]" value="${total}">
                             <span class="col" id="proName">${name} </span>
-                        <span class="col" id="proQty"> x${qty} </span>
+                        <span class="col" id="proQty"> ${qty} </span>
                         <span class="col" id="proTotal"> ${total} EGP </span>
                     </div>`)
                     totalBeforeDiscount += total;
@@ -370,7 +370,7 @@
                             <li><label> Tax : </label> <strong id="family_tax">` + {{$setting->family_tax}} + `%</strong></li>
                             <li><label> total after tax : </label> <strong id="totalInfoPrice">${totalBeforeDiscount} EGP</strong></li>
                             <li><label> Discount : </label> <strong id="totalInfoDiscount">0 EGP</strong></li>
-                            <li><label> Revenue : </label> <strong id="totalInfoRevenue">${totalBeforeDiscount} EGP</strong></li>
+                            <li><label> Amount To Pay : </label> <strong id="totalInfoRevenue">${totalBeforeDiscount} EGP</strong></li>
             `)
         } else if (window.location.href.indexOf("update_reservation") > -1) {
             $('.thirdInfo').append(`
@@ -380,7 +380,7 @@
                             <li><label> Tax : </label> <strong id="rev_tax">` + {{$setting->rev_tax}} + `%</strong></li>
                             <li><label> total after tax : </label> <strong id="totalInfoPrice">${totalBeforeDiscount} EGP</strong></li>
                             <li><label> Discount : </label> <strong id="totalInfoDiscount">0 EGP</strong></li>
-                            <li><label> Revenue : </label> <strong id="totalInfoRevenue">${totalBeforeDiscount} EGP</strong></li>
+                            <li><label> Amount To Pay : </label> <strong id="totalInfoRevenue">${totalBeforeDiscount} EGP</strong></li>
             `)
         }
     });

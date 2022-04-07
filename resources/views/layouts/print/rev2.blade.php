@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
 <html lang="en" dir="rtl">
+<title>{{$setting->title}}</title>
 <head>
 
     <meta charset="utf-8">
@@ -13,6 +14,7 @@
 
 
         body {
+            direction: ltr;
             margin: 0;
             padding: 0;
         }

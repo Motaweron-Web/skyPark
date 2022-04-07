@@ -1,6 +1,7 @@
 @extends('Admin/layouts/master')
-
-@section('title') {{$setting->title}} | Users @endsection
+@section('title')
+    {{$setting->title}} | Users
+@endsection
 @section('page_name') Users @endsection
 @section('css')
     @include('layouts.loader.formLoader.loaderCss')

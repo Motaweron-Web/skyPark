@@ -18,7 +18,7 @@
                       <div class="numbers">
                         <p class="text-sm mb-0 text-capitalize font-weight-bold">Today's Money</p>
                         <h5 class="font-weight-bolder mb-0">
-                          53,000
+                          {{$today_money}}
                           <span class="text-success text-sm font-weight-bolder">EGP</span>
                         </h5>
                       </div>

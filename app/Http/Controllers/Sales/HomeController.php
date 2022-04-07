@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Sales;
 use App\Http\Controllers\Controller;
 use App\Models\Clients;
 use App\Models\GeneralSetting;
+use App\Models\Reservations;
+use App\Models\Ticket;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -33,7 +35,11 @@ class HomeController extends Controller
             $userArr[$i]['month'] = $month[$i - 1];
         }
         $clients = array_values($userArr);
-        return view('sales.index',compact('clients_count','new_clients','clients'));
+        $today_money = Reservations::whereDate('created_at', Carbon::today())
+            ->where('add_by',auth()->user()->id)->sum('paid_amount')
+            +
+            Ticket::whereDate('created_at', Carbon::today())->where('add_by',auth()->user()->id)->sum('paid_amount');
+        return view('sales.index',compact('clients_count','new_clients','clients','today_money'));
     }//end fun
 
     public function creatCapacity(){

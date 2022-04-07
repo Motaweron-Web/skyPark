@@ -1,4 +1,8 @@
 $(document).ready(function () {
+  // goBack
+  function goBack() {
+    window.history.back();
+  };
 
   // odometer
   $('.odometer').appear(function (e) {
@@ -8,7 +12,6 @@ $(document).ready(function () {
       $(this).html(countNumber);
     });
   });
-  
   //navbar animation
   $(window).scroll(function () {
     var appScroll = $(document).scrollTop();

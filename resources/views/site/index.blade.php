@@ -31,26 +31,26 @@
               <p class="animate__animated animate__fadeInUp wow">
                   {{$setting->about}}
               </p>
-              <div class="icons row">
-                <div class="col p-1 animate__animated animate__fadeInUp wow">
-                  <a href="{{route('safety')}}" class="icon">
-                    <i class="fas fa-user-hard-hat"></i>
-                    <span>SAFE</span>
-                  </a>
-                </div>
-                <div class="col p-1 animate__animated animate__fadeInUp wow">
-                  <a href="family-friendly.html" class="icon">
-                    <i class="fas fa-users-crown"></i>
-                    <span>Family Friendly</span>
-                  </a>
-                </div>
-                <div class="col p-1 animate__animated animate__fadeInUp wow">
-                  <a href="challenging.html" class="icon">
-                    <i class="fas fa-trophy"></i>
-                    <span>CHALLENGING</span>
-                  </a>
-                </div>
-              </div>
+{{--              <div class="icons row">--}}
+{{--                <div class="col p-1 animate__animated animate__fadeInUp wow">--}}
+{{--                  <a href="{{route('safety')}}" class="icon">--}}
+{{--                    <i class="fas fa-user-hard-hat"></i>--}}
+{{--                    <span>SAFE</span>--}}
+{{--                  </a>--}}
+{{--                </div>--}}
+{{--                <div class="col p-1 animate__animated animate__fadeInUp wow">--}}
+{{--                  <a href="family-friendly.html" class="icon">--}}
+{{--                    <i class="fas fa-users-crown"></i>--}}
+{{--                    <span>Family Friendly</span>--}}
+{{--                  </a>--}}
+{{--                </div>--}}
+{{--                <div class="col p-1 animate__animated animate__fadeInUp wow">--}}
+{{--                  <a href="challenging.html" class="icon">--}}
+{{--                    <i class="fas fa-trophy"></i>--}}
+{{--                    <span>CHALLENGING</span>--}}
+{{--                  </a>--}}
+{{--                </div>--}}
+{{--              </div>--}}
             </div>
           </div>
           <div class="col-md-6 p-0">
@@ -110,7 +110,7 @@
                 <div class="carousel__track">
                   <div data-index="0" class="carousel__slide is-selected">
                     <div class="info">
-                      <h3>4th of June 2021</h3>
+                      <h3>4th of June 2022</h3>
                       <p>The wait is finally over as the adventurous life you've always been after, is a couple of days
                         away!</p>
                     </div>
@@ -169,7 +169,7 @@
                   </div>
                   <h2> {{$item->title}} </h2>
                   <p>{{Str::limit($item->desc,200)}} </p>
-                  <a href="{{route('offer_details',$offer->id)}}"> VIEW COURSE </a>
+                  <a href="{{route('offer_details',$item->id)}}"> VIEW COURSE </a>
                 </div>
               </div>
                 @endforeach

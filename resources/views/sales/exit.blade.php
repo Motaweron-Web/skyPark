@@ -39,44 +39,43 @@
             </div>
 
 
-            <div class=" topUp w-100 w-md-80 m-auto p-3 mb-5 ">
 
                 @if($hours)
+                <div class=" topUp w-100 w-md-80 m-auto p-3 mb-5 ">
                     <div class="alert alert-primary alert-dismissible fade show text-white bg-gradient-primary" role="alert">
                         <span class="alert-text"><strong>TopUp ! </strong> The customer has an extra time of {{$hours}} hours</span>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true"><i class="fal fa-times  fs-4"></i></span>
                         </button>
                     </div>
-                @endif
+                    <label class="form-label ">payment method</label>
+                    <div class="paymentMethods">
+                        <button class="btn" style="width:17%" type="button" data-bs-toggle="collapse" data-bs-target="#payCash" aria-expanded="false"
+                                aria-controls="payCash">
+                            <img src="{{asset('assets/sales/img/cash.svg')}}" style="width: 35%;">
+                            <span> cash </span> </button>
+                        <button class="btn" style="width:17%" type="button">
+                            <img src="{{asset('assets/sales/img/visa.svg')}}" style="width: 35%;">
 
-                <label class="form-label ">payment method</label>
-                <div class="paymentMethods">
-                    <button class="btn" style="width:17%" type="button" data-bs-toggle="collapse" data-bs-target="#payCash" aria-expanded="false"
-                            aria-controls="payCash">
-                        <img src="{{asset('assets/sales/img/cash.svg')}}" style="width: 35%;">
-                        <span> cash </span> </button>
-                    <button class="btn" style="width:17%" type="button">
-                        <img src="{{asset('assets/sales/img/visa.svg')}}" style="width: 35%;">
-
-                        <span> visa </span> </button>
-                    <button class="btn" style="width:22%" type="button">
-                        <img src="{{asset('assets/sales/img/masterCard.svg')}}" style="width: 35%;">
-                        <span> mastercard </span> </button>
-                    <!-- payCash -->
-                    <div class="collapse pt-3  " id="payCash">
-                        <div class="row align-items-end">
-                            <div class="col-8 col-md-9 p-2 ">
-                                <label> Amount </label>
-                                <input class="form-control" type="number" />
-                            </div>
-                            <div class="col-4 col-md-3 p-2">
-                                <button type="button" class="btn w-100 btn-success"> Pay </button>
+                            <span> visa </span> </button>
+                        <button class="btn" style="width:22%" type="button">
+                            <img src="{{asset('assets/sales/img/masterCard.svg')}}" style="width: 35%;">
+                            <span> mastercard </span> </button>
+                        <!-- payCash -->
+                        <div class="collapse pt-3  " id="payCash">
+                            <div class="row align-items-end">
+                                <div class="col-8 col-md-9 p-2 ">
+                                    <label> Amount </label>
+                                    <input class="form-control" type="number" />
+                                </div>
+                                <div class="col-4 col-md-3 p-2">
+                                    <button type="button" class="btn w-100 btn-success"> Pay </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+        @endif
 
             <!-- table -->
             <table class=" customDataTable table table-bordered nowrap">
@@ -107,7 +106,11 @@
                         <td>{{'#' .$model->bracelet_number ?? ''}}</td>
                         <td>{{'#' .$model->type->title ?? ''}}</td>
                         <td>{{$model->name ?? ''}}</td>
-                        <td>{{$age->format("%y") ?? ''}}</td>
+                        @if($age->format("%y"))
+                            <td>{{$age->format("%y")}}</td>
+                        @else
+                            <td></td>
+                        @endif
                         <td>{{date('hA',strtotime($model->shift_start))}}</td>
                         <td>{{date('hA',strtotime($model->shift_end))}}</td>
                         <td><i class="fas fa-alarm-plus me-1 fa-1x color1"></i> {{$model->top_up_hours}}</td>

@@ -22,49 +22,53 @@
                     <span class="nav-link-text ms-1">Home</span>
                 </a>
             </li>
+            @can('Family Sale')
             <!-- nav-item  -->
-            <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#familySale" class="nav-link " id="main-family"
-                   aria-controls="familySale" role="button"
-                   aria-expanded="false">
-                    <div
-                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
-                        <i class="fas fa-users-crown"></i>
+                <li class="nav-item">
+                    <a data-bs-toggle="collapse" href="#familySale" class="nav-link " id="main-family"
+                       aria-controls="familySale" role="button"
+                       aria-expanded="false">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
+                            <i class="fas fa-users-crown"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Family Sale</span>
+                    </a>
+                    <div class="collapse  " id="familySale">
+                        <ul class="nav ms-4 ps-3">
+                            @can('Add Client')
+                                <li class="nav-item createClient">
+                                    <a class="nav-link createClient" href="{{route('client.create')}}">
+                                        <span class="sidenav-mini-icon"> A </span>
+                                        <span class="sidenav-normal"> Add Client </span>
+                                    </a>
+                                </li>
+                            @endcan
+
+                            @can('Edit Ticket')
+                                <li class="nav-item tickets">
+                                    <a class="nav-link tickets" href="{{route('ticket.search')}}">
+                                        <span class="sidenav-mini-icon"> T </span>
+                                        <span class="sidenav-normal"> Edit Tickets </span>
+                                    </a>
+                                </li>
+                            @endcan
+
+                            @can('Family Access')
+                                <li class="nav-item familyAccess">
+                                    <a class="nav-link familyAccess" href="{{route('familyAccess.index')}}">
+                                        <span class="sidenav-mini-icon"> F </span>
+                                        <span class="sidenav-normal"> Family Access </span>
+                                    </a>
+                                </li>
+                            @endcan
+                        </ul>
                     </div>
-                    <span class="nav-link-text ms-1">Family Sale</span>
-                </a>
-                <div class="collapse  " id="familySale">
-                    <ul class="nav ms-4 ps-3">
-                        @can('Add Client')
-                            <li class="nav-item createClient">
-                                <a class="nav-link createClient" href="{{route('client.create')}}">
-                                    <span class="sidenav-mini-icon"> A </span>
-                                    <span class="sidenav-normal"> Add Client </span>
-                                </a>
-                            </li>
-                        @endcan
+                </li>
+                <!-- nav-item  -->
+            @endcan
 
-                        @can('Edit Ticket')
-                            <li class="nav-item tickets">
-                                <a class="nav-link tickets" href="{{route('ticket.search')}}">
-                                    <span class="sidenav-mini-icon"> T </span>
-                                    <span class="sidenav-normal"> Edit Tickets </span>
-                                </a>
-                            </li>
-                        @endcan
-
-                        @can('Family Access')
-                            <li class="nav-item familyAccess">
-                                <a class="nav-link familyAccess" href="{{route('familyAccess.index')}}">
-                                    <span class="sidenav-mini-icon"> F </span>
-                                    <span class="sidenav-normal"> Family Access </span>
-                                </a>
-                            </li>
-                        @endcan
-                    </ul>
-                </div>
-            </li>
-            <!-- nav-item  -->
+            @can('Group Sale')
             <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#groupSale" class="nav-link " id="main-group"
                    aria-controls="groupSale" role="button"
@@ -106,8 +110,9 @@
                     </ul>
                 </div>
             </li>
+            @endcan
 
-        @can('Corporations')
+            @can('Corporations')
             <!-- nav-item  -->
                 <li class="nav-item">
                     <a href="{{route('sales.coupons')}}" class="nav-link" id="coupon">
@@ -122,15 +127,15 @@
             @endcan
 
             @can('Exit')
-            <li class="nav-item">
-                <a href="{{route('exit.index')}}" class="nav-link" id="main-exit">
-                    <div
-                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
-                        <i class="fad fa-door-open"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Exit</span>
-                </a>
-            </li>
+                <li class="nav-item">
+                    <a href="{{route('exit.index')}}" class="nav-link" id="main-exit">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
+                            <i class="fad fa-door-open"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Exit</span>
+                    </a>
+                </li>
             @endcan
         </ul>
     </div>

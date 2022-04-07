@@ -73,11 +73,14 @@ class CouponController extends Controller
         ],[
             'coupon_end.after' => 'Coupon End Date Should Be After Start Date'
         ]);
+        $rand = strtoupper(date('D').rand(0,9999).'Co'.substr(time(), -2));
         $rev = Reservations::create([
+            'add_by'        => 0,
             'client_name'   => $request->client_name,
             'phone'         => $request->phone,
             'email'         => $request->email,
-            'ticket_num'    => strtoupper(date('D').rand(0,9999).'Co'.substr(time(), -2)),
+            'ticket_num'    => $rand,
+            'custom_id'     => $rand,
             'paid_amount'   => $request->paid_amount,
             'is_coupon'     => '1',
             'hours_count'   => $request->hours_count,

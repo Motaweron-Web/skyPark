@@ -27,6 +27,10 @@ if (session()->get('activeDate') == $toDay) {
 ?>
 <div class="day getData <?php echo $toDay . $active;?>" data-date="<?php echo $toDay;?>">
     <span class="num"> <?php echo $i;?></span>
+    <div class="capacityContainer">
+        <div class="capacityPercentage" style="width: <?php echo $percent ?? 0;?>%;">
+        </div>
+    </div>
     <div class="events">
         <?php
         foreach ($checkReservations as $reservation) {
@@ -34,9 +38,5 @@ if (session()->get('activeDate') == $toDay) {
             echo '<div class="event"> <span class="icon"> <i class="' . $icon . '"></i> </span></div>';
         }
         ?>
-    </div>
-    <div class="capacityContainer">
-        <div class="capacityPercentage" style="width: <?php echo $percent ?? 0;?>%;">
-        </div>
     </div>
 </div>

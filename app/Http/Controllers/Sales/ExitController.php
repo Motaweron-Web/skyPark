@@ -293,8 +293,8 @@ class ExitController extends Controller
                 $ticket->update($data);
             }
         }
-        toastr()->success('top up stored successfully');
-        return back();
+        toastr()->success('Group exit successfully');
+        return redirect('capacity?month=' . date('Y-m'));
 
     }
 }

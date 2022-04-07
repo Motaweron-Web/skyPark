@@ -16,6 +16,11 @@
     <form class="card p-2 py-4 mt-3 ">
         <!-- table -->
         <table class=" customDataTable table table-bordered nowrap">
+            <div class="d-flex justify-content-between align-items-center flex-wrap px-3 pb-3">
+                <button type="button" class="btn btn-success d-none" data-bs-toggle="modal" data-bs-target="#payAmount" id="payBtn">
+                    <i class="far fa-check me-1"></i> Pay Amount
+                </button>
+            </div>
             <thead>
             <tr>
                 <th>Sale Number</th>
@@ -70,6 +75,27 @@
 
 
     </form>
+    <div class="modal fade" id="payAmount" tabindex="-1" role="dialog" aria-labelledby="payAmount" aria-hidden="true"
+         data-bs-backdrop="static">
+        <div class="modal-dialog modal-danger modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="modal-title-print">Pay Remaining Amount</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fal fa-times text-dark fs-4"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input class="data_id" name="id" id="idOfTicket" type="hidden">
+                    <p>Are You Sure Of Paying The Remaining Amount ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark ml-auto me-2" data-bs-dismiss="modal"> Close</button>
+                    <button type="submit" class="btn btn-success" id="confirmBtn"> Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('js')
     <script>

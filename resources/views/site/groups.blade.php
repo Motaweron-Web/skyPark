@@ -23,7 +23,7 @@
         <div class="group">
           <div class="row align-items-center">
             <div class="col-md-6 p-3 order-md-2 ">
-              <img src="img/group.svg" >
+              <img src="{{asset('assets/site')}}/img/group.svg" >
             </div>
             <div class="col-md-6 p-3 order-md-1">
               <div class="info">
@@ -40,7 +40,7 @@
         <div class="group">
           <div class="row align-items-center">
             <div class="col-md-6 p-3 ">
-              <img src="img/team.svg" >
+              <img src="{{asset('assets/site')}}/img/team.svg" >
             </div>
             <div class="col-md-6 p-3">
               <div class="info">
@@ -56,7 +56,7 @@
         <div class="group">
           <div class="row align-items-center">
             <div class="col-md-6 p-3 order-md-2 ">
-              <img src="img/birthday.svg" >
+              <img src="{{asset('assets/site')}}/img/birthday.svg" >
             </div>
             <div class="col-md-6 p-3 order-md-1">
               <div class="info">

@@ -708,6 +708,7 @@ table.dataTable > tbody > tr.child span.dtr-title::after {
 
 .screens .screen {
     display: inline-block;
+    white-space: nowrap;
     text-align: center;
     border: 1px solid #eee;
     background-color: #F8F9FA;
@@ -819,7 +820,7 @@ table.dataTable > tbody > tr.child span.dtr-title::after {
 .calendar .calendarBody .day {
     border: 1px solid #eee;
     border-radius: 5px;
-    min-height: 70px;
+    /*min-height: 70px;*/
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
     position: relative;
@@ -1083,7 +1084,7 @@ table.dataTable > tbody > tr.child span.dtr-title::after {
 .myBarcode {
     position: relative;
     padding: 15px 15px 0;
-    transform: scale(.9);
+    transform: scale(.8);
     transform-origin: left top;
 }
 .myBarcode div {

@@ -15,6 +15,8 @@ class CreateReservationsTable extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
+            //////////// Cashier ////////////////////
+            $table->integer('add_by');
 
             //////////// client ////////////////////
             $table->string('client_name',500)->nullable();

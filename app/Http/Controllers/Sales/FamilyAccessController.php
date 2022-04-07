@@ -7,6 +7,7 @@ use App\Models\Bracelets;
 use App\Models\Reservations;
 use App\Models\Ticket;
 use App\Models\TicketRevModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -27,14 +28,18 @@ class FamilyAccessController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-
-            $ticket = Ticket::whereDate('visit_date', date('Y-m-d'))
-                ->where(function ($query) use ($request) {
-                    $query->where('ticket_num', $request->search)
-                        ->orWhereHas('client', function ($query) use ($request) {
-                            $query->where('phone', $request->search);
-                        });
-                })->with('append_models.type');
+            if($request->search != 'all') {
+                $ticket = Ticket::whereDate('visit_date', date('Y-m-d'))
+                    ->where(function ($query) use ($request) {
+                        $query->where('ticket_num', $request->search)
+                            ->orWhereHas('client', function ($query) use ($request) {
+                                $query->where('phone', $request->search);
+                            });
+                    })->with('append_models.type');
+            }
+            else{
+                $ticket = Ticket::whereDate('visit_date', date('Y-m-d'))->where('status','append');
+            }
 
 
             $bracelet_numbers = [];
@@ -43,12 +48,15 @@ class FamilyAccessController extends Controller
             $returnArray = [];
 
             if ($ticket->count() > 0) {
-
-                foreach ($ticket->first()->append_models as $key => $model) {
+                if ($request->search == 'all')
+                    $models =  TicketRevModel::where([['status','append'],['day', Carbon::today()],['ticket_id','!=',null]])->get();
+                else
+                    $models = $ticket->first()->append_models;
+                foreach ($models as $key => $model) {
                     $smallArray = [];
-                    $smallArray[] = '#' . $ticket->first()->ticket_num ?? '';
+                    $smallArray[] = '#' . $model->ticket->ticket_num ?? '';
                     $smallArray[] = '#' . $model->type->title ?? '';
-                    $custom_ids[] = $ticket->first()->ticket_num ?? '';
+                    $custom_ids[] = $model->ticket->ticket_num ?? '';
 
                     ///////////////////////////// bracelet /////////////////
                     $bracelet = view('sales.layouts.familyAccess.bracelet', compact('model'));
@@ -129,13 +137,8 @@ class FamilyAccessController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function update(Request $request, $id)
     {
         $data = $request->validate([
@@ -145,7 +148,7 @@ class FamilyAccessController extends Controller
             'name' => 'nullable|max:500',
             'gender' => 'nullable|in:male,female',
         ],[
-            'bracelet_number.unique'=>'هذا السوار مأخوذ مسبقاً'
+            'bracelet_number.unique'=>'This Bracelet Num Is Taken'
         ]);
         $model = TicketRevModel::findOrFail($request->id);
 
@@ -158,6 +161,9 @@ class FamilyAccessController extends Controller
             toastr()->info('not found');
             return response(1, 500);
         }
+        if($ticket->rem_amount > 0){
+            return response()->json(['status'=>405,'rem_amount'=>$ticket->rem_amount,'ticket_id'=>$ticket->id]);
+        }
 
         $status['status'] = 'in';
         $data['status'] = 'in';
@@ -166,9 +172,17 @@ class FamilyAccessController extends Controller
         $braceletData['status'] = false;
 
         Bracelets::where('title', $request->bracelet_number)->update($braceletData);
-
-
         $model->update($data);
+
+        if ($model->rev_id != '') {
+            $count = TicketRevModel::where([['rev_id', $model->rev_id], ['status', 'append']])->count();
+        }
+        elseif($model->ticket_id != '') {
+            $count = TicketRevModel::where([['ticket_id', $model->ticket_id], ['status', 'append']])->count();
+        }
+        if($count == 0){
+            $ticket->update($status);
+        }
         $ticket->update($status);
         return response(1);
     }
@@ -182,5 +196,14 @@ class FamilyAccessController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function updateAmount(request $request){
+        $ticket = Ticket::findOrFail($request->id);
+        $ticket->update([
+           'paid_amount' => $ticket->grand_total,
+            'rem_amount' => 0
+        ]);
+        return response(['message' => 'The remaining value is updated', 'status' => 200], 200);
     }
 }
