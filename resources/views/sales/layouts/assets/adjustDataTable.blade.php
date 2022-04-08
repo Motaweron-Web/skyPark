@@ -443,12 +443,18 @@
             $('#discount').text('0');
             $('#revenue').text(parseFloat(total.text()).toFixed(2));
         } else {
-            $('#discount').text($('#calcDiscount').val() + "%")
+            if($('#calcDiscount').val().length > 0){
+                $('#discount').text($('#calcDiscount').val() + "%")
+                $('#totalInfoDiscount').text($('#calcDiscount').val() + "%")
+            }
+            else{
+                $('#discount').text("0")
+                $('#totalInfoDiscount').text("0 EGP")
+            }
             var after = (parseFloat(total.text()) - $('#calcDiscount').val() * parseFloat(total.text()) / 100).toFixed(2);
             $('#revenue').text(after)
             $('#totalInfoPrice').text(total.text() + " EGP")
             $('#totalInfoRevenue').text(after + " EGP")
-            $('#totalInfoDiscount').text($('#calcDiscount').val() + "%")
             calculateChange()
         }
     }
@@ -465,8 +471,13 @@
             var after = (parseFloat(total.text()) - $('#calcDiscount').val()).toFixed(2);
             $('#revenue').text(after)
             $('#totalInfoPrice').text(total.text() + " EGP")
+            if($('#calcDiscount').val().length > 0)
+                $('#totalInfoDiscount').text($('#calcDiscount').val() + " EGP")
+            else
+                $('#totalInfoDiscount').text("0 EGP")
+
+
             $('#totalInfoRevenue').text(after + " EGP")
-            $('#totalInfoDiscount').text($('#calcDiscount').val() + " EGP")
             calculateChange()
         }
     }

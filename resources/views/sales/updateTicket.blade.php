@@ -1,106 +1,29 @@
 @extends('sales.layouts.master')
+@section('links')
+    Update Ticket
+@endsection
 @section('page_title')
-    {{$setting->title}} | Edit Reservation
+    {{$setting->title}} | Update Ticket
 @endsection
 @section('content')
-    <h2 class="MainTiltle mb-5 ms-4"> Edit Reservation </h2>
-
+    <h2 class="MainTitle mb-5 ms-4">ticket</h2>
     <div class="multisteps-form">
-        <form action="{{route('reservations.update',$rev->id)}}" method="POST" enctype="multipart/form-data"
-              class="row">
-            @csrf
-            @method('PUT')
-            <input type="hidden" id="rev_id" name="rev_id" value="{{$rev->id}}">
-            <input type="hidden" id="visit_date" name="visit_date" value="{{$rev->day}}">
+        <form class="row">
             <div class="col-lg-9 p-1 ">
                 <div class="multisteps-form__progress mb-5">
-                    <button type="button"
-                            class="multisteps-form__progress-btn ReservationInfo-multisteps-form__progress-btn js-active"
-                            title="ReservationInfo"> Reservation Info
-                    </button>
-                    <button type="button" class="multisteps-form__progress-btn visitors-multisteps-form__progress-btn"
-                            title="visitors"> visitors
-                    </button>
-                    <button type="button" class="multisteps-form__progress-btn products-multisteps-form__progress-btn"
-                            title="products"> products
-                    </button>
-                    <button type="button" class="multisteps-form__progress-btn payment-multisteps-form__progress-btn"
-                            title="payment"> payment
-                    </button>
+                    <button type="button" class="multisteps-form__progress-btn js-active" title="visitors"> visitors</button>
+                    <button type="button" class="multisteps-form__progress-btn" title="products"> products</button>
+                    <button type="button" class="multisteps-form__progress-btn" title="payment"> payment</button>
                 </div>
                 <div class="multisteps-form__form mb-2">
-                    <!-- step 1 -->
-                    <div class="card multisteps-form__panel ReservationInfo-multisteps-form__panel p-3 border-radius-xl bg-white js-active"
-                        validate="true" id="ticketTab" data-animation="FadeIn">
-                        <h5 class="font-weight-bolder">Reservation Info</h5>
-                        <div class="multisteps-form__content">
-                            <div class="row mt-3">
-                                <div class="col-sm-6 p-2">
-                                    <label>Client Name </label>
-                                    <input class="form-control" type="text" value="{{$rev->client_name}}"
-                                           name="client_name" id="client_name">
-                                    <label id="client_nameError" class="text-danger"></label>
-                                </div>
-                                <div class="col-sm-6 p-2">
-                                    <label>Phone </label>
-                                    <input class="form-control" type="text" value="{{$rev->phone}}"
-                                           name="phone" id="phone">
-                                    <label id="phoneError" class="text-danger"></label>
-                                </div>
-                                <div class="col-sm-12">
-                                    <label>Email </label>
-                                    <input class="form-control" type="email" value="{{$rev->email}}"
-                                           name="email" id="email">
-                                    <label id="emailError" class="text-danger"></label>
-                                </div>
-                                <div class="col-sm-12">
-                                    <label class="form-label"> <i class="fas fa-feather-alt me-1"></i> Note </label>
-                                    <textarea name="notes" id="note" class="form-control" rows="6"
-                                              placeholder="Add Note...">{{$rev->note}}</textarea>
-                                </div>
-                            </div>
-                            {{--                            <div class="row mt-3">--}}
-                            {{--                                <div class="col-sm-6 p-2">--}}
-                            {{--                                    <label style="text-transform: initial !important;">Reservation Duration (h) </label>--}}
-                            {{--                                    <input class="form-control" type="number" value="{{$rev->hours_count}}"--}}
-                            {{--                                           name="duration" onchange="checkTime()"--}}
-                            {{--                                           id="duration" min="1" max="24"--}}
-                            {{--                                           onKeyUp="if(this.value>24){this.value='24';}else if(this.value<=0){this.value='1';}$('#durationError').text('')"/>--}}
-                            {{--                                    <label id="durationError" class="text-danger"></label>--}}
-                            {{--                                </div>--}}
-                            {{--                                <input class="form-control" type="hidden" id="date" value="{{$rev->day}}"--}}
-                            {{--                                       name="visit_date"/>--}}
-                            {{--                                <input type="hidden" id="first_shift_start" value="{{$first_shift_start}}">--}}
-                            {{--                                <input type="hidden" id="start" value="">--}}
-                            {{--                                <div class="col-sm-6 p-2">--}}
-                            {{--                                    <label class="form-label"> shift </label>--}}
-                            {{--                                    <select class="form-control" id="choices_times" name="choices_times">--}}
-
-                            {{--                                    </select>--}}
-                            {{--                                </div>--}}
-                            {{--                                <div class="col-sm-12 p-2">--}}
-                            {{--                                    <label class="form-label"> <i class="fas fa-feather-alt me-1"></i> Note </label>--}}
-                            {{--                                    <textarea name="notes" id="note" class="form-control" rows="6"--}}
-                            {{--                                              placeholder="Add Note...">{{$rev->note}}</textarea>--}}
-                            {{--                                </div>--}}
-                            {{--                            </div>--}}
-                            <div class="button-row d-flex mt-4">
-                                <button class="btn bg-gradient-dark ms-auto mb-0 js-btn-next" type="button"
-                                        id="firstNext">Next
-                                </button>
-                            </div>
-                        </div>
-                    </div>
                     <!-- step 2 -->
-                    <div class="card multisteps-form__panel p-3 border-radius-xl bg-white " id="visitorsTab"
+                    <div class="card multisteps-form__panel p-3 border-radius-xl bg-white js-active" id="visitorsTab"
                          data-animation="FadeIn">
                         <h5 class="font-weight-bolder">visitors</h5>
                         <div class="multisteps-form__content">
                             <div class="row mt-3">
                                 <!-- visitor Type  -->
-                                <small class="form-text text-muted mb-1"><i class="fa fa-arrow-right text-warning"></i>
-                                    Enter a number to add many rows</small>
-                                <div class="col-10 p-2">
+                                <div class="col-12 p-2">
                                     @foreach($types as $type)
                                         <div class="visitorType visitorType{{$type->id}}">
                                             <div class="visitorTypeDiv">
@@ -108,24 +31,16 @@
                                                      title="{{$type->title}}">
                                                 <span class="visitor">{{$type->title}}</span>
                                                 <span
-                                                    class="count">{{$models->where('rev_id',$rev->id)->where('visitor_type_id',$type->id)->count()}}</span>
+                                                    class="count">{{$models->where('ticket_id',$ticket->id)->where('visitor_type_id',$type->id)->count()}}</span>
                                                 <input type="hidden"
                                                        value="{{$prices->where('visitor_type_id',$type->id)->first()->price}}"
                                                        name="price[]" id="price{{$type->id}}">
                                                 <input type="hidden" value="{{$type->id}}"
                                                        id="visitor_type_id">
                                             </div>
-                                            <div class="countInput">
-                                                <input type="number" id="countInput" class="inputCount" min="0"
-                                                       value="{{$models->where('rev_id',$rev->id)->where('visitor_type_id',$type->id)->count()}}"/>
-                                            </div>
                                         </div>
                                     @endforeach
-                                </div>
-                                <div class="col-2">
-                                    <button class="btn btn-danger" type="button" onclick="DeleteRows()"><i
-                                            class="fal fa-trash me-2"></i> Clear
-                                    </button>
+
                                 </div>
                                 <!-- table -->
                                 <div class="col-12 p-2 position-relative">
@@ -189,14 +104,12 @@
                                                 </td>
                                             </tr>
                                         @endforeach
+
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                             <div class="button-row d-flex mt-4">
-                                <button class="btn bg-gradient-secondary mb-0 js-btn-prev" type="button"
-                                        id="secondPrev">Prev
-                                </button>
                                 <button class="btn bg-gradient-dark ms-auto mb-0 js-btn-next" type="button"
                                         id="secondNext">Next
                                 </button>
@@ -204,8 +117,7 @@
                         </div>
                     </div>
                     <!-- step 3 -->
-                    <div class="card multisteps-form__panel p-3 border-radius-xl bg-white " id="productsTab"
-                         data-animation="FadeIn">
+                    <div class="card multisteps-form__panel p-3 border-radius-xl bg-white " id="productsTab" data-animation="FadeIn">
                         <h5 class="font-weight-bolder">products</h5>
                         <div class="multisteps-form__content">
                             <div class="row mt-3 align-items-end">
@@ -294,23 +206,23 @@
                                     <div class="screens row">
                                         <div class="screen col">
                                             <span>old total</span>
-                                            <strong id="oldTotal">{{$rev->total_price}}</strong>
+                                            <strong id="oldTotal">{{$ticket->total_price}}</strong>
                                         </div>
                                         <div class="screen col">
                                             <span>discount</span>
-                                            <strong id="oldDiscount"> {{$rev->discount_value}} {{($rev->discount_type == 'per') ? '%' : ''}} </strong>
+                                            <strong id="oldDiscount"> {{$ticket->discount_value}} {{($ticket->discount_type == 'per') ? '%' : ''}} </strong>
                                         </div>
                                         <div class="screen col">
                                             <span>Amount to Pay</span>
-                                            <strong id="oldRevenue"> {{$rev->grand_total}}</strong>
+                                            <strong id="oldRevenue"> {{$ticket->grand_total}}</strong>
                                         </div>
                                         <div class="screen col">
                                             <span>paid</span>
-                                            <strong id="oldPaid"> {{$rev->paid_amount}}</strong>
+                                            <strong id="oldPaid"> {{$ticket->paid_amount}}</strong>
                                         </div>
                                         <div class="screen col">
                                             <span>dues</span>
-                                            <strong id="oldDues"> {{$rev->rem_amount}}</strong>
+                                            <strong id="oldDues"> {{$ticket->rem_amount}}</strong>
                                         </div>
                                     </div>
                                 </div>
@@ -336,7 +248,7 @@
                                         </div>
                                         <div class="screen col">
                                             <span>paid</span>
-                                            <strong id="paid"> {{$rev->paid_amount}} </strong>
+                                            <strong id="paid"> {{$ticket->paid_amount}} </strong>
                                         </div>
                                         <div class="screen col">
                                             <span>change</span>
@@ -612,7 +524,7 @@
                                                 <div class="col-8 col-md-9 p-2 ">
                                                     <label> Amount </label>
                                                     <input class="form-control" type="number" id="amount" step="any"
-                                                           onchange="calculateChange()" onkeyup="calculateChange()" value="{{$rev->paid_amount}}"/>
+                                                           onchange="calculateChange()" onkeyup="calculateChange()" value="{{$ticket->paid_amount}}"/>
                                                 </div>
                                                 {{--                                            <div class="col-4 col-md-3 p-2">--}}
                                                 {{--                                                <button type="button" class="btn w-100 btn-success"> Pay</button>--}}
@@ -638,14 +550,11 @@
                 <div class=" bill" id="bill">
                     <h4 class="font-weight-bolder ps-2">Bill</h4>
                     <div class="info">
-                        <h6 class="billTitle"> ticket <span id="RandTicket">{{$rev->ticket_num}}</span></h6>
+                        <h6 class="billTitle"> ticket <span id="RandTicket">{{$ticket->ticket_num}}</span></h6>
                         <ul>
                             <li><label> Cashier Name : </label> <strong>{{$add_by}}</strong></li>
-                            <li><label> Visit Date : </label> <strong id="dateOfTicket">{{$rev->day}}</strong></li>
-                            <li><label> Reservation Duration : </label> <strong id="hourOfTicket"
-                                                                                style="text-transform: none !important;">{{$rev->hours_count}}
-                                    h</strong>
-                            </li>
+                            <li><label> Visit Date : </label> <strong id="dateOfTicket">{{$ticket->visit_date}}</strong></li>
+                            <li><label> Reservation Duration : </label> <strong id="hourOfTicket" style="text-transform: initial !important;">{{$ticket->hours_count}} h</strong></li>
                         </ul>
                     </div>
                     <div class="info firstInfo">
@@ -656,32 +565,32 @@
                                 <span class="col"> Quantity </span>
                                 <span class="col"> price </span>
                             </div>
-                            @foreach($rev->models->groupBy('visitor_type_id') as $visitor)
-                            <div class="item row insertRows">
-                                <span class="col">{{$visitor[0]->type->title}}</span>
-                                <span class="col" style="text-transform: initial !important;"> {{$visitor->count()}}</span>
-                                <span class="col"> {{$visitor->sum('price')}} EGP</span>
-                            </div>
+                            @foreach($ticket->models->groupBy('visitor_type_id') as $visitor)
+                                <div class="item row insertRows">
+                                    <span class="col">{{$visitor[0]->type->title}}</span>
+                                    <span class="col" style="text-transform: initial !important;"> {{$visitor->count()}}</span>
+                                    <span class="col"> {{$visitor->sum('price')}} EGP</span>
+                                </div>
                             @endforeach
                         </div>
                     </div>
                     <div class="info secondInfo">
                         @if(count($products) > 0)
-                        <h6 class="billTitle"> products</h6>
-                        <div class="items">
-                            <div class="itemsHead row">
-                                <span class="col">type</span>
-                                <span class="col"> Quantity </span>
-                                <span class="col"> price </span>
+                            <h6 class="billTitle"> products</h6>
+                            <div class="items">
+                                <div class="itemsHead row">
+                                    <span class="col">type</span>
+                                    <span class="col"> Quantity </span>
+                                    <span class="col"> price </span>
+                                </div>
+                                @foreach($products as $product)
+                                    <div class="item row">
+                                        <span class="col">{{$product->product->title}} </span>
+                                        <span class="col"> {{$product->qty}} </span>
+                                        <span class="col"> {{$product->total_price}} EGP </span>
+                                    </div>
+                                @endforeach
                             </div>
-                            @foreach($products as $product)
-                            <div class="item row">
-                                <span class="col">{{$product->product->title}} </span>
-                                <span class="col"> {{$product->qty}} </span>
-                                <span class="col"> {{$product->total_price}} EGP </span>
-                            </div>
-                            @endforeach
-                        </div>
                         @endif
                     </div>
                     <div class="info thirdInfo">
@@ -691,111 +600,82 @@
                         $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
                     @endphp
                     <div class="myBarcode">
-                        {!! $generator->getBarcode($rev->ticket_num, $generator::TYPE_CODE_128) !!}
+                        {!! $generator->getBarcode($ticket->ticket_num, $generator::TYPE_CODE_128) !!}
                     </div>
+{{--                    <div class="printBtn">--}}
+{{--                        <button type="button" class="btn btn-outline-info fw-normal " id="printBtn"><i--}}
+{{--                                class="fas fa-sign-out me-2"></i>--}}
+{{--                            Print & Exit--}}
+{{--                        </button>--}}
+{{--                        <button type="submit" class="btn btn-info "><i class="fal fa-print me-2"></i> Access</button>--}}
+
+{{--                    </div>--}}
                 </div>
             </div>
+            @csrf
         </form>
     </div>
 @endsection
 @section('js')
     <script type="text/javascript" src="{{asset('assets/sales')}}/js/plugins/multistep-form.js"></script>
-
     @include('sales.layouts.assets.editDataTable')
     <script>
-        $(document).ready(function () {
-            checkTime()
+        $('form').on('submit', function(e) {
+            e.preventDefault();
+            var visitor_type    = $("span[id='visitor_type[]']").map(function(){return $(this).attr('data-type_id');}).get(),
+                visitor_price   = $("span[id='visitor_price[]']").map(function(){return $(this).attr('data-price');}).get(),
+                visitor_birthday= $("input[id='visitor_birthday[]']").map(function(){return $(this).val();}).get(),
+                visitor_name    = $("input[name='visitor_name[]']").map(function(){return $(this).val();}).get(),
+                gender          = $(".choose input:checked").map(function(){return $(this).val();}).get(),
+                product_id      =  $("input[name='product_id[]']").map(function(){return $(this).val();}).get(),
+                product_qty     =  $("input[name='proQtyInput[]']").map(function(){return $(this).val();}).get(),
+                product_price   =  $("input[name='proTotalInput[]']").map(function(){return $(this).val();}).get(),
+                total_price     =  $("#totalPrice").text(),
+                discount_value  =  $("#discount").text().replace('%',''),
+                RandTicket      =  $("#RandTicket").text(),
+                revenue         =  $("#revenue").text(),
+                amount          =  parseFloat($('#paid').text())-parseFloat($('#change').text()),
+                discount_type   = $(".discType input:checked").map(function(){return $(this).val();}).get(),
+                rem             = parseFloat($("#revenue").text())-amount;
 
-        });
-    </script>
-        <script>
-            $('form').on('submit', function (e) {
-                e.preventDefault();
-                var duration = $('#duration').val(),
-                    visit_date = $('#date').val(),
-                    shift_id = $('#choices-shift').val(),
-                    visitor_type = $("span[id='visitor_type[]']").map(function () {
-                        return $(this).attr('data-type_id');
-                    }).get(),
-                    visitor_price = $("span[id='visitor_price[]']").map(function () {
-                        return $(this).attr('data-price');
-                    }).get(),
-                    visitor_birthday = $("input[id='visitor_birthday[]']").map(function () {
-                        return $(this).val();
-                    }).get(),
-                    visitor_name = $("input[name='visitor_name[]']").map(function () {
-                        return $(this).val();
-                    }).get(),
-                    gender = $(".choose input:checked").map(function () {
-                        return $(this).val();
-                    }).get(),
-                    product_id = $("input[name='product_id[]']").map(function () {
-                        return $(this).val();
-                    }).get(),
-                    product_qty = $("input[name='proQtyInput[]']").map(function () {
-                        return $(this).val();
-                    }).get(),
-                    product_price = $("input[name='proTotalInput[]']").map(function () {
-                        return $(this).val();
-                    }).get(),
-                    client_name = $("#client_name").val(),
-                    client_phone = $("#phone").val(),
-                    client_email = $("#email").val(),
-                    total_price = $("#totalPrice").text(),
-                    discount_value = $("#discount").text().replace('%', ''),
-                    RandTicket = $("#RandTicket").text(),
-                    revenue = $("#revenue").text(),
-                    amount = parseFloat($('#paid').text()) - parseFloat($('#change').text()),
-                    discount_type = $(".discType input:checked").map(function () {
-                        return $(this).val();
-                    }).get(),
-                    rem = parseFloat($("#revenue").text()) - amount;
-
-                var data = {
-                    'client_name':client_name,
-                    'phone':client_phone,
-                    'email':client_email,
-                    'shift_start':"{{$rev->models[0]->shift_start}}",
-                    'shift_end':"{{$rev->models[0]->shift_end}}",
-                    'note':$('#note').val(),
-                    "visitor_type": visitor_type,
-                    "visitor_price": visitor_price,
-                    "visitor_birthday": visitor_birthday,
-                    "visitor_name": visitor_name,
-                    "gender": gender,
-                    "product_id": product_id,
-                    "product_qty": product_qty,
-                    "product_price": product_price,
-                    "total_price": total_price,
-                    "discount_type": discount_type,
-                    "discount_value": discount_value,
-                    "rand_ticket": RandTicket,
-                    "amount": amount,
-                    "revenue": revenue,
-                    "rev_id": "{{$rev->id}}",
-                    "rem": (Math.round(rem * 100) / 100).toFixed(2),
-                }
-                $.ajax({
-                    type: "POST",
-                    data: data,
-                    url: '{{route('postUpdateReservation')}}',
-                    beforeSend: function () {
-                        $('#confirmBtn').html('<span class="spinner-border spinner-border-sm mr-2" ' +
-                            ' ></span> <span style="margin-left: 4px;">working</span>').attr('disabled', true);
-                    },
-                    success: function (data) {
-                        toastr.success("Reservation is updated successfully");
-                        $('#confirmBtn').html('Confirm').attr('disabled', false);
-                        window.setTimeout(function () {
-                            window.location.href = "{{route('capacity.index')}}?month=" + data.day;
-                        }, 300);
-                    },
-                });
-
-                // Prevent form submission
+            var data = {
+                "ticket_id":{{$ticket->id}},
+                "visitor_type":visitor_type,
+                "visitor_price":visitor_price,
+                "visitor_birthday":visitor_birthday,
+                "visitor_name":visitor_name,
+                "gender":gender,
+                "product_id":product_id,
+                "product_qty":product_qty,
+                "product_price":product_price,
+                "total_price":total_price,
+                "discount_type":discount_type,
+                "discount_value":discount_value,
+                "rand_ticket":RandTicket,
+                "amount":amount,
+                "revenue":revenue,
+                "rem":(Math.round(rem * 100) / 100).toFixed(2),
+            }
+            console.log(data)
+            $.ajax({
+                type: "POST",
+                data: data,
+                url: '{{route('restoreTicket')}}',
+                beforeSend: function(){
+                    $('#confirmBtn').html('<span class="spinner-border spinner-border-sm mr-2" ' +
+                        ' ></span> <span style="margin-left: 4px;">working</span>').attr('disabled', true);
+                },
+                success: function(data){
+                    toastr.success("Ticket is updated successfully");
+                    $('#confirmBtn').html('Confirm').attr('disabled', false);
+                    window.setTimeout(function() {
+                        window.location.href="{{route('client.create')}}";
+                    }, 300);
+                },
             });
-        </script>
 
+            // Prevent form submission
+        } );
+
+    </script>
 @endsection
-
-

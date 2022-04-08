@@ -146,7 +146,7 @@
                                 <div class="col-md-5 p-2">
                                     <label class="form-label"> product </label>
                                     <select class="form-control" id="choices-product">
-                                        <option value="" disabled selected>Choose The Category</option>
+                                        <option value="" disabled selected>Choose The Product</option>
                                     </select>
                                 </div>
                                 <div class="col-md-2 p-2">

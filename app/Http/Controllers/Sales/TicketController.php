@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CapacityDays;
 use App\Models\Category;
 use App\Models\Clients;
+use App\Models\Event;
 use App\Models\GeneralSetting;
 use App\Models\Product;
 use App\Models\Reservations;
@@ -14,6 +15,7 @@ use App\Models\Shifts;
 use App\Models\Ticket;
 use App\Models\TicketRevModel;
 use App\Models\TicketRevProducts;
+use App\Models\User;
 use App\Models\VisitorTypes;
 use Carbon\Carbon;
 use Carbon\Traits\Date;
@@ -284,7 +286,7 @@ class TicketController extends Controller
             $smallArray[] = $ticket->models->count();
             $accessUrl    = route('familyAccess.index').'?search='.$ticket->ticket_num;
             $printUrl     = route('ticket.edit',$ticket->id);
-            $editUrl      = 'a';
+            $editUrl      = route('updateTicket',$ticket->id);
             $title        = $ticket->client->name." - ".$ticket->ticket_num;
             $editSpan     = null;
             $deleteSpan   = null;
@@ -310,13 +312,139 @@ class TicketController extends Controller
         return response()->json(['html' => $html,'status' => 200]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
+    public function updateTicket($id){
+        $ticket     = Ticket::where([['id',$id],['status','append']])->firstOrFail();
+        $add_by     = User::where('id',$ticket->add_by)->first()->name;
+        $types      = VisitorTypes::all();
+        $models     = TicketRevModel::where('ticket_id',$id)->get();
+        $categories = Category::with(['products'=>function($query){
+            $query->where('status','1');
+        }])->whereHas('products',function ($q){
+            $q->where('status','1');
+        })->get();
+        $products = TicketRevProducts::where('ticket_id',$id)->get();
+        $prices = $this->getPrices($ticket->hours_count,$ticket->shift_id);
+        return view('sales.updateTicket',compact('ticket','add_by','prices','products','models','types','categories'));
+    }
+
+    public function restoreTicket(request $request){
+        $ticket      = Ticket::findOrFail($request->ticket_id);
+        $shift_start = $ticket->models->first()->shift_start;
+        $shift_end   = $ticket->models->first()->shift_end;
+        $day         = $ticket->models->first()->day;
+        foreach ($ticket->models as $model){
+            $model->delete();
+        }
+        $ticket->update([
+            'total_price'    => $request->total_price,
+            'discount_type'  => $request->discount_type[0],
+            'discount_value' => $request->discount_value,
+            'paid_amount'    => $request->amount,
+            'grand_total'    => $request->revenue,
+            'rem_amount'     => $request->rem,
+        ]);
+        for ($i = 0 ; $i < count($request->visitor_type); $i++) {
+            TicketRevModel::create([
+                'ticket_id'       => $ticket->id,
+                'shift_start'     => $shift_start,
+                'shift_end'       => $shift_end,
+                'day'             => $day,
+                'visitor_type_id' => $request->visitor_type[$i],
+                'price'           => $request->visitor_price[$i],
+                'name'            => $request->visitor_name[$i],
+                'birthday'        => $request->visitor_birthday[$i],
+                'gender'          => ($request->gender[$i]) ?? null,
+            ]);
+        }
+        foreach ($ticket->products as $product){
+            $product->delete();
+        }
+        if($request->has('product_id')) {
+            for ($i = 0; $i < count($request->product_id); $i++) {
+                TicketRevProducts::create([
+                    'ticket_id'   => $ticket->id,
+                    'product_id'  => $request->product_id[$i],
+                    'category_id' => Product::where('id', $request->product_id[$i])->first()->category_id,
+                    'qty'         => $request->product_qty[$i],
+                    'price'       => $request->product_price[$i] / $request->product_qty[$i],
+                    'total_price' => $request->product_price[$i],
+                ]);
+            }
+        }
+        return response()->json(['status' => true]);
+    }
+
+    public function getPrices($hours_count,$shift_id)
+    {
+        $shift = Shifts::where('id', $shift_id)->first();
+        $hours = $hours_count;
+        $shift_duration = strtotime($shift->to) - (strtotime($shift->from));
+        $shift_prices = ShiftDetails::where('shift_id', $shift_id)->select('visitor_type_id', 'price')->get();
+        // now check if wanted hours is less than shift time then do direct calculations
+        if ($hours <= $shift_duration / 3600) {
+            foreach ($shift_prices as $price) {
+                $price->price *= $hours;
+            }
+            return $shift_prices;
+        } else {
+            // do function
+            $visitorTypes = VisitorTypes::latest()->get();
+            $hoursCount = $hours_count;
+            $newHoursCount = $hours_count;
+            $minHorse = 0;
+
+            $shift = Shifts::findOrFail($shift_id);
+            $shifts = [];
+            $prices = [];
+            $pricesArray = [];
+            $searchHourArray = [];
+            foreach ($visitorTypes as $visitorType) {
+                $pricesArray[$visitorType->id] = 0;
+            }
+
+            while ($newHoursCount > 0) {
+
+                $from = strtotime(date('H', strtotime($shift->from)) . ":00");
+                $to = strtotime(date('H', strtotime($shift->to)) . ":00");
+                $difference = round(abs($to - $from) / 3600, 2);
+                if ($hoursCount > $difference) {
+                    $searchHour = $difference;
+                } else {
+                    $searchHour = $hoursCount;
+                }
+
+                if ($newHoursCount < $difference) {
+                    $searchHour = $newHoursCount;
+                }
+
+
+                foreach ($visitorTypes as $visitorType) {
+                    $findShiftDetails = ShiftDetails::where('shift_id', $shift->id)->where('visitor_type_id', $visitorType->id)->firstOrFail();
+                    $shifts[] = $findShiftDetails;
+                    $pricesArray[$visitorType->id] += $searchHour * $findShiftDetails->price;
+                }
+                $nextId = Shifts::whereTime('from', '>=', $shift->to)->max('id');
+                $latestShift = $shift;
+                $shift = Shifts::find($nextId);
+                $newHoursCount = $newHoursCount - $searchHour;
+
+                if (!$shift) {
+                    break;
+                }
+            }
+            $shift_prices = [];
+            foreach ($pricesArray as $key => $item) {
+                $smallArray = [];
+                $smallArray['visitor_type_id'] = $key;
+                $smallArray['price'] = $item;
+                $shift_prices[] = $smallArray;
+            }
+            return $shift_prices;
+        }
+    }
+
+
+
     public function update(Request $request, $id)
     {
         //

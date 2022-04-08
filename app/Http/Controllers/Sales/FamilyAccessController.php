@@ -49,7 +49,7 @@ class FamilyAccessController extends Controller
 
             if ($ticket->count() > 0) {
                 if ($request->search == 'all')
-                    $models =  TicketRevModel::where([['status','append'],['day', Carbon::today()],['ticket_id','!=',null]])->get();
+                    $models =  TicketRevModel::where([['status','append'],['day', date('Y-m-d')],['ticket_id','!=',null]])->get();
                 else
                     $models = $ticket->first()->append_models;
                 foreach ($models as $key => $model) {

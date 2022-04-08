@@ -8,13 +8,14 @@ use Illuminate\Support\Facades\Route;
 
     // Ticket
     Route::resource('ticket', 'TicketController');
-//    Route::get('ticket-{id}', 'TicketController@print')->name('ticket.print');
     Route::get('calcCapacity', 'TicketController@calcCapacity')->name('calcCapacity');
     Route::get('checkChange', 'TicketController@checkChange')->name('checkChange');
     Route::get('getShifts', 'TicketController@getShifts')->name('getShifts');
     Route::get('tickets', 'TicketController@search')->name('ticket.search');
     Route::get('searchForTickets', 'TicketController@searchForTicket')->name('searchForTickets');
     Route::get('detailsTicket/{id}', 'TicketController@details')->name('detailsTicket');
+    Route::get('updateTicket/{id}', 'TicketController@updateTicket')->name('updateTicket');
+    Route::POST('restoreTicket', 'TicketController@restoreTicket')->name('restoreTicket');
     Route::POST('storeModels', 'TicketController@storeModels')->name('storeModels');
     Route::POST('delete_ticket', 'TicketController@delete_ticket')->name('delete_ticket');
     Route::POST('storeRevTicket', 'ReservationController@storeRevTicket')->name('storeRevTicket');

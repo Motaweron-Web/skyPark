@@ -347,7 +347,7 @@
             });
         }
         localStorage.setItem('price',totalBeforeDiscount)
-        if (window.location.href.indexOf("ticket") > -1) {
+        if (window.location.href.indexOf("updateTicket") > -1) {
             totalBeforeDiscount += {{$setting->family_tax}}*totalBeforeDiscount/100;
             totalBeforeDiscount = parseFloat(totalBeforeDiscount).toFixed(2);
             total.text(totalBeforeDiscount);
@@ -362,11 +362,11 @@
         $('#revenue').text(totalBeforeDiscount)
         calculateChange();
         $('#calcDiscount').val('')
-        if (window.location.href.indexOf("ticket") > -1) {
+        if (window.location.href.indexOf("updateTicket") > -1) {
             $('.thirdInfo').append(`
                         <h6 class="billTitle"> Totals </h6>
                         <ul>
-                            <li><label> total before tax : </label> <strong id="beforeTax">${(totalBeforeDiscount - {{$setting->family_tax}} * totalBeforeDiscount / 100).toFixed(2)} EGP</strong></li>
+                            <li><label> total before tax : </label> <strong id="beforeTax">${localStorage.getItem('price')} EGP</strong></li>
                             <li><label> Tax : </label> <strong id="family_tax">` + {{$setting->family_tax}} + `%</strong></li>
                             <li><label> total after tax : </label> <strong id="totalInfoPrice">${totalBeforeDiscount} EGP</strong></li>
                             <li><label> Discount : </label> <strong id="totalInfoDiscount">0 EGP</strong></li>
@@ -405,12 +405,18 @@
             $('#discount').text('0');
             $('#revenue').text(parseFloat(total.text()).toFixed(2));
         } else {
-            $('#discount').text($('#calcDiscount').val() + "%")
+            if($('#calcDiscount').val().length > 0){
+                $('#discount').text($('#calcDiscount').val() + "%")
+                $('#totalInfoDiscount').text($('#calcDiscount').val() + "%")
+            }
+            else{
+                $('#discount').text("0")
+                $('#totalInfoDiscount').text("0 EGP")
+            }
             var after = (parseFloat(total.text()) - $('#calcDiscount').val() * parseFloat(total.text()) / 100).toFixed(2);
             $('#revenue').text(after)
             $('#totalInfoPrice').text(total.text() + " EGP")
             $('#totalInfoRevenue').text(after + " EGP")
-            $('#totalInfoDiscount').text($('#calcDiscount').val() + "%")
             calculateChange()
         }
     }
@@ -427,8 +433,13 @@
             var after = (parseFloat(total.text()) - $('#calcDiscount').val()).toFixed(2);
             $('#revenue').text(after)
             $('#totalInfoPrice').text(total.text() + " EGP")
+            if($('#calcDiscount').val().length > 0)
+                $('#totalInfoDiscount').text($('#calcDiscount').val() + " EGP")
+            else
+                $('#totalInfoDiscount').text("0 EGP")
+
+
             $('#totalInfoRevenue').text(after + " EGP")
-            $('#totalInfoDiscount').text($('#calcDiscount').val() + " EGP")
             calculateChange()
         }
     }

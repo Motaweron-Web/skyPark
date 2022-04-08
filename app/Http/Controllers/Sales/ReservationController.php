@@ -16,6 +16,7 @@ use App\Models\Shifts;
 use App\Models\Ticket;
 use App\Models\TicketRevModel;
 use App\Models\TicketRevProducts;
+use App\Models\User;
 use App\Models\VisitorTypes;
 use Carbon\Carbon;
 use Carbon\Traits\Date;
@@ -308,9 +309,8 @@ class ReservationController extends Controller
 
     public function update($id)
     {
-        $rev    = Reservations::where([['id',$id],['status','append']])->first();
-        if(!$rev)
-            abort(404);
+        $rev    = Reservations::where([['id',$id],['status','append']])->firstOrFail();
+        $add_by = User::where('id',$rev->add_by)->first()->name;
         $events = Event::all();
         $first_shift_start = Carbon::parse(Shifts::orderBy('from', 'ASC')->first()->from)->format('H');
         $types  = VisitorTypes::all();
@@ -323,7 +323,7 @@ class ReservationController extends Controller
         })->get();
         $products = TicketRevProducts::where('rev_id',$id)->get();
         $prices = $this->calcCapacity($rev->hours_count,$rev->shift_id);
-        return view('sales.updateReservation',compact('rev','prices','products','events','models','first_shift_start','types','random','categories'));
+        return view('sales.updateReservation',compact('rev','add_by','prices','products','events','models','first_shift_start','types','random','categories'));
     }
 
     public function calcCapacity($hours_count,$shift_id)
@@ -398,6 +398,7 @@ class ReservationController extends Controller
 
     public function postUpdateReservation(request $request){
         $rev = Reservations::where('id',$request->rev_id)->first();
+        $day = $rev->models->first()->day;
         foreach ($rev->models as $model){
             $model->delete();
         }
@@ -417,6 +418,7 @@ class ReservationController extends Controller
         for ($i = 0 ; $i < count($request->visitor_type); $i++) {
             TicketRevModel::create([
                 'rev_id'          => $rev->id,
+                'day'             => $day,
                 'shift_start'     => $request->shift_start,
                 'shift_end'       => $request->shift_end,
                 'visitor_type_id' => $request->visitor_type[$i],
