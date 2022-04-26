@@ -154,29 +154,19 @@
                                                 <td>
                                                     <div class="choose">
                                                         <div class="genderOption">
-                                                            <input type="radio" class="btn-check"
-                                                                   name="gender{{$loop->iteration}}"
-                                                                   id="option1{{$loop->iteration}}" value="male">
-                                                            <label class=" mb-0 btn btn-outline"
-                                                                   for="option1{{$loop->iteration}}"><span><i
-                                                                        class="fas fa-male"></i></span></label>
-                                                        </div>
-                                                        <div class="genderOption" style="display: none">
-                                                            <input type="radio" class="btn-check"
-                                                                   name="gender{{$loop->iteration}}"
-                                                                   id="option1{{$loop->iteration}}"
-                                                                   value="male" {{($model->gender == 'male') ? 'checked' : ''}}>
-                                                            <label class=" mb-0 btn btn-outline"
-                                                                   for="option1{{$loop->iteration}}"></label>
+                                                            <input type="radio" class="btn-check gender" name="gender{{$model->id}}"
+                                                                   value="male" id="option1{{$model->id}}" {{($model->gender == 'male') ? 'checked' : ''}}>
+                                                            <label class=" mb-0 btn btn-outline" for="option1{{$model->id}}">
+                                                                <span> <i class="fas fa-male"></i> </span>
+                                                            </label>
                                                         </div>
                                                         <div class="genderOption">
-                                                            <input type="radio" class="btn-check"
-                                                                   name="gender{{$loop->iteration}}"
-                                                                   id="option2{{$loop->iteration}}"
-                                                                   value="female" {{($model->gender == 'female') ? 'checked' : ''}}>
-                                                            <label class=" mb-0 btn btn-outline"
-                                                                   for="option2{{$loop->iteration}}"><span><i
-                                                                        class="fas fa-female"></i> </span></label>
+                                                            <input type="radio" class="btn-check gender" name="gender{{$model->id}}"
+                                                                   value="female" id="option2{{$model->id}}" {{($model->gender == 'female') ? 'checked' : ''}}>
+                                                            <label class=" mb-0 btn btn-outline" for="option2{{$model->id}}">
+                                                                <span> <i class="fas fa-female"></i> </span>
+                                                                <!-- <span> female </span> -->
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -693,6 +683,15 @@
                     <div class="myBarcode">
                         {!! $generator->getBarcode($rev->ticket_num, $generator::TYPE_CODE_128) !!}
                     </div>
+                    <div id="printDiv" style="display: none">
+                        <div class="printBtn">
+                            <a class="btn btn-outline-info fw-normal " id="accessBtn"><i
+                                    class="fas fa-sign-out me-2"></i>
+                                Access
+                            </a>
+                            <a class="btn btn-info " target="_blank"  id="printBtn"><i class="fal fa-print me-2"></i> Print</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>
@@ -785,10 +784,12 @@
                     },
                     success: function (data) {
                         toastr.success("Reservation is updated successfully");
-                        $('#confirmBtn').html('Confirm').attr('disabled', false);
-                        window.setTimeout(function () {
-                            window.location.href = "{{route('capacity.index')}}?month=" + data.day;
-                        }, 300);
+                        $('#confirmBtn').hide();
+                        $('#lastPrev').hide();
+                        $('#printDiv').show();
+                        $('#printBtn').attr("href", data.printUrl)
+                        $('#accessBtn').attr("href", data.accessUrl)
+                        window.scrollTo({ top: 1000, behavior: 'smooth' });
                     },
                 });
 

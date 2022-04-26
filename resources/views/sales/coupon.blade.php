@@ -42,19 +42,34 @@
                     <td>{{$rev->coupon_end}}</td>
                     <td>
                         @if(count($rev->models) == 0)
-                            <a href="{{route('sales.couponsVisitors',$rev->id)}}" class="btn btn-rounded shadow-none btn-outline-info "> <i
+                            <a href="{{route('sales.couponsVisitors',$rev->id)}}"
+                               class="btn btn-rounded shadow-none btn-outline-info "> <i
                                     class="far fa-plus me-1"></i> add visitor </a>
                         @else
-                            <a href="{{route('sales.couponsVisitors',$rev->id)}}" class="btn btn-rounded shadow-none btn-outline-info "> <i
+                            <a href="{{route('sales.couponsVisitors',$rev->id)}}"
+                               class="btn btn-rounded shadow-none btn-outline-info "> <i
                                     class="far fa-plus me-1"></i> show visitor </a>
                         @endif
                     </td>
                     <td>
                         <span class="controlIcons">
-                            <span class="icon editBtn" data-id="{{$rev->id}}"> <i class="far fa-edit"></i> </span>
-                        <span class="icon deleteSpan" data-id="{{$rev->id}}" data-title="{{$rev->client_name}}">
-                      <i class="far fa-trash-alt"></i>
-                        </span>
+                      @if($rev->status == 'append')
+                                <span class="icon editBtn" data-id="{{$rev->id}}"> <i class="far fa-edit"></i> </span>
+                      @endif
+                      @if($rev->status != 'in')
+                                <span class="icon deleteSpan" data-id="{{$rev->id}}" data-title="{{$rev->client_name}}"> <i
+                                        class="far fa-trash-alt"></i></span>
+                      @endif
+                      @if($rev->status == 'append')
+                                <span class="icon" data-bs-toggle="tooltip" title="Access"><a
+                                        href="{{route('groupAccess.index').'?search='.$rev->ticket_num}}"><i
+                                            class="fal fa-check "></i></a></span>
+                      @endif
+
+                            {{--                       <span class="icon deleteSpan" data-id="{{$rev->id}}" data-title="{{$rev->client_name}}">--}}
+                            {{--                      <i class="far fa-trash-alt"></i>--}}
+                            {{--                        </span>--}}
+
                 </span>
                     </td>
                 </tr>
@@ -81,7 +96,8 @@
                                 <label class="form-label"> <i class="fas fa-building me-1"></i> Corporation Name
                                 </label>
                                 <div class="input-group">
-                                    <input class="form-control" type="text" placeholder="Type here..." name="client_name">
+                                    <input class="form-control" type="text" placeholder="Type here..."
+                                           name="client_name">
                                 </div>
                             </div>
                             <div class="col-sm-4 p-2">
@@ -106,20 +122,23 @@
                             <div class="col-sm-4 p-2">
                                 <label class="form-label"> <i class="fas fa-users me-1"></i> Visitors Count </label>
                                 <div class="input-group">
-                                    <input class="form-control" type="number" min="1" placeholder="Count" name="visitor_count">
+                                    <input class="form-control" type="number" min="1" placeholder="Count"
+                                           name="visitor_count">
                                 </div>
                             </div>
                             <div class="col-sm-4 p-2">
                                 <label class="form-label"> <i class="fas fa-users me-1"></i> Hours Count </label>
                                 <div class="input-group">
-                                    <input class="form-control" type="number" min="1" max="24" placeholder="Count" name="hours_count">
+                                    <input class="form-control" type="number" min="1" max="24" placeholder="Count"
+                                           name="hours_count">
                                 </div>
                             </div>
                             <div class="col-sm-6 p-2">
                                 <label class="form-label"> <i class="fas fa-calendar-alt me-1"></i> Coupon Start Date
                                 </label>
                                 <div class="input-group">
-                                    <input class="form-control" type="date" name="coupon_start" value="{{date('Y-m-d')}}">
+                                    <input class="form-control" type="date" name="coupon_start"
+                                           value="{{date('Y-m-d')}}">
                                 </div>
                             </div>
                             <div class="col-sm-6 p-2">
@@ -193,13 +212,20 @@
     <!-- MODAL CLOSED -->
 @endsection
 @section('js')
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
     <script>
         $(document).ready(function () {
             var table = $('.customDataTable').DataTable({
                 responsive: true,
-                "order": [ 0, 'desc' ]
+                dom: 'Bfrtip',
+                "order": [0, 'desc'],
+                buttons: [
+                    'excel'
+                ]
             });
-            new $.fn.dataTable.FixedHeader(table);
+            // new $.fn.dataTable.FixedHeader(table);
         });
     </script>
     <script>
@@ -209,6 +235,7 @@
                             <div class="inter-right--bottom"></div>
                         </div>
         `;
+
         function dismiss() {
             $('#delete_modal').modal('hide');
         }

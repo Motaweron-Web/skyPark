@@ -225,6 +225,12 @@
     if (document.getElementById('choices-discount')) {
         var element = document.getElementById('choices-discount');
         const options = new Choices(element, {
+            searchEnabled: true
+        });
+    }
+    if (document.getElementById('choices-discount')) {
+        var element = document.getElementById('choices-discount');
+        const options = new Choices(element, {
             searchEnabled: false
         });
     }
@@ -353,6 +359,9 @@
     var Percent = $('#offerType1'),
         Amount = $('#offerType2');
     $(document).on('click', '#thirdNext', function () {
+        $('#paid').text(0)
+        $('#change').text(0)
+        $('#amount').val('')
         totalBeforeDiscount = parseInt(localStorage.getItem('priceOfVisitor'));
         if (myTable.rows().count() != 0) {
             $('.secondInfo').append(`
@@ -425,12 +434,19 @@
     var totalPrice = parseInt(total.text());
     Percent.prop("checked", true);
     $('#revenue').text(totalBeforeDiscount)
+
     $("#calcDiscount").on("keyup change", function (e) {
+        if($("#calcDiscount").val() != 0){
+            $('#reasonDiv').show();
+        }else {
+            $('#reasonDiv').hide();
+        }
         if (Percent.is(':checked'))
             checkPercent()
         else if (Amount.is(':checked'))
             checkAmount()
     });
+
     Percent.change(function () {
         checkPercent()
     });
@@ -442,6 +458,7 @@
             $('#totalInfoDiscount').text(0 + " EGP")
             $('#discount').text('0');
             $('#revenue').text(parseFloat(total.text()).toFixed(2));
+            $('#reasonDiv').hide();
         } else {
             if($('#calcDiscount').val().length > 0){
                 $('#discount').text($('#calcDiscount').val() + "%")
@@ -466,6 +483,7 @@
             $('#calcDiscount').val('');
             $('#discount').text('0');
             $('#revenue').text(parseFloat(total.text()).toFixed(2));
+            $('#reasonDiv').hide();
         } else {
             $('#discount').text($('#calcDiscount').val() || 0)
             var after = (parseFloat(total.text()) - $('#calcDiscount').val()).toFixed(2);

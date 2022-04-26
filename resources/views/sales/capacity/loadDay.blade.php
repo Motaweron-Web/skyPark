@@ -14,7 +14,7 @@
 
 
     <div class="details" style="height:300px;overflow-y: auto">
-        <h6 class="title"> current events :</h6>
+        <h6 class="title"> All Events :</h6>
 
         @foreach($reservations as $reservation)
         <div class="event"> <span class="icon"> <i class="{{$reservation->event->icon??''}}"></i> </span>

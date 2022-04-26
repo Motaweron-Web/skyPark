@@ -56,15 +56,21 @@
                         <h6 class="billTitle"> visitors</h6>
                         <div class="items">
                             <div class="itemsHead row">
+                                <span class="col"> name </span>
                                 <span class="col">type</span>
-                                <span class="col"> Quantity </span>
+                                @if($ticket->status == 'in')
+                                <span class="col"> bracelet </span>
+                                @endif
                                 <span class="col"> price </span>
                             </div>
                             @foreach($models as $model)
                                 <div class="item row">
+                                    <span class="col"> {{($model->name) ?? '---'}} </span>
                                     <span class="col">{{$model->type->title}}</span>
-                                    <span class="col"> {{$model->count_all}} </span>
-                                    <span class="col"> {{$model->sum_all}} EGP </span>
+                                    @if($ticket->status == 'in')
+                                        <span class="col">{{$model->bracelet_number}}  </span>
+                                    @endif
+                                    <span class="col"> {{$model->price}} EGP </span>
                                 </div>
                             @endforeach
                         </div>
@@ -95,7 +101,7 @@
                     <ul>
                         <li><label> total price : </label> <strong>   {{$ticket->grand_total}} EGP</strong></li>
                         @if($ticket->discount_value != 0)
-                        <li><label> Discount : </label> <strong> {{$ticket->discount_value}} {{($ticket->discount_type == 'per') ? 'EGP' : '%'}}</strong></li>
+                        <li><label> Discount : </label> <strong> {{$ticket->discount_value}} {{($ticket->discount_type == 'per') ? '%' : 'EGP'}}</strong></li>
                         @endif
                         <li><label> paid : </label> <strong>  {{$ticket->paid_amount}} EGP</strong></li>
                         <li><label> Remaining : </label> <strong>  {{$ticket->rem_amount}} EGP</strong></li>

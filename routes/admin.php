@@ -40,6 +40,11 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin','namespace'=>'Admin']
     Route::resource('bracelet','BraceletsController');
     Route::POST('bracelet.delete','BraceletsController@delete')->name('bracelet.delete');
 
+    #### Discount ####
+    Route::resource('discount','DiscountController');
+    Route::POST('discount.delete','DiscountController@delete')->name('discount.delete');
+
+
     #### References ####
     Route::resource('reference','RefernceController');
     Route::POST('reference.delete','RefernceController@delete')->name('reference.delete');

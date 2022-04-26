@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CapacityDays;
 use App\Models\Category;
 use App\Models\Clients;
+use App\Models\DiscountReason;
 use App\Models\Event;
 use App\Models\GeneralSetting;
 use App\Models\Product;
@@ -183,9 +184,9 @@ class TicketController extends Controller
             })
             ->get();
         $customId = strtoupper(date('D') . $id . 'Re' . substr(time(), -2));
-//        $random       = strtoupper(date('D').$id.'Re'.substr(time(), -2));
+        $discounts = DiscountReason::all();
         $random = strtoupper(substr(Carbon::now()->format("l"), 0, 3) . $id . rand(0, 99) . Carbon::now()->format('is'));
-        return view('sales/ticket', compact('first_shift_start', 'customId', 'shifts', 'random', 'types', 'categories', 'id'));
+        return view('sales/ticket', compact('first_shift_start','discounts', 'customId', 'shifts', 'random', 'types', 'categories', 'id'));
     }
 
     public function storeModels(request $request)
@@ -199,10 +200,12 @@ class TicketController extends Controller
             'total_price'    => $request->total_price,
             'discount_type'  => $request->discount_type[0],
             'discount_value' => $request->discount_value,
+            'discount_id'    => $request->discount_id,
             'ticket_num'     => $request->rand_ticket,
             'paid_amount'    => $request->amount,
             'grand_total'    => $request->revenue,
             'rem_amount'     => $request->rem,
+            'payment_method' => $request->payment_method,
         ]);
         for ($i = 0; $i < count($request->visitor_type); $i++) {
             TicketRevModel::create([
@@ -229,26 +232,22 @@ class TicketController extends Controller
                 ]);
             }
         }
-        return response()->json(['status' => true]);
+        $accessUrl    = route('familyAccess.index').'?search='.$ticket->ticket_num;
+        $printUrl     = route('ticket.edit',$ticket->id);
+        return response()->json([
+            'status' => true,
+            'accessUrl' => $accessUrl,
+            'printUrl'  => $printUrl,
+        ]);
     }
 
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
-        $ticket = Ticket::with('products.product', 'shift')->findOrFail($id);
-        $models = TicketRevModel::where('ticket_id', $id)
-            ->selectRaw('price, sum(price) as sum_all')
-            ->selectRaw('visitor_type_id, count(*) as count_all')
-            ->groupby('visitor_type_id')
-            ->with('type')
-            ->get();
-        $date = Carbon::now();
+        $ticket    = Ticket::with('products.product', 'shift')->findOrFail($id);
+        $models    = TicketRevModel::where('ticket_id', $id)->get();
+        $date = Carbon::now()->addHours(2);
         return view('layouts.print.ticket', compact('ticket', 'models','date'));
     }
 
@@ -264,6 +263,8 @@ class TicketController extends Controller
                 $q->where('ticket_num',$request->searchText)->orWhereHas('client',function ($q)use($request)
                 {
                     $q->where('phone',$request->searchText)->orWhere('name','like','%'.$request->searchText.'%');
+                })->orWhereHas('models',function ($q) use($request){
+                    $q->where('bracelet_number',$request->searchText);
                 });
             });
         }
@@ -294,7 +295,7 @@ class TicketController extends Controller
             if($ticket->status == 'append')
                 $editSpan = '<span class="icon" data-bs-toggle="tooltip" title="edit" data-id="'.$ticket->id.'"><a href="'.$editUrl.'"><i class="far fa-edit"></i></a></span>';
 
-            if($ticket->status != 'in')
+            if($ticket->status != 'in' && $ticket->status != 'out')
                 $deleteSpan = '<span class="icon deleteSpan" data-bs-toggle="tooltip" title=" delete "  data-title="'.$title.'" data-id="'.$ticket->id.'"> <i class="far fa-trash-alt"></i>  </span>';
 
             if($ticket->status == 'append')
@@ -371,7 +372,13 @@ class TicketController extends Controller
                 ]);
             }
         }
-        return response()->json(['status' => true]);
+        $accessUrl    = route('familyAccess.index').'?search='.$ticket->ticket_num;
+        $printUrl     = route('ticket.edit',$ticket->id);
+        return response()->json([
+            'status' => true,
+            'accessUrl' => $accessUrl,
+            'printUrl'  => $printUrl,
+        ]);
     }
 
     public function getPrices($hours_count,$shift_id)

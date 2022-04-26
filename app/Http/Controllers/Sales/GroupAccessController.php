@@ -35,7 +35,7 @@ class GroupAccessController extends Controller
                     ->with('append_models.type');
             }
             else{
-                $reservation = Reservations::where('status','append')->with('append_models.type');
+                $reservation = Reservations::where([['status','append'],['is_coupon','!=', '1'],['day', Carbon::today()]])->with('append_models.type');
             }
 
             if($request->search != 'all'){
@@ -171,7 +171,6 @@ class GroupAccessController extends Controller
             'bracelet_number'=>['required'],
             'id'=>['required','array'],
             'id.*.'=>['array',Rule::exists('ticket_rev_models','id')->where('status','append')],
-            'birthday'=>'nullable|array',
             'name'=>'nullable|max:500|array',
             'gender'=>'nullable|array',
             'gender.*.'=>'in:male,female',
@@ -185,10 +184,10 @@ class GroupAccessController extends Controller
                 return response()->json(['status'=>405,'rem_amount'=>$model->reservation->rem_amount,'rev_id'=>$model->reservation->id]);
             }
             $data['bracelet_number'] = $request->bracelet_number[$key];
-            $data['birthday'] = $request->birthday[$key];
-            $data['name'] = $request->name[$key];
-            $data['gender'] = $request->gender[$key];
+            $data['name'] = ($request->name[$key]) ?? '';
+            $data['gender'] = ($request->gender[$key]) ?? '';
             $data['status'] = 'in';
+            $data['start_at'] = date('H:i:s');
             $status['status'] = 'in';
 
             if ($model->rev_id != '') {
@@ -233,6 +232,10 @@ class GroupAccessController extends Controller
 
     public function getBracelets(Request $request)
     {
+        $model = TicketRevModel::findOrFail($request->firstId);
+        if($model->reservation->rem_amount > 0){
+            return response()->json(['status'=>405,'rem_amount'=>$model->reservation->rem_amount,'rev_id'=>$model->reservation->id]);
+        }
         $count = $request->count;
         $firstBracelet = $request->firstBracelet;
         $firstCharacter = substr($firstBracelet, 0, 1);

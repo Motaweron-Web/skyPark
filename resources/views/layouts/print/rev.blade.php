@@ -112,7 +112,7 @@
                     <ul>
                         <li><label> total price : </label> <strong>   {{$ticket->grand_total}} EGP</strong></li>
                         @if($ticket->discount_value != 0)
-                            <li><label> Discount : </label> <strong> {{$ticket->discount_value}} {{($ticket->discount_type == 'per') ? 'EGP' : '%'}}</strong></li>
+                            <li><label> Discount : </label> <strong> {{$ticket->discount_value}} {{($ticket->discount_type == 'per') ? '%' : 'EGP'}}</strong></li>
                         @endif
                         <li><label> paid : </label> <strong>  {{$ticket->paid_amount}} EGP</strong></li>
                         <li><label> Remaining : </label> <strong>  {{$ticket->rem_amount}} EGP</strong></li>

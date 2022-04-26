@@ -130,7 +130,7 @@ class CapacityController extends Controller
         $capacityDay = CapacityDays::whereDate('day', $date)->first();
         $countOfTheDay = $capacityDay->count ?? generalSetting()->capacity;
 
-        $countDay = TicketRevModel::whereDate('day', $date)->count();
+        $countDay = TicketRevModel::whereDate('day', $date)->where('status','in')->count();
         $percent = ($countDay / $countOfTheDay) * 100;
         ////////////////////////////////////// حساب النسبة //////////////////////////////
 

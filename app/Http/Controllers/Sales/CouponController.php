@@ -168,7 +168,7 @@ class CouponController extends Controller
     {
         $model = TicketRevModel::findOrFail($id);
         $rev = Reservations::where('id', $model->rev_id)->first();
-        $date = Carbon::now();
+        $date = Carbon::now()->addHours(2);
         return view('layouts.print.model', compact('model', 'date', 'rev'));
     }
 }

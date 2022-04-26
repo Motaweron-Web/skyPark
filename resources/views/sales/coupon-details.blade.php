@@ -119,6 +119,9 @@
       </div>
 @endsection
 @section('js')
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
 <script>
     function dismiss() {
         $('#delete_modal').modal('hide');
@@ -126,9 +129,13 @@
     $(document).ready(function () {
         var table = $('.customDataTable').DataTable({
             responsive: true,
-            "order": [ 0, 'desc' ]
+            dom: 'Bfrtip',
+            "order": [ 0, 'desc' ],
+            buttons: [
+              'excel'
+            ]
         });
-        new $.fn.dataTable.FixedHeader(table);
+        // new $.fn.dataTable.FixedHeader(table);
     });
     $(document).on('click', '.deleteSpan', function (event) {
         var delete_id = $(this).attr('data-id');

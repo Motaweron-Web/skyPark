@@ -38,11 +38,13 @@
 <table class="myTable" style="width:100%">
     <tr style="background-color: #a6c64c;color: white">
         <th>Total Price</th>
+        <th>Discount</th>
         <th>Paid Amount</th>
         <th>Remaining Amount</th>
     </tr>
     <tr>
         <td>{{$ticket->grand_total}} EGP</td>
+        <td>{{$ticket->discount_value}} {{($ticket->discount_type == 'per') ? '%' : 'EGP'}}</td>
         <td>{{$ticket->paid_amount}} EGP</td>
         <td>{{$ticket->rem_amount}} EGP</td>
     </tr>

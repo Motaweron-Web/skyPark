@@ -314,6 +314,9 @@
     var Percent = $('#offerType1'),
         Amount = $('#offerType2');
     $(document).on('click', '#thirdNext', function () {
+        $('#paid').text(0)
+        $('#change').text(0)
+        $('#amount').val('')
         totalBeforeDiscount = parseInt(localStorage.getItem('priceOfVisitor'));
         if (myTable.rows().count() != 0) {
             $('.secondInfo').empty();

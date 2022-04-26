@@ -54,12 +54,19 @@
 
 
 
-        <li class="slide">
-            <a class="side-menu__item" href="{{route('bracelet.index')}}">
-                <i class="fe fe-bold side-menu__icon"></i>
-                <span class="side-menu__label">Bracelets</span>
-            </a>
-        </li>
+{{--        <li class="slide">--}}
+{{--            <a class="side-menu__item" href="{{route('bracelet.index')}}">--}}
+{{--                <i class="fe fe-bold side-menu__icon"></i>--}}
+{{--                <span class="side-menu__label">Bracelets</span>--}}
+{{--            </a>--}}
+{{--        </li>--}}
+
+                <li class="slide">
+                    <a class="side-menu__item" href="{{route('discount.index')}}">
+                        <i class="fe fe-arrow-down-left side-menu__icon"></i>
+                        <span class="side-menu__label">Discount Reasons</span>
+                    </a>
+                </li>
 
         <li class="slide">
             <a class="side-menu__item" href="{{route('reference.index')}}">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sales;
 use App\Http\Controllers\Controller;
 use App\Models\CapacityDays;
 use App\Models\Category;
+use App\Models\DiscountReason;
 use App\Models\Event;
 use App\Models\GeneralSetting;
 use App\Models\Governorate;
@@ -85,7 +86,7 @@ class ReservationController extends Controller
             if($rev->status == 'append')
                 $editSpan = '<span class="icon" data-bs-toggle="tooltip" title="edit" data-id="'.$rev->id.'"><a href="'.$editUrl.'"><i class="far fa-edit"></i></a></span>';
 
-            if($rev->status != 'in')
+            if($rev->status != 'in' && $rev->status != 'out')
                 $deleteSpan = '<span class="icon deleteSpan" data-bs-toggle="tooltip" title=" delete " data-title="'.$title.'" data-id="'.$rev->id.'"> <i class="far fa-trash-alt"></i></span>';
 
             if($rev->status == 'append')
@@ -258,7 +259,13 @@ class ReservationController extends Controller
             }
         }
         $day = Carbon::parse(Reservations::where('id',$request->rev_id)->first()->day)->format('Y-m');
-        return response()->json(['day'=>$day,'status' => true]);
+        $accessUrl    = route('groupAccess.index').'?search='.Reservations::where('id',$request->rev_id)->first()->ticket_num;
+        $printUrl     = route('reservations.show',Reservations::where('id',$request->rev_id)->first()->id);
+        return response()->json([
+            'status' => true,
+            'accessUrl' => $accessUrl,
+            'printUrl'  => $printUrl,
+        ]);
     }
 
     /**
@@ -276,7 +283,7 @@ class ReservationController extends Controller
             ->groupby('visitor_type_id')
             ->with('type')
             ->get();
-        $date = Carbon::now();
+        $date = Carbon::now()->addHours(2);
         return view('layouts.print.rev',compact('ticket','models','date'));
     }
 
@@ -295,6 +302,7 @@ class ReservationController extends Controller
         $customId     = strtoupper(date('D').$id.'Re'.substr(time(), -2));
         $shifts       = Shifts::latest()->get();
         $visitorTypes = VisitorTypes::latest()->get();
+        $discounts = DiscountReason::all();
         $categories = Category::with(['products'=>function($query){
             $query->where('status','1');
         }])
@@ -303,7 +311,7 @@ class ReservationController extends Controller
             })
             ->get();
         $random = substr(Carbon::now()->format("l"),0,3).rand(0, 999).Carbon::now()->format('is');
-        return view('sales.reservation-info',compact('id','first_shift_start','random','categories','types','reservation','customId','shifts','visitorTypes'));
+        return view('sales.reservation-info',compact('id','discounts','first_shift_start','random','categories','types','reservation','customId','shifts','visitorTypes'));
     }
 
 
@@ -444,7 +452,13 @@ class ReservationController extends Controller
             }
         }
         $day = Carbon::parse(Reservations::where('id',$request->rev_id)->first()->day)->format('Y-m');
-        return response()->json(['day'=>$day,'status' => true]);
+        $accessUrl    = route('groupAccess.index').'?search='.$rev->ticket_num;
+        $printUrl     = route('reservations.show',$rev->id);
+        return response()->json([
+            'status' => true,
+            'accessUrl' => $accessUrl,
+            'printUrl'  => $printUrl,
+        ]);
     }
 
     /**

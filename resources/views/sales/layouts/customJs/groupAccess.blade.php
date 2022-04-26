@@ -143,7 +143,8 @@
 
         $.post(url, method, function (data) {
             $('.spinner').hide()
-            accessWhenLoad()
+            toastr.success('Visitors Accessed Successfully');
+            window.location.href = '/groupAccess';
         }).fail(function (data) {
             $('.spinner').hide()
 
@@ -170,9 +171,10 @@
     function getBracelets()
     {
 
-        var  firstBracelet, count = $('.braceletNumbers').length
+        var  firstBracelet, count = $('.braceletNumbers').length,
+        firstBracelet = $('.braceletNumbers').first().val(),
+        firstId = $('.braceletNumbers').first().attr("data-id");
 
-        firstBracelet = $('.braceletNumbers').first().val();
 
         if (firstBracelet.length <= 2)
         {
@@ -185,19 +187,28 @@
 
         var method = {
             count: count,
-            firstBracelet: firstBracelet
+            firstBracelet: firstBracelet,
+            firstId: firstId
         }
 
 
         $.post("{{route('capacity.getBracelets')}}", method, function (data) {
-            if (data.length > 0) {
-                $('.braceletNumbers').each(function (key, value) {
-                    $(this).val(data[key])
-                })
-                $('#checkAll').data('type','accessAll')
-                $('#checkAll').attr('data-type','accessAll')
-            } else {
-                toastr.warning('there is no bracelet free')
+            if(data.status == 405) {
+                toastr.error('An Amount Of ' + data.rem_amount + ' EGP Is Unpaid');
+                $('#payBtn').removeClass('d-none');
+                $('#payBtn').attr('data-ticket_id', data.rev_id);
+                $('#idOfTicket').val(data.rev_id);
+            }
+            else{
+                if (data.length > 0) {
+                    $('.braceletNumbers').each(function (key, value) {
+                        $(this).val(data[key])
+                    })
+                    $('#checkAll').data('type','accessAll')
+                    $('#checkAll').attr('data-type','accessAll')
+                } else {
+                    toastr.warning('there is no bracelet free')
+                }
             }
 
         }).fail(function (data) {
