@@ -158,8 +158,6 @@
             if (date == "{{date('Y-m-d')}}"){
                 $('.{{date('Y-m-d')}}').removeClass('toDay')
             }
-
-
         }
 
     </script>

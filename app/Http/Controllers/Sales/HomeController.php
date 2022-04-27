@@ -13,6 +13,11 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     public function index(){
+//
+//        if (auth()->user()->can('Add Client')){
+//            return 'yes';
+//        }
+//        die('no');
         $clients_count = Clients::all()->count();
         $new_clients   = Clients::whereDate('created_at', Carbon::today())->get()->count();
         $clients       = Clients::select('id', 'created_at')

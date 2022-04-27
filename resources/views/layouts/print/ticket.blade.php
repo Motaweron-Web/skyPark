@@ -103,6 +103,11 @@
                         @if($ticket->discount_value != 0)
                         <li><label> Discount : </label> <strong> {{$ticket->discount_value}} {{($ticket->discount_type == 'per') ? '%' : 'EGP'}}</strong></li>
                         @endif
+
+
+                        @if($ticket->total_top_up_price)
+                        <li><label> Top Up : {{$ticket->total_top_up_hours}} H</label> <strong> {{$ticket->total_top_up_price}} EGP</strong></li>
+                        @endif
                         <li><label> paid : </label> <strong>  {{$ticket->paid_amount}} EGP</strong></li>
                         <li><label> Remaining : </label> <strong>  {{$ticket->rem_amount}} EGP</strong></li>
                     </ul>
@@ -114,6 +119,12 @@
         </div>
     </div>
 </div>
+
+<script>
+    setTimeout(function () {
+        window.close();
+    }, 1000);
+</script>
 </body>
 
 </html>

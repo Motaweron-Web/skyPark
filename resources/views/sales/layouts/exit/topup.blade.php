@@ -31,6 +31,7 @@
                 if (data.status == 200){
                     setTimeout(function () {
                         $('#topUp').modal('hide')
+                        window.open(data.url, '_blank').focus()
                         location.reload()
                     },300)
                 }else {

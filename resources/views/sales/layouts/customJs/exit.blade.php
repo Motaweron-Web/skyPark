@@ -69,9 +69,10 @@
                             }
                         });
                     }
-                },//end error method
+                },//end error method   error: function (data) {
             });
-        }
+        }//end error method
+
         $(document).on('click','.tempStatus',function () {
             var id = $(this).data('id')
             var status = $(this).data('status')

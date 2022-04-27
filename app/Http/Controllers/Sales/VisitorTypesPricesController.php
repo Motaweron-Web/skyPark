@@ -32,9 +32,17 @@ class VisitorTypesPricesController extends Controller{
             $pricesArray[$visitorType->id] = 0;
         }
 
+        $count = 0;
+
 
 
         while ($newHoursCount > 0){
+
+            if ($count >= 100)
+            {
+                break;
+            }
+
 
             $from = strtotime(date('H',strtotime($shift->from)).":00");
             $to = strtotime(date('H',strtotime($shift->to)).":00");
@@ -67,7 +75,9 @@ class VisitorTypesPricesController extends Controller{
             if (!$shift){
                 break;
             }
+            $count++;
         }
+//        return $pricesArray;
         return response()->json(['status'=>200,'array'=>$pricesArray,'latestHours'=>$newHoursCount]);
 
 

@@ -192,7 +192,7 @@ class ExitController extends Controller
             'top_up_hours' => 'nullable|numeric'
         ]);
         $model = TicketRevModel::findOrFail($id);
-
+        $printUrl = '';
         if ($request->has('top_up_hours')) {
 
             if ($model->rev_id != '')
@@ -214,9 +214,7 @@ class ExitController extends Controller
             $method['visit_date'] = date('Y-m-d');
             $method['hours_count'] = $data['top_up_hours'];
             $method['shift_id'] = $shift->first()->id;
-
             $response = Http::get(route('visitorTypesPrices'), $method);
-
             $top_up_hours = $request->top_up_hours - $response['latestHours'];
             $data['top_up_hours'] = $top_up_hours + $model->top_up_hours;
             $price = $response['array'][$model->visitor_type_id];
@@ -232,8 +230,13 @@ class ExitController extends Controller
 
         TicketRevModel::findOrFail($id)->update($data);
 
+        if ($model->rev_id != '')
+            $printUrl = route('reservations.show',$ticket->id);
+        elseif ($model->ticket_id != '')
+            $printUrl = route('ticket.edit',$ticket->id);
 
-        return response()->json(['status' => 200]);
+
+        return response()->json(['status' => 200,'url'=>$printUrl]);
 
     }
     /**
