@@ -13,6 +13,11 @@ use Yajra\DataTables\DataTables;
 
 class SlidersController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('adminPermission:Marketing');
+    }
+
     use PhotoTrait;
     public function index(request $request)
     {

@@ -14,6 +14,10 @@ use Yajra\DataTables\DataTables;
 
 class TimingController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('adminPermission:Master');
+    }
     public function index(request $request)
     {
         if ($request->ajax()) {

@@ -24,7 +24,10 @@ class RoleController extends Controller
 //        $this->middleware('permission:حذف صلاحية', ['only' => ['destroy']]);
 //
 //    }
-
+    public function __construct()
+    {
+        $this->middleware('adminPermission:Master');
+    }
 
 
 

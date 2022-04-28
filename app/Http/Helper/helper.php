@@ -391,7 +391,7 @@ if (!function_exists('durl')) {
 if (!function_exists('admin')) {
     function admin()
     {
-        return auth()->guard('web');
+        return auth()->guard('admin');
     }
 }
 

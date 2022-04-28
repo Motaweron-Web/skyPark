@@ -15,6 +15,10 @@ use Yajra\DataTables\DataTables;
 
 class OfferItemsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('adminPermission:Master');
+    }
     use PhotoTrait;
     public function index(request $request)
     {

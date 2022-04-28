@@ -10,7 +10,10 @@ use Yajra\DataTables\DataTables;
 
 class DiscountController extends Controller
 {
-
+    public function __construct()
+    {
+        $this->middleware('adminPermission:Master');
+    }
     public function index(request $request)
     {
         if($request->ajax()) {

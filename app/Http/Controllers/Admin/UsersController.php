@@ -16,6 +16,11 @@ class UsersController extends Controller
 {
     use PhotoTrait;
 
+    public function __construct()
+    {
+        $this->middleware('adminPermission:Branch Admin');
+    }
+
     public function index(request $request)
     {
         if ($request->ajax()) {

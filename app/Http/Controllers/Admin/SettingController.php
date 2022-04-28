@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('adminPermission:Setting');
+    }
+
     use PhotoTrait;
     public function index(){
         $setting = GeneralSetting::first();

@@ -15,6 +15,10 @@ use Yajra\DataTables\DataTables;
 
 class RefernceController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('adminPermission:Master');
+    }
     /**
      * Display a listing of the resource.
      *

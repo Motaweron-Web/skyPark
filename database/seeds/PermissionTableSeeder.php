@@ -24,8 +24,20 @@ class PermissionTableSeeder extends Seeder
             'Corporations',
             'Exit',
         ];
+
+        $adminPermissions = [
+            'CS',
+            'Marketing',
+            'Setting',
+            'Branch Admin',
+            'Master',
+        ];
+
         foreach ($permissions as $permission) {
             Permission::create(['name' => $permission]);
+        }
+        foreach ($adminPermissions as $adminPermission) {
+            Permission::create(['name' => $adminPermission, 'guard_name' => 'admin']);
         }
     }
 }

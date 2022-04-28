@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Bracelets extends Model
 {
+
     protected $guarded = [];
     public function scopeBraceletFree($query)
     {

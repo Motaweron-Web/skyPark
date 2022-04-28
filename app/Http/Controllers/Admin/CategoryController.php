@@ -14,6 +14,10 @@ use Yajra\DataTables\DataTables;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('adminPermission:Master');
+    }
     /**
      * Display a listing of the resource.
      *

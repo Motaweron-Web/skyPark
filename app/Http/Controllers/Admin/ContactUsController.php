@@ -9,6 +9,11 @@ use Yajra\DataTables\DataTables;
 
 class ContactUsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('adminPermission:CS');
+    }
+
     public function index(request $request)
     {
         if($request->ajax()) {

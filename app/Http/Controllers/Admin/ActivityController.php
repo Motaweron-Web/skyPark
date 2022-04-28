@@ -15,6 +15,11 @@ use Yajra\DataTables\DataTables;
 
 class ActivityController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('adminPermission:Marketing');
+    }
+
     use PhotoTrait;
     public function index(request $request)
     {

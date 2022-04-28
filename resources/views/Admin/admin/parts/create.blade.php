@@ -1,3 +1,4 @@
+<link href="{{asset('assets/admin')}}/plugins/select2/select2.min.css" rel="stylesheet"/>
 <div class="modal-header">
     <h5 class="modal-title" id="example-Modal3">Add Admin</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -24,6 +25,14 @@
         <label for="password" class="form-control-label">Password</label>
         <input type="password" class="form-control" name="password" id="password">
     </div>
+        <div class="form-group">
+            <label class="form-label">Assign Roles</label>
+            <select name="permissions[]" class="form-control select2" data-placeholder="Choose Roles" multiple>
+                @foreach($permissions as $permission)
+                    <option value="{{$permission->name}}">{{$permission->name}}</option>
+                @endforeach
+            </select>
+        </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary" id="addButton">Create</button>
@@ -34,3 +43,5 @@
 <script>
     $('.dropify').dropify()
 </script>
+<script src="{{asset('assets/admin')}}/js/select2.js"></script>
+<script src="{{asset('assets/admin')}}/plugins/select2/select2.full.min.js"></script>

@@ -14,7 +14,10 @@ use Yajra\DataTables\DataTables;
 
 class CouponController extends Controller
 {
-
+    public function __construct()
+    {
+        $this->middleware('adminPermission:Master');
+    }
 
     public function index(request $request)
     {
