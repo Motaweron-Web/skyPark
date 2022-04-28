@@ -156,6 +156,12 @@
                         <span class="side-menu__label">Activities Page</span>
                     </a>
                 </li>
+                <li class="slide">
+                    <a class="side-menu__item" href="{{route('group.index')}}">
+                        <i class="fe fe-git-commit side-menu__icon"></i>
+                        <span class="side-menu__label">Group Page</span>
+                    </a>
+                </li>
             @endif
 
             <li class="slide">

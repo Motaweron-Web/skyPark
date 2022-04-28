@@ -7,6 +7,7 @@ use App\Models\AboutUs;
 use App\Models\Activity;
 use App\Models\ContactUs;
 use App\Models\GeneralSetting;
+use App\Models\Groups;
 use App\Models\Offer;
 use App\Models\OfferItem;
 use App\Models\Slider;
@@ -36,7 +37,8 @@ class HomeController extends Controller
     }
 
     public function groups(){
-        return view('site.groups');
+        $groups = Groups::latest()->get();
+        return view('site.groups',compact('groups'));
     }
 
     public function contact(){

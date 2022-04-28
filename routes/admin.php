@@ -106,6 +106,10 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin','namespace'=>'Admin']
     Route::POST('edit_setting','SettingController@edit')->name('admin.edit.setting');
     Route::get('getLogo','SettingController@getLogo')->name('getLogo');
 
+    ### Group ####
+    Route::resource('group','GroupController');
+    Route::POST('group-delete','GroupController@destroy')->name('group.delete');
+
     #### Auth ####
     Route::get('logout', 'AuthController@logout')->name('admin.logout');
 });
